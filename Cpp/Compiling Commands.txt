@@ -1,0 +1,3 @@
+Compile: i686-w64-mingw32-g++ -c -DBUILDING_GUITAR_DLL guitar_api.cpp
+
+Link: i686-w64-mingw32-g++ -shared -o guitar_api.dll guitar_api.o -static-libgcc -static-libstdc++ -lessentia -lfftw3f -lsamplerate -lole32 -Wl,-add-stdcall-alias
