@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ConsoleApp1
 {
@@ -53,7 +54,17 @@ namespace ConsoleApp1
                     outsideRead = reader.Read(buffer, 0, buffer.Length);
                     outsideBuffer = buffer;
                 }
+
+                StringBuilder sb = new StringBuilder(outsideBuffer.Length * 6);
+                foreach(float f in outsideBuffer)
+                {
+                    if(f == 0)continue;
+                    sb.Append(f.ToString() + ";");
+                }
+                System.IO.File.WriteAllText(@"WavAsString.txt", sb.ToString());
                 Console.WriteLine("Success");
+
+
                 /*for(int i = 0; i < buffer.Length; i = i + 256)
                  {
                      string s = string.Empty;
