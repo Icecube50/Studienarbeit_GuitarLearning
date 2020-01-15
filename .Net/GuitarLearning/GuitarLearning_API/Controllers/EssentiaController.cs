@@ -16,7 +16,7 @@ namespace GuitarLearning_API.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Essentia", "Ist Toll" };
+            return new string[] { "GuitarLearning_ServerOperational" };
         }
 
         // GET: api/Essentia/5

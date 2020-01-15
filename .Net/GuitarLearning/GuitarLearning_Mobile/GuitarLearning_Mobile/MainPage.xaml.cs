@@ -21,17 +21,6 @@ namespace GuitarLearning_Mobile
         {
             InitializeComponent();
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            string fileName = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-
-            string root = Directory.GetCurrentDirectory();
-            string[] files = Directory.GetFiles(root);
-            string[] directories = Directory.GetDirectories(root);
-
-            OutputLabel.Text = "Done";
-        }
     }
 
     public static class AssetStorage

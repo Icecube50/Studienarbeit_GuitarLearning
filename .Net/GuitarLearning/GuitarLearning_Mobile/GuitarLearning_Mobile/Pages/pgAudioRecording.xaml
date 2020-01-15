@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GuitarLearning_Mobile.Pages.pgAudioRecording"
+             Title="AudioRecording">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Recording = OFF"
+                   x:Name="lbRecordingState"
+                   VerticalOptions="StartAndExpand"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,10,0,0"
+                   FontSize="20"/>
+
+            <Label Text="No Chord Detected"
+                   x:Name="lbCurrentChord"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalTextAlignment="Center"
+                   FontSize="60"/>
+            
+            <Button Text="Start"
+                    VerticalOptions="EndAndExpand"
+                    HeightRequest="75"
+                    Clicked="OnRecordingState_Changed"
+                    x:Name="btnRecording"
+                    FontSize="20"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
