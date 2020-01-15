@@ -11,7 +11,7 @@ extern "C" {
 #define GUITAR_DLL __declspec(dllimport)
 #endif
 
-char* __stdcall GUITAR_DLL CalculateChords(float* audioInput, long int audioInputSize/*, long int DEBUG_MODE/*, int sampleRate, int frameSize, int hopSize*/);
+char* __stdcall GUITAR_DLL CalculateChords(float* audioInput, long int audioInputSize);
 
 void __stdcall GUITAR_DLL HelloWorld();
 

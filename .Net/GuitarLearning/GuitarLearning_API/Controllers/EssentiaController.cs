@@ -30,18 +30,19 @@ namespace GuitarLearning_API.Controllers
         }
 
         // GET: api/Essentia/5
-        [HttpPost]
+        /*[HttpPost]
         public ChordItem Post(ChordItem input)
         {
             float[] audioData = EssentiaInterface.ParseToFloatArray(input.Chords);
             string chordData = EssentiaInterface.CalculateChordsFrom(audioData);
             return new ChordItem() { Chords = "%" + chordData + "%" };
-        }
+        }*/
 
         [HttpPost]
         public Temp Post(Temp input)
         {
             string chordData = EssentiaInterface.CalculateChordsFrom(input.audioData);
+            if(chordData == "") { chordData = "X,0.0;"; }
             return new Temp() { audioData = new float[1], chordData = chordData };
         }
     }

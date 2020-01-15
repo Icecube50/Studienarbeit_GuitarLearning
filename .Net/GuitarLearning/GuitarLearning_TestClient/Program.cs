@@ -33,32 +33,55 @@ namespace GuitarLearning_TestClient
         static async Task TestWavFile(string path)
         {
             if (!File.Exists(path)) return;
-            float[] buffer = ReadFromFile(path);
+
+            float[] buffer = null;
+            using (AudioFileReader reader = new AudioFileReader(path))
+            {
+                buffer = new float[reader.Length];
+                reader.Read(buffer, 0, buffer.Length);
+            }
+
             int index = 0;
-
-            var payload = new Temp() { audioData = buffer, chordData = string.Empty };
-            string json = JsonConvert.SerializeObject(payload);
-            File.WriteAllText(@"D:\05 Temp\data.json", json);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync("api/Essentia", httpContent);
-            if (response.Content != null)
+            do
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-            }
-            return;
+                if (index > buffer.Length) { break; }
+                Logger.Log("Parsing Index " + index.ToString() + " - " + (index + 10000).ToString());
+                float[] partOfBuffer = new float[10000];
+                for(int i = 0; i < partOfBuffer.Length; i++)
+                {
+                    if(index + i >= buffer.Length) 
+                    {
+                        break; 
+                    }
+                    partOfBuffer[i] = buffer[index + i];
+                }
+                index += 10000;
 
-            while (index < buffer.Length)
-            {
-                //Console.WriteLine("Working on " + index + " -> " +  (index + 100));
-                string content = BufferToDataString(buffer, index, 100);
-                index += 100;
+                try
+                {
+                    var payload = new Temp() { audioData = partOfBuffer, chordData = string.Empty };
+                    string json = JsonConvert.SerializeObject(payload);
 
-                string address = BuildRequestAddress("api/Essentia", content);
-                Logger.Log("Address - " + address);
-                string chordString = await GET_ChordRequest(address);
-                if(chordString != "") Console.WriteLine(chordString);
-                //Console.WriteLine("###############################");
+                    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = await httpClient.PostAsync("api/Essentia", httpContent);
+                    if (response.Content != null)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var truckload = JsonConvert.DeserializeObject<Temp>(responseContent);
+                        if (truckload is Temp)
+                        {
+                            Temp t = truckload as Temp;
+                            Logger.Log("Chord: " + t.chordData);
+                        }
+                    }
+                }
+                catch(Exception e)
+                {
+                    Logger.Log(e.Message);
+                    ; 
+                }
             }
+            while (true);
             return;
         }
 
@@ -69,6 +92,17 @@ namespace GuitarLearning_TestClient
             {
                 buffer = new float[reader.Length];
                 reader.Read(buffer, 0, buffer.Length);
+            }
+            return buffer;
+        }
+
+        static float[] ReadFromFile(string path,int start, int length)
+        {
+            float[] buffer = null;
+            using (AudioFileReader reader = new AudioFileReader(path))
+            {
+                buffer = new float[length];
+                reader.Read(buffer, start, length);
             }
             return buffer;
         }

@@ -7,7 +7,7 @@ using namespace std;
 using namespace essentia;
 using namespace essentia::standard;
 
-char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, long int DEBUG_MODE/*, int sampleRate, int frameSize, int hopSize*/){
+char* __stdcall CalculateChords(float* audioInput, long int audioInputSize){
     // Initializing
     std::vector<Real> audioProcessReady;
     Pool pool;
@@ -17,15 +17,15 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
     const int SAMPLE_RATE = 44100;
     const int FRAME_SIZE = 2048;
     const int HOP_SIZE = 1024;
-    const int DEBUG_MODE = 1;
+    const int DEBUG_MODE = 0;
 
     //Converting float array to vector<Real>
-    if(DEBUG_MODE) printf("--- Converting float array ---\n");
+    if(DEBUG_MODE){ printf("--- Converting float array ---\n"); }
     for(int i = 0; i < audioInputSize; i++){
         Real r = audioInput[i];
         audioProcessReady.push_back(r);
     }
-    if(DEBUG_MODE) printf("--- Convert Done ---\n");
+    if(DEBUG_MODE){ printf("--- Convert Done ---\n"); }
 
     essentia::init();   
 
@@ -47,7 +47,7 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
     Algorithm* chordDetector = factory.create("ChordsDetection");
 
     // Connecting the algorithms
-    if(DEBUG_MODE) printf("--- Start connecting ---\n");
+    if(DEBUG_MODE){ printf("--- Start connecting ---\n"); }
     //Audio -> FrameCutter
     frameCutter->input("signal").set(audioProcessReady);
 
@@ -80,7 +80,7 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
 
     try{
         // Processing the audio
-        if(DEBUG_MODE) printf("--- Start processing ---\n");
+        if(DEBUG_MODE){ printf("--- Start processing ---\n"); }
         while(true){
             frameCutter->compute();
 
@@ -94,23 +94,22 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
             peak->compute();
             hpcp->compute();
 
-            if(DEBUG_MODE) printf("--- Adding HPCP to pool ---\n");
+            if(DEBUG_MODE){ printf("--- Adding HPCP to pool ---\n"); }
             pool.add("HPCP", signalHPCP);
         }
 
         std::vector<vector<Real>> signalPCP;
 
-        if(DEBUG_MODE){
-            printf("--- Getting PCP ---\n");
-            signalPCP = pool.value<vector<vector<Real>>>("HPCP");
-            printf("--- Getting PCP.size() ---\n");
-            int pcpSize = int(signalPCP.size());
-            printf("--- Got Size ---\n");
-            if(pcpSize > 0) printf("Size is positive\n");
-        }
+        if(DEBUG_MODE){ printf("--- Getting PCP ---\n"); }
+        signalPCP = pool.value<vector<vector<Real>>>("HPCP");
+        if(DEBUG_MODE){ printf("--- Getting PCP.size() ---\n"); }
+        int pcpSize = int(signalPCP.size());
+        if(DEBUG_MODE){ printf("--- Got Size ---\n"); }
+        if(pcpSize > 0 && DEBUG_MODE){ printf("Size is positive\n"); }
+        
 
         //Computing
-        if(DEBUG_MODE) printf("--- Computing Chords ---\n");
+        if(DEBUG_MODE){ printf("--- Computing Chords ---\n"); }
         chordDetector->input("pcp").set(signalPCP);
         chordDetector->output("chords").set(chordName);
         chordDetector->output("strength").set(chordStrength);
@@ -125,20 +124,8 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
             if(chordSize == strengthSize) printf("Intensity for every chord\n");
         }
 
-        //Cleanup
-        if(DEBUG_MODE) printf("--- Do Cleanup ---\n");
-        delete frameCutter;
-        delete windowing;
-        delete spectrum;
-        delete peak;
-        delete hpcp;
-        delete chordDetector;
-
-        if(DEBUG_MODE) printf("--- Do Shutdown ---\n");
-        essentia::shutdown();
-
         //Building return string
-        if(DEBUG_MODE) printf("--- Build return String ---\n");
+        if(DEBUG_MODE){ printf("--- Build return String ---\n"); }
         string completeChordString = "";
         if(chordName.size() == chordStrength.size()){
             for(int i = 0; i < chordName.size(); i++){
@@ -162,36 +149,36 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
         }
 
         //Converting to CRL-Conform string
-        if(DEBUG_MODE) printf("--- Converting to CLR-String ---\n");
+        if(DEBUG_MODE){ printf("--- Converting to CLR-String ---\n"); }
 
         char* cString = new char[completeChordString.size() + 1];
 
-        if(DEBUG_MODE) printf("strcpy(cString, completeChordString.c_string())\n");
+        if(DEBUG_MODE){ printf("strcpy(cString, completeChordString.c_string())\n"); }
         strcpy(cString, completeChordString.c_str());
 
         ULONG Size = strlen(cString) + sizeof(char);
 
         returnPointer = (char*)::CoTaskMemAlloc(Size);
 
-        if(DEBUG_MODE) printf("strcpy(returnPointer, cString)\n");
+        if(DEBUG_MODE){ printf("strcpy(returnPointer, cString)\n"); }
         strcpy(returnPointer, cString);
 
         delete[] cString;
     }
     catch(...){
-        if(DEBUG_MODE) printf("--- Entered Catch ---\n");
+        if(DEBUG_MODE){ printf("--- Entered Catch ---\n"); }
 
         string failed = "-1";
         char* cString = new char[failed.size() + 1];
 
-        if(DEBUG_MODE) printf("strcpy(cString, failed.c_string())\n");
+        if(DEBUG_MODE){ printf("strcpy(cString, failed.c_string())\n"); }
         strcpy(cString, failed.c_str());
 
         ULONG Size = strlen(cString) + sizeof(char);
 
         returnPointer = (char*)::CoTaskMemAlloc(Size);
 
-        if(DEBUG_MODE) printf("strcpy(returnPointer, cString)\n");
+        if(DEBUG_MODE){ printf("strcpy(returnPointer, cString)\n"); }
         strcpy(returnPointer, cString);
 
         delete[] cString;
@@ -202,6 +189,19 @@ char* __stdcall CalculateChords(float* audioInput, long int audioInputSize/*, lo
         printf("%s", returnPointer);
         printf("\n");
     }
+
+    //Cleanup
+    if(DEBUG_MODE){ printf("--- Do Cleanup ---\n"); }
+    delete frameCutter;
+    delete windowing;
+    delete spectrum;
+    delete peak;
+    delete hpcp;
+    delete chordDetector;
+
+    if(DEBUG_MODE){ printf("--- Do Shutdown ---\n"); }
+    essentia::shutdown();
+
     return returnPointer;
 }
 
