@@ -50,5 +50,16 @@ namespace GuitarLearning_Mobile.UtilityClasses
             audioRecorder.Dispose();
         }
 
+        /*
+         * while(IsRecording)
+         *      Recorder.Read
+         *      UpdateBuffer
+         *      
+         * Reader.Stop()
+         * Reader.Dispose()
+         * 
+         * Is this valid??
+         */
+
     }
 }
