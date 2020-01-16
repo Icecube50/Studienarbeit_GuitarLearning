@@ -1,5 +1,8 @@
 ﻿using Android.Content.Res;
+using GuitarLearning_Mobile.Pages;
 using NAudio.Wave;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +23,10 @@ namespace GuitarLearning_Mobile
         public MainPage()
         {
             InitializeComponent();
+
+            optAudioRecording.PageLink = new pgAudioRecording();
+            optNetworkTesting.PageLink = new pgNetworkTesting();
+            optSongTemplate.PageLink = new pgSongPage_Template();
         }
     }
 

@@ -56,7 +56,7 @@ namespace GuitarLearning_TestClient
                     partOfBuffer[i] = buffer[index + i];
                 }
                 index += 10000;
-
+                //Logger.Log(BufferToDataString(partOfBuffer, 0, 1000));
                 try
                 {
                     var payload = new Temp() { audioData = partOfBuffer, chordData = string.Empty };

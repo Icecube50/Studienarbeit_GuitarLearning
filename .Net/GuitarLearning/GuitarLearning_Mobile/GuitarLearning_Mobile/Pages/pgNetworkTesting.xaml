@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GuitarLearning_Mobile.Pages.pgNetworkTesting"
+             Title="NetworkTesting"
+             x:Name="root">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="5">
+            <Label Text="Connection URL:"
+                   VerticalOptions="Start"
+                   FontSize="18"/>
+
+            <Entry Placeholder="Enter Address"
+                   VerticalOptions="Start"
+                   FontSize="18"
+                   x:Name="etyURl"/>
+
+            <Editor Placeholder="Output Data:"
+                    VerticalOptions="Start"
+                    HeightRequest="200"
+                    IsReadOnly="True"
+                    x:Name="edtOutput"
+                    Text="{Binding Source={x:Reference root}, Path=editorOutput}"/>
+
+            <Grid VerticalOptions="Start">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Button Text="Check Connectivity"
+                        VerticalOptions="Fill"
+                        FontSize="18"
+                        HeightRequest="75"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        x:Name="btnCheckConnectivity"
+                        Clicked="DoCheckConnectivity"/>
+
+                <Button Text="Ping"
+                        VerticalOptions="Fill"
+                        FontSize="18"
+                        HeightRequest="75"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="btnPing"/>
+
+                <Button Text="Ping Remote"
+                        VerticalOptions="Fill"
+                        FontSize="18"
+                        HeightRequest="75"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        x:Name="btnRemotePing"/>
+                
+                <Button Text="Get Guitar-API"
+                        VerticalOptions="Fill"
+                        FontSize="18"
+                        HeightRequest="75"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="btnGet"/>
+
+                <Button Text="Post Sample Data"
+                        VerticalOptions="Fill"
+                        FontSize="18"
+                        HeightRequest="75"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        x:Name="btnPost"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

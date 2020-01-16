@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GuitarLearning_Mobile.Pages.pgAudioRecording"
-             Title="AudioRecording">
+             Title="AudioRecording" Disappearing="OnLeave">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Recording = OFF"
@@ -24,7 +24,6 @@
             <Button Text="Start"
                     VerticalOptions="EndAndExpand"
                     HeightRequest="75"
-                    Clicked="OnRecordingState_Changed"
                     x:Name="btnRecording"
                     FontSize="20"/>
         </StackLayout>

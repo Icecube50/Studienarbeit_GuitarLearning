@@ -7,11 +7,37 @@
              mc:Ignorable="d"
              x:Class="GuitarLearning_Mobile.MainPage"
              Title="GuitarLearning"
+             x:Name="AppRoot"
              >
     <StackLayout Orientation="Vertical">
-        <local:vMainOption HorizontalOptions="FillAndExpand"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+            </Grid.RowDefinitions>
+            <local:vMainOption HorizontalOptions="Start"
                            OptionName="AudioRecording"
-                           />
-    </StackLayout>
+                           x:Name="optAudioRecording"
+                           Grid.Row="0"/>
+            <local:vMainOption HorizontalOptions="Start"
+                           OptionName="NetworkTesting"
+                           x:Name="optNetworkTesting"
+                           Grid.Row="2"/>
+            <local:vMainOption HorizontalOptions="Start"
+                           OptionName="SongTemplate"
+                           x:Name="optSongTemplate"
+                           Grid.Row="4"/>
 
+            <BoxView Grid.Row="1"
+                     Color="Black"/>
+            <BoxView Grid.Row="3"
+                     Color="Black"/>
+            <BoxView Grid.Row="5"
+                     Color="Black"/>
+        </Grid>
+    </StackLayout>
 </ContentPage>

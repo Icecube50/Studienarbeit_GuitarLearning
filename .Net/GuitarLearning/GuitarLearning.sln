@@ -9,9 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarLearning_Mobile.Andro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarLearning_Mobile", "GuitarLearning_Mobile\GuitarLearning_Mobile\GuitarLearning_Mobile.csproj", "{149E89DC-865C-423A-A010-43A1D4946584}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarLearning_API", "GuitarLearning_API\GuitarLearning_API.csproj", "{EE9F3527-C61E-45DC-B307-1F707F7CEF09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarLearning_API", "GuitarLearning_API\GuitarLearning_API.csproj", "{EE9F3527-C61E-45DC-B307-1F707F7CEF09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarLearning_TestClient", "GuitarLearning_TestClient\GuitarLearning_TestClient.csproj", "{91FEE576-B3A3-4873-8103-4707C0AE85BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarLearning_TestClient", "GuitarLearning_TestClient\GuitarLearning_TestClient.csproj", "{91FEE576-B3A3-4873-8103-4707C0AE85BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarLearning_Essentials", "GuitarLearning_Essentials\GuitarLearning_Essentials.csproj", "{A2EC115A-69B2-4FB4-B99E-935C580615C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,8 +51,8 @@ Global
 		{149E89DC-865C-423A-A010-43A1D4946584}.Release|Any CPU.Build.0 = Release|Any CPU
 		{149E89DC-865C-423A-A010-43A1D4946584}.Release|x86.ActiveCfg = Release|Any CPU
 		{149E89DC-865C-423A-A010-43A1D4946584}.Release|x86.Build.0 = Release|Any CPU
-		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Debug|Any CPU.Build.0 = Debug|x86
 		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Debug|x86.ActiveCfg = Debug|x86
 		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Debug|x86.Build.0 = Debug|x86
 		{EE9F3527-C61E-45DC-B307-1F707F7CEF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -65,6 +67,14 @@ Global
 		{91FEE576-B3A3-4873-8103-4707C0AE85BC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91FEE576-B3A3-4873-8103-4707C0AE85BC}.Release|x86.ActiveCfg = Release|Any CPU
 		{91FEE576-B3A3-4873-8103-4707C0AE85BC}.Release|x86.Build.0 = Release|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Debug|x86.Build.0 = Debug|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|x86.ActiveCfg = Release|Any CPU
+		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

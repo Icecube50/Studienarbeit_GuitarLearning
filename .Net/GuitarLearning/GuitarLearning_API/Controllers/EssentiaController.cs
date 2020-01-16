@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GuitarLearning_API.Models;
+using GuitarLearning_Essentials;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,11 +39,11 @@ namespace GuitarLearning_API.Controllers
         }*/
 
         [HttpPost]
-        public Temp Post(Temp input)
+        public EssentiaModel Post(EssentiaModel input)
         {
             string chordData = EssentiaInterface.CalculateChordsFrom(input.audioData);
             if(chordData == "") { chordData = "X,0.0;"; }
-            return new Temp() { audioData = new float[1], chordData = chordData };
+            return new EssentiaModel() { audioData = new float[1], chordData = chordData };
         }
     }
 }
