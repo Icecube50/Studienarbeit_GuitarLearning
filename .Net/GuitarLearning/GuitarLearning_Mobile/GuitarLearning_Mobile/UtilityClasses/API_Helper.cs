@@ -11,9 +11,12 @@ namespace GuitarLearning_Mobile.UtilityClasses
 {
     public class API_Helper
     {
+        public event EventHandler UpdateUI;
+
         private readonly object _lock = new object();
         private string _apiAddress { get; set; } = string.Empty;
         private AudioBuffer _audioBuffer { get; set; } = null;
+        private AudioRecording _audioRecording { get; set; } = null;
         private bool DoProcessFlag { get; set; } = false;
 
         private event EventHandler DoProcess;
@@ -23,23 +26,20 @@ namespace GuitarLearning_Mobile.UtilityClasses
             _audioBuffer = audioBuffer;
             _apiAddress = apiAddress;
 
-            _audioBuffer.StartProcessing += _audioBuffer_StartProcessing;
-            _audioBuffer.StopProcessing += _audioBuffer_StopProcessing;
-
             DoProcess += async (s, e) =>
             {
                 await ProcessingCycle();
             };
         }
 
-        private void _audioBuffer_StopProcessing(object sender, EventArgs e)
+        public void StopAPI()
         {
             if (!DoProcessFlag)
                 return;
             DoProcessFlag = false;
         }
 
-        private void _audioBuffer_StartProcessing(object sender, EventArgs e)
+        public void StartAPI()
         {
             if (DoProcessFlag)
                 return;
@@ -55,13 +55,18 @@ namespace GuitarLearning_Mobile.UtilityClasses
 
                 while (DoProcessFlag)
                 {
-                    if (_audioBuffer.Count() > 0)
+                    if (_audioBuffer.Peek() != null)
                     {
                         EssentiaModel essentiaModel = new EssentiaModel(_audioBuffer.Get());
                         var chordData = await DoAPICall(essentiaModel, httpClient);
+                        UpdateUI?.Invoke(chordData, new EventArgs());
 #if DEBUG
                         DoLog(chordData.chordData);
 #endif
+                    }
+                    else
+                    {
+                        await Task.Delay(5);
                     }
                 }
             }

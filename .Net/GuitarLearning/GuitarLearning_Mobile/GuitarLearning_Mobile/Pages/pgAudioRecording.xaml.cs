@@ -1,4 +1,5 @@
-﻿using GuitarLearning_Mobile.UtilityClasses;
+﻿using GuitarLearning_Essentials;
+using GuitarLearning_Mobile.UtilityClasses;
 using Plugin.Permissions;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,10 @@ namespace GuitarLearning_Mobile.Pages
 
             IsRecordingChanged += OnIsRecordingChanged;
             audioRecording = new AudioRecording();
+            audioRecording.GetHelper().UpdateUI += async (s, e) =>
+            {
+                await UpdateChordLabel(s);
+            };
 
             btnRecording.Clicked += async (s, e) =>
             {
@@ -70,6 +75,7 @@ namespace GuitarLearning_Mobile.Pages
             {
                 btnRecording.Text = "Start";
                 audioRecording.StopRecording();
+                lbCurrentChord.Text = "No Chord Detected";
             }
         }
 
@@ -95,6 +101,20 @@ namespace GuitarLearning_Mobile.Pages
         {
             audioRecording.CleanUp();
             audioRecording = null;
+        }
+
+        private async Task UpdateChordLabel(object model)
+        {
+            if(model is EssentiaModel)
+            {
+                EssentiaModel essentiaModel = model as EssentiaModel;
+                string[] chords = essentiaModel.chordData.Split(';');
+                foreach(string chord in chords)
+                {
+                    lbCurrentChord.Text = chord;
+                    await Task.Delay(1);
+                }
+            }
         }
     }
 }

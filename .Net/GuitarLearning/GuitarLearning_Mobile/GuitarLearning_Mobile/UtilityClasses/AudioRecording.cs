@@ -29,7 +29,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 audioBuffer.Length
                 );
 
-            _audioBuffer = new AudioBuffer(this);
+            _audioBuffer = new AudioBuffer();
             _Helper = new API_Helper(_audioBuffer);
 
             StartProcessing += async (s, e) =>
@@ -44,7 +44,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 return;
             IsRecording = true;
             StartProcessing?.Invoke(this, new EventArgs());
-            
+            _Helper.StartAPI();
         }
 
         public void StopRecording()
@@ -52,7 +52,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             if (!IsRecording)
                 return;
             IsRecording = false;
-            StopProcessing?.Invoke(this, new EventArgs());
+            _Helper.StopAPI();
         }
 
         public void CleanUp()
@@ -60,6 +60,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
             if (IsRecording)
                 StopRecording();
             audioRecorder.Dispose();
+        }
+
+        public API_Helper GetHelper()
+        {
+            return _Helper;
         }
 
         private async Task ReadDataToBuffer()

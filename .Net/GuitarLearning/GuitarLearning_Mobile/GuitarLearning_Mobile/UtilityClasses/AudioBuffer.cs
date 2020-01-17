@@ -1,34 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
     public class AudioBuffer
     {
-        public event EventHandler StartProcessing;
-        public event EventHandler StopProcessing;
-
         private readonly object _lock = new object();
 
         public const int BUFFER_SIZE = 1000;
         private Queue<float[]> BufferQueue { get; set; } = new Queue<float[]>();
-        public AudioBuffer(AudioRecording recorder)
-        {
-            recorder.StartProcessing += Recorder_StartProcessing;
-            recorder.StopProcessing += Recorder_StopProcessing;
-        }
-
-        private void Recorder_StopProcessing(object sender, EventArgs e)
-        {
-            StopProcessing?.Invoke(this, new EventArgs());
-            Clean();
-        }
-
-        private void Recorder_StartProcessing(object sender, EventArgs e)
-        {
-            StartProcessing?.Invoke(this, new EventArgs());
-        }
 
         public void Add(float[] newAudioData)
         {
@@ -46,12 +28,17 @@ namespace GuitarLearning_Mobile.UtilityClasses
             }
         }
 
-        public int Count()
+        public float[] Peek()
         {
             lock (_lock)
             {
-                return BufferQueue.Count;
+                return BufferQueue.Count != 0? BufferQueue.Peek() : null;
             }
+        }
+
+        public int Count()
+        {
+            return BufferQueue.Count;
         }
 
         public void Clean()
