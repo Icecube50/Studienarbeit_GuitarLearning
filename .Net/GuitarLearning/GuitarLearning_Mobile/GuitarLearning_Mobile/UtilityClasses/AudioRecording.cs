@@ -9,28 +9,27 @@ namespace GuitarLearning_Mobile.UtilityClasses
     public class AudioRecording
     {
         public event EventHandler StartProcessing;
-        public event EventHandler StopProcessing;
 
-        private AudioRecord audioRecorder { get; set; } = null;
-        private float[] audioBuffer { get; set; } = null;
+        private AudioRecord AudioRecorder { get; set; } = null;
+        private float[] InputBuffer { get; set; } = null;
         private bool IsRecording { get; set; } = false;
 
-        private AudioBuffer _audioBuffer { get; set; } = null;
-        private API_Helper _Helper { get; set; } = null;
+        private AudioBuffer AudioBuffer { get; set; } = null;
+        private API_Helper Helper { get; set; } = null;
 
         public AudioRecording()
         {
-            audioBuffer = new float[AudioBuffer.BUFFER_SIZE];
-            audioRecorder = new AudioRecord(
+            InputBuffer = new float[AudioBuffer.BUFFER_SIZE];
+            AudioRecorder = new AudioRecord(
                 AudioSource.Mic,
                 44100,
                 ChannelIn.Mono,
                 Android.Media.Encoding.PcmFloat,
-                audioBuffer.Length
+                InputBuffer.Length
                 );
 
-            _audioBuffer = new AudioBuffer();
-            _Helper = new API_Helper(_audioBuffer);
+            AudioBuffer = new AudioBuffer();
+            Helper = new API_Helper(AudioBuffer);
 
             StartProcessing += async (s, e) =>
             {
@@ -44,7 +43,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 return;
             IsRecording = true;
             StartProcessing?.Invoke(this, new EventArgs());
-            _Helper.StartAPI();
+            Helper.StartAPI();
         }
 
         public void StopRecording()
@@ -52,31 +51,31 @@ namespace GuitarLearning_Mobile.UtilityClasses
             if (!IsRecording)
                 return;
             IsRecording = false;
-            _Helper.StopAPI();
+            Helper.StopAPI();
         }
 
         public void CleanUp()
         {
             if (IsRecording)
                 StopRecording();
-            audioRecorder.Dispose();
+            AudioRecorder.Dispose();
         }
 
         public API_Helper GetHelper()
         {
-            return _Helper;
+            return Helper;
         }
 
         private async Task ReadDataToBuffer()
         {
-            audioRecorder.StartRecording();
+            AudioRecorder.StartRecording();
             while (IsRecording)
             {
-                await audioRecorder.ReadAsync(audioBuffer, 0, audioBuffer.Length, 0);
-                _audioBuffer.Add(audioBuffer);
-                audioBuffer = new float[audioBuffer.Length];
+                await AudioRecorder.ReadAsync(InputBuffer, 0, InputBuffer.Length, 0);
+                AudioBuffer.Add(InputBuffer);
+                InputBuffer = new float[InputBuffer.Length];
             }
-            audioRecorder?.Stop();
+            AudioRecorder?.Stop();
         }
 
     }

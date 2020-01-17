@@ -13,18 +13,16 @@ namespace GuitarLearning_Mobile.UtilityClasses
     {
         public event EventHandler UpdateUI;
 
-        private readonly object _lock = new object();
-        private string _apiAddress { get; set; } = string.Empty;
-        private AudioBuffer _audioBuffer { get; set; } = null;
-        private AudioRecording _audioRecording { get; set; } = null;
+        private string ApiAddress { get; set; } = string.Empty;
+        private AudioBuffer AudioBuffer { get; set; } = null;
         private bool DoProcessFlag { get; set; } = false;
 
         private event EventHandler DoProcess;
 
         public API_Helper(AudioBuffer audioBuffer, string apiAddress = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
         {
-            _audioBuffer = audioBuffer;
-            _apiAddress = apiAddress;
+            AudioBuffer = audioBuffer;
+            ApiAddress = apiAddress;
 
             DoProcess += async (s, e) =>
             {
@@ -55,9 +53,9 @@ namespace GuitarLearning_Mobile.UtilityClasses
 
                 while (DoProcessFlag)
                 {
-                    if (_audioBuffer.Peek() != null)
+                    if (AudioBuffer.Peek() != null)
                     {
-                        EssentiaModel essentiaModel = new EssentiaModel(_audioBuffer.Get());
+                        EssentiaModel essentiaModel = new EssentiaModel(AudioBuffer.Get());
                         var chordData = await DoAPICall(essentiaModel, httpClient);
                         UpdateUI?.Invoke(chordData, new EventArgs());
 #if DEBUG
@@ -77,7 +75,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             EssentiaModel apiModel = null;
             using (HttpRequestMessage request = new HttpRequestMessage())
             {
-                request.RequestUri = new Uri(_apiAddress);
+                request.RequestUri = new Uri(ApiAddress);
                 request.Method = HttpMethod.Post;
                 request.Headers.Add("Accept", "application/json");
                 var requestContent = JsonConvert.SerializeObject(currentModel);

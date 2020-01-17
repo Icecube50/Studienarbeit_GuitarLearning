@@ -107,14 +107,22 @@ namespace GuitarLearning_Mobile.Pages
 
                 editorOutput = string.Empty;
                 editorOutput += "Pinging " + address + "...\n";
-                bool result = await CrossConnectivity.Current.IsReachable(address);
-                if (result)
+                try
                 {
-                    editorOutput += address + " is reachable\n";
+                    bool result = await CrossConnectivity.Current.IsReachable(address);
+                    if (result)
+                    {
+                        editorOutput += address + " is reachable\n";
+                    }
+                    else
+                    {
+                        editorOutput += address + " cannot be reached\n";
+                    }
                 }
-                else
+                catch
                 {
-                    editorOutput += address + " cannot be reached\n";
+                    editorOutput += "Error during ping\n";
+                    editorOutput += "Please make sure the address is valid\n";
                 }
             };
 
@@ -125,14 +133,22 @@ namespace GuitarLearning_Mobile.Pages
                 editorOutput = string.Empty;
                 editorOutput += "Pinging " + address + "...\n";
 
-                bool result = await CrossConnectivity.Current.IsRemoteReachable(address);
-                if (result)
+                try
                 {
-                    editorOutput += address + " is reachable\n";
+                    bool result = await CrossConnectivity.Current.IsRemoteReachable(address);
+                    if (result)
+                    {
+                        editorOutput += address + " is reachable\n";
+                    }
+                    else
+                    {
+                        editorOutput += address + " cannot be reached\n";
+                    }
                 }
-                else
+                catch
                 {
-                    editorOutput += address + " cannot be reached\n";
+                    editorOutput += "Error during ping\n";
+                    editorOutput += "Please make sure the address is valid\n";
                 }
             };
 
@@ -143,28 +159,36 @@ namespace GuitarLearning_Mobile.Pages
                 editorOutput += "Communication with: " + address + "\n";
                 editorOutput += "Sending Get-Request...\n";
 
-                using (HttpRequestMessage request = new HttpRequestMessage())
+                try
                 {
-                    request.RequestUri = new Uri(address);
-                    request.Method = HttpMethod.Get;
-                    request.Headers.Add("Accept", "application/json");
-
-                    using(HttpClient httpClient = new HttpClient())
+                    using (HttpRequestMessage request = new HttpRequestMessage())
                     {
-                        httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
-                        HttpResponseMessage response = await httpClient.SendAsync(request);
-                        if(response.StatusCode == HttpStatusCode.OK)
+                        request.RequestUri = new Uri(address);
+                        request.Method = HttpMethod.Get;
+                        request.Headers.Add("Accept", "application/json");
+
+                        using (HttpClient httpClient = new HttpClient())
                         {
-                            editorOutput += "Status: OK\n";
-                            HttpContent content = response.Content;
-                            string json = await content.ReadAsStringAsync();
-                            editorOutput += "Content:\n" + json;
-                        }
-                        else
-                        {
-                            editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                            httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
+                            HttpResponseMessage response = await httpClient.SendAsync(request);
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                editorOutput += "Status: OK\n";
+                                HttpContent content = response.Content;
+                                string json = await content.ReadAsStringAsync();
+                                editorOutput += "Content:\n" + json;
+                            }
+                            else
+                            {
+                                editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                            }
                         }
                     }
+                }
+                catch
+                {
+                    editorOutput += "Timeout\n";
+                    editorOutput += "Could't reach server\n";
                 }
             };
 
@@ -175,31 +199,39 @@ namespace GuitarLearning_Mobile.Pages
                 editorOutput += "Communication with: " + address + "\n";
                 editorOutput += "Sending Post-Request...\n";
 
-                using (HttpRequestMessage request = new HttpRequestMessage())
+                try
                 {
-                    request.RequestUri = new Uri(address);
-                    request.Method = HttpMethod.Post;
-                    request.Headers.Add("Accept", "application/json");
-                    var requestContent = JsonConvert.SerializeObject(exampleData);
-                    request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
-
-                    using (HttpClient httpClient = new HttpClient())
+                    using (HttpRequestMessage request = new HttpRequestMessage())
                     {
-                        httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
-                        HttpResponseMessage response = await httpClient.SendAsync(request);
-                        if (response.StatusCode == HttpStatusCode.OK)
+                        request.RequestUri = new Uri(address);
+                        request.Method = HttpMethod.Post;
+                        request.Headers.Add("Accept", "application/json");
+                        var requestContent = JsonConvert.SerializeObject(exampleData);
+                        request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
+
+                        using (HttpClient httpClient = new HttpClient())
                         {
-                            editorOutput += "Status: OK\n";
-                            HttpContent content = response.Content;
-                            string json = await content.ReadAsStringAsync();
-                            var responseContent = JsonConvert.DeserializeObject<EssentiaModel>(json);
-                            editorOutput += "Chords:\n" + responseContent.chordData;
-                        }
-                        else
-                        {
-                            editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                            httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
+                            HttpResponseMessage response = await httpClient.SendAsync(request);
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                editorOutput += "Status: OK\n";
+                                HttpContent content = response.Content;
+                                string json = await content.ReadAsStringAsync();
+                                var responseContent = JsonConvert.DeserializeObject<EssentiaModel>(json);
+                                editorOutput += "Chords:\n" + responseContent.chordData;
+                            }
+                            else
+                            {
+                                editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                            }
                         }
                     }
+                }
+                catch
+                {
+                    editorOutput += "Timeout\n";
+                    editorOutput += "Could't reach server\n";
                 }
             };
         }
