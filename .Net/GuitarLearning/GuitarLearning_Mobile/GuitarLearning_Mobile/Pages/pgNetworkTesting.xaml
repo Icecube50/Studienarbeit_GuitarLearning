@@ -76,6 +76,16 @@
                         Grid.Row="2"
                         Grid.Column="0"
                         x:Name="btnPost"/>
+
+
+                <Button Text="Create Test Log"
+                        VerticalOptions="Fill"
+                        FontSize="18"
+                        HeightRequest="75"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        x:Name="btnLog"
+                        Clicked="OnCreateLog"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

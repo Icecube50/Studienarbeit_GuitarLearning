@@ -64,12 +64,12 @@ namespace GuitarLearning_Mobile.Pages
             if (IsRecording)
             {
                 btnRecording.Text = "Stop";
-                //audioRecording.StartRecording();
+                audioRecording.StartRecording();
             }
             else 
             {
                 btnRecording.Text = "Start";
-                //audioRecording.StopRecording();
+                audioRecording.StopRecording();
             }
         }
 

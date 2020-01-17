@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GuitarLearning_Mobile
 {
@@ -14,9 +15,21 @@ namespace GuitarLearning_Mobile
         {
             try
             {
-                //logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "LogAndroid.txt");
-                //Use this for daily log files : "Log" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
-                WriteToLog(logMessage, logFilePath);
+                string androidPath = Android.OS.Environment.GetExternalStoragePublicDirectory(string.Empty).AbsolutePath;
+                if (Directory.Exists(androidPath))
+                {
+                    androidPath = Path.Combine(androidPath, "GuitarLearning");
+                    if (!Directory.Exists(androidPath))
+                        Directory.CreateDirectory(androidPath);
+                    logFilePath = Path.Combine(androidPath, "LogAndroid.txt");
+                    //Use this for daily log files : "Log" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
+                    WriteToLog(logMessage, logFilePath);
+                }
+                else
+                {
+                    throw new Exception("No external storage was found");
+                }
+
             }
             catch (Exception e)
             {

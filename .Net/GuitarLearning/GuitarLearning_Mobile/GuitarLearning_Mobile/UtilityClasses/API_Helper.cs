@@ -9,27 +9,65 @@ using System.Threading.Tasks;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
-    public static class API_Helper
+    public class API_Helper
     {
-        private static string _apiAddress { get; set; } = string.Empty;
+        private readonly object _lock = new object();
+        private string _apiAddress { get; set; } = string.Empty;
+        private AudioBuffer _audioBuffer { get; set; } = null;
+        private bool DoProcessFlag { get; set; } = false;
 
-        public static void API_HelperSetup(string apiAddress)
+        private event EventHandler DoProcess;
+
+        public API_Helper(AudioBuffer audioBuffer, string apiAddress = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
         {
+            _audioBuffer = audioBuffer;
             _apiAddress = apiAddress;
 
-            AudioBuffer.BufferUpdated += async (s, e) =>
+            _audioBuffer.StartProcessing += _audioBuffer_StartProcessing;
+            _audioBuffer.StopProcessing += _audioBuffer_StopProcessing;
+
+            DoProcess += async (s, e) =>
             {
-                EssentiaModel currentModel = new EssentiaModel()
-                {
-                    audioData = AudioBuffer.Get(),
-                    chordData = string.Empty
-                };
-                var chordData = await DoAPICall(currentModel);
-                //TODO UpdateUI, per event?
+                await ProcessingCycle();
             };
         }
 
-        private static async Task<EssentiaModel> DoAPICall(EssentiaModel currentModel)
+        private void _audioBuffer_StopProcessing(object sender, EventArgs e)
+        {
+            if (!DoProcessFlag)
+                return;
+            DoProcessFlag = false;
+        }
+
+        private void _audioBuffer_StartProcessing(object sender, EventArgs e)
+        {
+            if (DoProcessFlag)
+                return;
+            DoProcessFlag = true;
+            DoProcess?.Invoke(this, new EventArgs());
+        }
+
+        private async Task ProcessingCycle()
+        {
+            using(HttpClient httpClient = new HttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 0, 12);
+
+                while (DoProcessFlag)
+                {
+                    if (_audioBuffer.Count() > 0)
+                    {
+                        EssentiaModel essentiaModel = new EssentiaModel(_audioBuffer.Get());
+                        var chordData = await DoAPICall(essentiaModel, httpClient);
+#if DEBUG
+                        DoLog(chordData.chordData);
+#endif
+                    }
+                }
+            }
+        }
+
+        private async Task<EssentiaModel> DoAPICall(EssentiaModel currentModel, HttpClient myClient)
         {
             EssentiaModel apiModel = null;
             using (HttpRequestMessage request = new HttpRequestMessage())
@@ -40,19 +78,23 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 var requestContent = JsonConvert.SerializeObject(currentModel);
                 request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
 
-                using (HttpClient httpClient = new HttpClient())
+                HttpResponseMessage response = await myClient.SendAsync(request);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
-                    HttpResponseMessage response = await httpClient.SendAsync(request);
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        HttpContent content = response.Content;
-                        string json = await content.ReadAsStringAsync();
-                        apiModel = JsonConvert.DeserializeObject<EssentiaModel>(json);
-                    }
-                }
+                    HttpContent content = response.Content;
+                    string json = await content.ReadAsStringAsync();
+                    apiModel = JsonConvert.DeserializeObject<EssentiaModel>(json);
+                }             
             }
             return apiModel;
+        }
+
+        private void DoLog(string chordData)
+        {
+            string msg = "Failed";
+            if (chordData != null)
+                msg = chordData;
+            Logger.Log("Data: " + msg);
         }
     }
 }

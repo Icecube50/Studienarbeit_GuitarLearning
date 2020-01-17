@@ -4,26 +4,62 @@ using System.Text;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
-    public static class AudioBuffer
+    public class AudioBuffer
     {
-        private static Queue<float[]> BufferQueue { get; set; } = new Queue<float[]>();
+        public event EventHandler StartProcessing;
+        public event EventHandler StopProcessing;
 
-        public static event EventHandler BufferUpdated;
+        private readonly object _lock = new object();
 
-        public static void Add(float[] newAudioData)
+        public const int BUFFER_SIZE = 1000;
+        private Queue<float[]> BufferQueue { get; set; } = new Queue<float[]>();
+        public AudioBuffer(AudioRecording recorder)
         {
-            BufferQueue.Enqueue(newAudioData);
-            BufferUpdated?.Invoke(null, new EventArgs());
+            recorder.StartProcessing += Recorder_StartProcessing;
+            recorder.StopProcessing += Recorder_StopProcessing;
         }
 
-        public static float[] Get()
+        private void Recorder_StopProcessing(object sender, EventArgs e)
         {
-            return BufferQueue.Dequeue();
+            StopProcessing?.Invoke(this, new EventArgs());
+            Clean();
         }
 
-        public static void Clean()
+        private void Recorder_StartProcessing(object sender, EventArgs e)
         {
-            BufferQueue.Clear();
+            StartProcessing?.Invoke(this, new EventArgs());
+        }
+
+        public void Add(float[] newAudioData)
+        {
+            lock (_lock)
+            {
+                BufferQueue.Enqueue(newAudioData);
+            }
+        }
+
+        public float[] Get()
+        {
+            lock (_lock)
+            {
+                return BufferQueue.Dequeue();
+            }
+        }
+
+        public int Count()
+        {
+            lock (_lock)
+            {
+                return BufferQueue.Count;
+            }
+        }
+
+        public void Clean()
+        {
+            lock (_lock)
+            {
+                BufferQueue.Clear();
+            }
         }
     }
 }

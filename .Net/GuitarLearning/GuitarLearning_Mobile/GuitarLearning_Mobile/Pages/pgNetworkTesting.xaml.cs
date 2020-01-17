@@ -226,5 +226,15 @@ namespace GuitarLearning_Mobile.Pages
                 editorOutput += "Device has no connection\n";
             }
         }
+
+        private void OnCreateLog(object sender, EventArgs e)
+        {
+            string address = etyURl.Text;
+
+            editorOutput = string.Empty;
+            editorOutput += "Creating Test-Log...\n";
+            Logger.Log("Test Entry: " + address);
+            editorOutput += "Done\n";
+        }
     }
 }
