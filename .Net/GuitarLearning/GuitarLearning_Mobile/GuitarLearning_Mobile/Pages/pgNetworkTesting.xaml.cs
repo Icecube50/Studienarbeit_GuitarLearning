@@ -166,7 +166,7 @@ namespace GuitarLearning_Mobile.Pages
                         request.RequestUri = new Uri(address);
                         request.Method = HttpMethod.Get;
                         request.Headers.Add("Accept", "application/json");
-
+                        Logger.Log("Request - " + request);
                         using (HttpClient httpClient = new HttpClient())
                         {
                             httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
@@ -177,10 +177,12 @@ namespace GuitarLearning_Mobile.Pages
                                 HttpContent content = response.Content;
                                 string json = await content.ReadAsStringAsync();
                                 editorOutput += "Content:\n" + json;
+                                Logger.Log("Response - " + "Status: " + response.StatusCode + " Content: " + json);
                             }
                             else
                             {
                                 editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                                Logger.Log("Response - " + "Status: " + response.StatusCode);
                             }
                         }
                     }
@@ -208,6 +210,7 @@ namespace GuitarLearning_Mobile.Pages
                         request.Headers.Add("Accept", "application/json");
                         var requestContent = JsonConvert.SerializeObject(exampleData);
                         request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
+                        Logger.Log("Request - " + request);
 
                         using (HttpClient httpClient = new HttpClient())
                         {
@@ -220,10 +223,12 @@ namespace GuitarLearning_Mobile.Pages
                                 string json = await content.ReadAsStringAsync();
                                 var responseContent = JsonConvert.DeserializeObject<EssentiaModel>(json);
                                 editorOutput += "Chords:\n" + responseContent.chordData;
+                                Logger.Log("Response - " + "Status: " + response.StatusCode + " Content" + responseContent.chordData);
                             }
                             else
                             {
                                 editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                                Logger.Log("Response - " + "Status: " + response.StatusCode);
                             }
                         }
                     }

@@ -25,8 +25,13 @@ namespace GuitarLearning_Mobile
             InitializeComponent();
 
             optAudioRecording.PageLink = new pgAudioRecording();
+            optAudioRecording.OptionName = "Audio Recorder";
+
             optNetworkTesting.PageLink = new pgNetworkTesting();
+            optNetworkTesting.OptionName = "Network Testing";
+
             optSongTemplate.PageLink = new pgSongPage_Template();
+            optSongTemplate.OptionName = "Song Template";
         }
     }
 

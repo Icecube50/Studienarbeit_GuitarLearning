@@ -14,7 +14,8 @@ namespace GuitarLearning_API
         {
             try
             {
-                var logFilePath = Path.Combine(@"D:\05 Temp", "LogServer_2.txt");
+                string dic = Directory.GetCurrentDirectory();
+                var logFilePath = Path.Combine(dic, "LogServer.txt");
                 //Use this for daily log files : "Log" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
                 WriteToLog(logMessage, logFilePath);
             }

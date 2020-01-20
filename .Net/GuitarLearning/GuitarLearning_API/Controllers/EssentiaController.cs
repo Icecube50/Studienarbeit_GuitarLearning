@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GuitarLearning_Essentials;
@@ -16,7 +17,15 @@ namespace GuitarLearning_API.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "GuitarLearning_ServerOperational" };
+            try
+            {
+                return new string[] { "GuitarLearning_ServerOperational" };
+            }
+            catch(Exception e)
+            {
+                Logger.Log("Error - " + e.Message + "\nStack: " + e.StackTrace);
+                return null;
+            }
         }
 
         // GET: api/Essentia/5
@@ -26,7 +35,7 @@ namespace GuitarLearning_API.Controllers
             //float[] audioData = EssentiaInterface.ParseToFloatArray(inputString);
             //string chordData = EssentiaInterface.CalculateChordsFrom(audioData);
             //return "%" + chordData + "%";
-            return inputString;
+            return Directory.GetCurrentDirectory();
         }
 
         // GET: api/Essentia/5
@@ -41,9 +50,17 @@ namespace GuitarLearning_API.Controllers
         [HttpPost]
         public EssentiaModel Post(EssentiaModel input)
         {
-            string chordData = EssentiaInterface.CalculateChordsFrom(input.audioData);
-            if(chordData == "") { chordData = "X,0.0;"; }
-            return new EssentiaModel() { audioData = new float[1], chordData = chordData };
+            try
+            {
+                string chordData = EssentiaInterface.CalculateChordsFrom(input.audioData);
+                if (chordData == "") { chordData = "X,0.0;"; }
+                return new EssentiaModel() { audioData = new float[1], chordData = chordData };
+            }
+            catch(Exception e)
+            {
+                Logger.Log("Error - " + e.Message + "\nStack: " + e.StackTrace);
+                return null;
+            }
         }
     }
 }
