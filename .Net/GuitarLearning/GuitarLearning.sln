@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarLearning_API", "Guita
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarLearning_TestClient", "GuitarLearning_TestClient\GuitarLearning_TestClient.csproj", "{91FEE576-B3A3-4873-8103-4707C0AE85BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarLearning_Essentials", "GuitarLearning_Essentials\GuitarLearning_Essentials.csproj", "{A2EC115A-69B2-4FB4-B99E-935C580615C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuitarLearning_Essentials", "GuitarLearning_Essentials\GuitarLearning_Essentials.csproj", "{A2EC115A-69B2-4FB4-B99E-935C580615C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuitarLearning_TabulatorGenerator", "GuitarLearning_TabulatorGenerator\GuitarLearning_TabulatorGenerator.csproj", "{205B00E4-DE0A-497C-A632-45EFCD08EB13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,14 @@ Global
 		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|x86.ActiveCfg = Release|Any CPU
 		{A2EC115A-69B2-4FB4-B99E-935C580615C1}.Release|x86.Build.0 = Release|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Debug|x86.Build.0 = Debug|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Release|x86.ActiveCfg = Release|Any CPU
+		{205B00E4-DE0A-497C-A632-45EFCD08EB13}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

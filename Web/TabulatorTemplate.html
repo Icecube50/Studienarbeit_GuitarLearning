@@ -1,0 +1,40 @@
+<!---->
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="TabulatorTemplate.css"> 
+    </head>
+    <body>
+        <div class="Container">
+            <div class="BlankSheet" id=imgTab>
+                <div class="ChordLine"/>
+
+                <img src="viertelnote.png" id="Note1"/>
+                <img src="viertelnote.png" id="Note2"/>
+                <img src="viertelnote.png" id="Note3"/>
+                <img src="viertelnote.png" id="Note4"/>
+                <img src="viertelnote.png" id="Note5"/>
+                <img src="viertelnote.png" id="Note6"/>
+                <img src="viertelnote.png" id="Note7"/>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function Animate() {
+                var tab = document.getElementById("imgTab");
+                var posX = 0;
+                var id = setInterval(frame, 5);
+
+                function frame() {
+                    if (posX == -2000) {
+                        clearInterval(id);
+                    }
+                    else {
+                        posX--;
+                        tab.style.left = posX + "px";
+                    }
+                }
+            }
+        </script>
+        <button onclick="Animate()">
+        <div>Icons erstellt von <a href="https://www.flaticon.com/de/autoren/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
+    </body>
+</html>

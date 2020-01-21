@@ -1,0 +1,72 @@
+
+.Container{
+    margin: 50px;
+}
+
+.BlankSheet{
+    width: 5000px;
+    height: 120px;
+    position: absolute;
+}
+
+.ChordLine{
+    left: 0px;
+    top: 10px;
+    position: absolute;
+    border: 1px solid lightgray;
+    width: 5000px;
+}
+
+#Note1{
+    position: absolute;
+    height: 30px;
+    top: -30px;
+    left: 10px;
+}
+
+#Note2{
+    position: absolute;
+    left: 150px;
+    top: 48px;
+    height: 30px;
+}
+
+#Note3{
+    position: absolute;
+    left: 200px;
+    top: 47px;
+    height: 30px;
+}
+
+#Note4{
+    position: absolute;
+    left: 250px;
+    top: 55px;
+    height: 30px;
+}
+
+#Note5{
+    position: absolute;
+    left: 300;
+    top: 69px;
+    height: 30px;
+}
+
+#Note6{
+    position: absolute;
+    left: 350;
+    top: 75px;
+    height: 30px;
+}
+
+#Note7{
+    position: absolute;
+    left: 400;
+    top: 90px;
+    height: 30px;
+}
+
+button{
+    position: absolute;
+    top: 200;
+}
