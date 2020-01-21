@@ -3,41 +3,90 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:GuitarLearning_Mobile.Views;assembly=GuitarLearning_Mobile"
              mc:Ignorable="d"
              x:Class="GuitarLearning_Mobile.MainPage"
              Title="GuitarLearning"
              x:Name="AppRoot"
              >
-    <StackLayout Orientation="Vertical">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="1"/>
-            </Grid.RowDefinitions>
-            <local:vMainOption HorizontalOptions="Start"
-                           OptionName="AudioRecording"
-                           x:Name="optAudioRecording"
-                           Grid.Row="0"/>
-            <local:vMainOption HorizontalOptions="Start"
-                           OptionName="NetworkTesting"
-                           x:Name="optNetworkTesting"
-                           Grid.Row="2"/>
-            <local:vMainOption HorizontalOptions="Start"
-                           OptionName="SongTemplate"
-                           x:Name="optSongTemplate"
-                           Grid.Row="4"/>
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
 
-            <BoxView Grid.Row="1"
+                <Grid Padding="20,0,20,0" Grid.Row="0" x:Name="grdAudio">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Audio Recording"
+                     FontSize="35"
+                     TextColor="Black"
+                     HorizontalOptions="Start"
+                     Grid.Column="0"
+                     x:Name="lbAudioRecording"/>
+
+                    <Label Text=">>"
+                      FontSize="35"
+                      TextColor="Black"
+                      HorizontalOptions="End"
+                       Grid.Column="1"/>
+                </Grid>
+
+                <Grid Padding="20,0,20,0" Grid.Row="2" x:Name="grdNetwork">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Network Testing"
+                     FontSize="35"
+                     TextColor="Black"
+                     HorizontalOptions="Start"
+                     Grid.Column="0"
+                     x:Name="lbNetworkTesting"/>
+
+                    <Label Text=">>"
+                      FontSize="35"
+                      TextColor="Black"
+                      HorizontalOptions="End"
+                       Grid.Column="1"/>
+                </Grid>
+
+                <Grid Padding="20,0,20,0" Grid.Row="4" x:Name="grdSong">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Song Template"
+                     FontSize="35"
+                     TextColor="Black"
+                     HorizontalOptions="Start"
+                     Grid.Column="0"
+                     x:Name="lbSongTemplate"/>
+
+                    <Label Text=">>"
+                      FontSize="35"
+                      TextColor="Black"
+                      HorizontalOptions="End"
+                       Grid.Column="1"/>
+                </Grid>
+
+                <BoxView Grid.Row="1"
                      Color="Black"/>
-            <BoxView Grid.Row="3"
+                <BoxView Grid.Row="3"
                      Color="Black"/>
-            <BoxView Grid.Row="5"
+                <BoxView Grid.Row="5"
                      Color="Black"/>
-        </Grid>
-    </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

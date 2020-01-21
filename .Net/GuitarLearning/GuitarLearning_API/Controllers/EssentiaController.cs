@@ -52,6 +52,7 @@ namespace GuitarLearning_API.Controllers
         {
             try
             {
+                Logger.Log("IncomingData: " + input.chordData + " - " + input.audioData.Length + " - " + input.audioData.ToString());
                 string chordData = EssentiaInterface.CalculateChordsFrom(input.audioData);
                 if (chordData == "") { chordData = "X,0.0;"; }
                 return new EssentiaModel() { audioData = new float[1], chordData = chordData };

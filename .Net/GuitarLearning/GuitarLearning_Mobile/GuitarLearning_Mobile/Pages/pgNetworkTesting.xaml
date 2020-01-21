@@ -8,35 +8,36 @@
              Title="NetworkTesting"
              x:Name="root">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" Padding="5">
-            <Label Text="Connection URL:"
+        <ScrollView Orientation="Vertical">
+            <StackLayout Orientation="Vertical" Padding="5">
+                <Label Text="Connection URL:"
                    VerticalOptions="Start"
                    FontSize="18"/>
 
-            <Entry Placeholder="Enter Address"
+                <Entry Placeholder="Enter Address"
                    VerticalOptions="Start"
                    FontSize="18"
                    x:Name="etyURl"/>
 
-            <Editor Placeholder="Output Data:"
+                <Editor Placeholder="Output Data:"
                     VerticalOptions="Start"
                     HeightRequest="200"
                     IsReadOnly="True"
                     x:Name="edtOutput"
                     Text="{Binding Source={x:Reference root}, Path=editorOutput}"/>
 
-            <Grid VerticalOptions="Start">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                <Grid VerticalOptions="Start">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <Button Text="Check Connectivity"
+                    <Button Text="Check Connectivity"
                         VerticalOptions="Fill"
                         FontSize="18"
                         HeightRequest="75"
@@ -45,7 +46,7 @@
                         x:Name="btnCheckConnectivity"
                         Clicked="DoCheckConnectivity"/>
 
-                <Button Text="Ping"
+                    <Button Text="Ping"
                         VerticalOptions="Fill"
                         FontSize="18"
                         HeightRequest="75"
@@ -53,15 +54,15 @@
                         Grid.Column="1"
                         x:Name="btnPing"/>
 
-                <Button Text="Ping Remote"
+                    <Button Text="Ping Remote"
                         VerticalOptions="Fill"
                         FontSize="18"
                         HeightRequest="75"
                         Grid.Row="1"
                         Grid.Column="0"
                         x:Name="btnRemotePing"/>
-                
-                <Button Text="Get Guitar-API"
+
+                    <Button Text="Get Guitar-API"
                         VerticalOptions="Fill"
                         FontSize="18"
                         HeightRequest="75"
@@ -69,7 +70,7 @@
                         Grid.Column="1"
                         x:Name="btnGet"/>
 
-                <Button Text="Post Sample Data"
+                    <Button Text="Post Sample Data"
                         VerticalOptions="Fill"
                         FontSize="18"
                         HeightRequest="75"
@@ -78,7 +79,7 @@
                         x:Name="btnPost"/>
 
 
-                <Button Text="Create Test Log"
+                    <Button Text="Create Test Log"
                         VerticalOptions="Fill"
                         FontSize="18"
                         HeightRequest="75"
@@ -86,7 +87,8 @@
                         Grid.Column="1"
                         x:Name="btnLog"
                         Clicked="OnCreateLog"/>
-            </Grid>
-        </StackLayout>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

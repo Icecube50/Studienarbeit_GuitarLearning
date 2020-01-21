@@ -24,14 +24,32 @@ namespace GuitarLearning_Mobile
         {
             InitializeComponent();
 
-            optAudioRecording.PageLink = new pgAudioRecording();
-            optAudioRecording.OptionName = "Audio Recorder";
+            var tapGestureRecognizerAudio = new TapGestureRecognizer();
+            tapGestureRecognizerAudio.Tapped += OnAudioContainer_Tapped;
+            grdAudio.GestureRecognizers.Add(tapGestureRecognizerAudio);
 
-            optNetworkTesting.PageLink = new pgNetworkTesting();
-            optNetworkTesting.OptionName = "Network Testing";
+            var tapGestureRecognizerNetwork = new TapGestureRecognizer();
+            tapGestureRecognizerNetwork.Tapped += OnNetworkContainer_Tapped;
+            grdNetwork.GestureRecognizers.Add(tapGestureRecognizerNetwork);
 
-            optSongTemplate.PageLink = new pgSongPage_Template();
-            optSongTemplate.OptionName = "Song Template";
+            var tapGestureRecognizerSong = new TapGestureRecognizer();
+            tapGestureRecognizerSong.Tapped += OnSongContainer_Tapped;
+            grdSong.GestureRecognizers.Add(tapGestureRecognizerSong);
+        }
+
+        private void OnSongContainer_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new pgSongPage_Template());
+        }
+
+        private void OnNetworkContainer_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new pgNetworkTesting());
+        }
+
+        private void OnAudioContainer_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new pgAudioRecording());
         }
     }
 

@@ -1,0 +1,29 @@
+<html>
+    <style>
+        img {
+            position: fixed;
+        }
+    </style>
+
+    <head></head>
+    <body>
+        <script type="text/javascript">
+            function Animate() {
+                var tab = document.getElementById("imgTab");
+                var posX = 0;
+                var id = setInterval(frame, 5);
+
+                function frame() {
+                    if (posX == -2000) {
+                        clearInterval(id);
+                    }
+                    else {
+                        posX--;
+                        tab.style.left = posX + "px";
+                    }
+                }
+            }
+        </script>
+        <img src="Test2000_300.png" id="imgTab"/>
+    </body>
+</html>

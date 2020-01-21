@@ -211,6 +211,8 @@ namespace GuitarLearning_Mobile.Pages
                         var requestContent = JsonConvert.SerializeObject(exampleData);
                         request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
                         Logger.Log("Request - " + request);
+                        Logger.Log("Content - " + request.Content);
+                        Logger.Log("Model - " + exampleData.audioData.Length + " - " + exampleData.audioData.ToString() + " - " + exampleData.audioData);
 
                         using (HttpClient httpClient = new HttpClient())
                         {

@@ -13,9 +13,20 @@
                     <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
 
+                <WebView Grid.Row="0"
+                         x:Name="wvTabContainer"/>
+
                 <Grid BackgroundColor="DodgerBlue"
                          HeightRequest="80" Grid.Row="1">
-                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="►"
+                            FontSize="60"
+                            HeightRequest="80"
+                            x:Name="btnStartAnimation"/>
                 </Grid>
             </Grid>
         </StackLayout>
