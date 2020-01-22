@@ -1,4 +1,9 @@
-﻿using System;
+﻿using GuitarLearning_TabulatorGenerator.CSS_Constants;
+using GuitarLearning_TabulatorGenerator.HTML_Serializing;
+using GuitarLearning_TabulatorGenerator.MusicalNotes;
+using GuitarLearning_TabulatorGenerator.Storage;
+using GuitarLearning_TabulatorGenerator.Storage.GuitarStrings;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,31 +23,28 @@ namespace GuitarLearning_TabulatorGenerator
             InitializeComponent();
 
             cbString.Items.Clear();
-            cbString.Items.Add(GuitarStrings.E);
-            cbString.Items.Add(GuitarStrings.A);
-            cbString.Items.Add(GuitarStrings.D);
-            cbString.Items.Add(GuitarStrings.G);
-            cbString.Items.Add(GuitarStrings.B);
-            cbString.Items.Add(GuitarStrings.e);
+            cbString.Items.Add(GuitarStringType.E);
+            cbString.Items.Add(GuitarStringType.A);
+            cbString.Items.Add(GuitarStringType.D);
+            cbString.Items.Add(GuitarStringType.G);
+            cbString.Items.Add(GuitarStringType.B);
+            cbString.Items.Add(GuitarStringType.e);
+            cbString.SelectedItem = GuitarStringType.E;
 
             cbSingleLength.Items.Clear();
-            cbSingleLength.Items.Add(Notes.Ganze);
-            cbSingleLength.Items.Add(Notes.Halbe);
-            cbSingleLength.Items.Add(Notes.Viertel);
-            cbSingleLength.Items.Add(Notes.Achtel);
+            cbSingleLength.Items.Add(NoteTypes.Quarter);
+            cbSingleLength.SelectedItem = NoteTypes.Quarter;
         }
 
         private int IdCounter = 0;
         private void btnAddSingle_Click(object sender, EventArgs e)
         {
-            GuitarStrings guitarStrings = (GuitarStrings)cbString.SelectedItem;
-            uint bund = Convert.ToUInt32(txtBund.Text);
-            Notes notes = (Notes)cbSingleLength.SelectedItem;
+            GuitarStringType stringType = (GuitarStringType)cbString.SelectedItem;
+            uint track = Convert.ToUInt32(txtBund.Text);
+            NoteTypes noteType = (NoteTypes)cbSingleLength.SelectedItem;
 
-            if (notes == Notes.Ganze) NoteContainer.Song.Add(new WholeNote(guitarStrings, bund, IdCounter.ToString()));
-            if (notes == Notes.Halbe) NoteContainer.Song.Add(new HalfNote(guitarStrings, bund, IdCounter.ToString()));
-            if (notes == Notes.Viertel) NoteContainer.Song.Add(new QuarterNote(guitarStrings, bund, IdCounter.ToString()));
-            if (notes == Notes.Achtel) NoteContainer.Song.Add(new EighthNote(guitarStrings, bund, IdCounter.ToString()));
+            if (noteType == NoteTypes.Quarter) MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString()));
+
             IdCounter++;
             txtID.Text = IdCounter.ToString();
         }
@@ -51,11 +53,12 @@ namespace GuitarLearning_TabulatorGenerator
         {
             try
             {
-                SetValues.Title = txtSongName.Text;
-                SetValues.QuarterDuration = Convert.ToUInt32(txtDistanceBeat.Text);
-                SetValues.BPM = Convert.ToUInt32(txtBPM.Text);
-                SetValues.SizeHeader = Convert.ToUInt32(txtHeaderLength.Text);
-                SetValues.SizeChords = Convert.ToUInt32(txtChordLength.Text);
+                SongOptions.SongTitle = txtSongName.Text;
+                SongOptions.SetBPM(Convert.ToUInt32(txtBPM.Text));
+
+                StyleOptions.SizeOfQuarter = Convert.ToUInt32(txtDistanceBeat.Text);
+                StyleOptions.HeaderLength = Convert.ToUInt32(txtHeaderLength.Text);
+                StyleOptions.ContentLength = Convert.ToUInt32(txtChordLength.Text);
 
                 btnAddSingle.Enabled = true;
                 btnGenerate.Enabled = true;
@@ -66,110 +69,75 @@ namespace GuitarLearning_TabulatorGenerator
             }
         }
 
+        private string PathToHTML { get; set; } = string.Empty;
+        private string PathToCss { get; set; } = string.Empty;
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sdlg = new SaveFileDialog();
-            var result = sdlg.ShowDialog();
-            if(result == DialogResult.OK)
+            using (SaveFileDialog sdlg = new SaveFileDialog())
             {
-                string file = sdlg.FileName;
+                var result = sdlg.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    //HTML file
+                    string file = sdlg.FileName;
+                    if (File.Exists(file)) File.Delete(file);
 
-                if (File.Exists(file)) File.Delete(file);
-                string fileCSS = Path.GetFileNameWithoutExtension(file) + ".css";
-                string cssPath = Path.Combine(Path.GetDirectoryName(file), fileCSS);
-                if (File.Exists(cssPath)) File.Delete(cssPath);
-               
-                CreateHTML(file);
-                CreateCSS(cssPath);
-            }
-            sdlg.Dispose();
-        }
+                    //CSS file
+                    string fileCSS = Path.GetFileNameWithoutExtension(file) + ".css";
+                    string cssPath = Path.Combine(Path.GetDirectoryName(file), fileCSS);
+                    if (File.Exists(cssPath)) File.Delete(cssPath);
 
-        #region HTML
-        private void CreateHTML(string file)
-        {
-            File.AppendAllText(file, "<!-- This code was automatically generated. Any change may result in errors -->\n");
-            CreateHeader(file);
-            CreateStringLines(file);
-            CreateFooter(file);
-        }
-        private void CreateHeader(string file)
-        {
-            File.AppendAllText(file, "<!DOCTYPE html>\n");
-            File.AppendAllText(file, "<html lang=\"de\">\n");
-            File.AppendAllText(file, "<head>\n");
-            File.AppendAllText(file, "<meta charset=\"utf-8\">\n");
-            string fileCSS = Path.GetFileNameWithoutExtension(file) + ".css";
-            File.AppendAllText(file, "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + fileCSS + "\">\n");
-            File.AppendAllText(file,
-                "</head>\n" +
-                "<body>\n" +
-                "<div class=\"TabHeader\">\n" +
-                "<h3>" + SetValues.Title + "</h3>\n" +
-                "<p>" + SetValues.BPM.ToString() + " BPM</p>\n");
-        }
+                    PathToHTML = file;
+                    PathToCss = cssPath;
 
-        private void CreateStringLines(string file)
-        {
-            File.AppendAllText(file,
-                "<div class=\"Sheet\" id=\"divSheet\">\n" +
-                "<hr class=\"GuitarString\">\n" +
-                "<hr class=\"GuitarString\">\n" +
-                "<hr class=\"GuitarString\">\n" +
-                "<hr class=\"GuitarString\">\n" +
-                "<hr class=\"GuitarString\">\n" +
-                "<hr class=\"GuitarString\">\n");
-
-            CreateAllNotes(file);
-
-            File.AppendAllText(file, "</div>\n");
-        }
-
-        private void CreateAllNotes(string file)
-        {
-            foreach(Note n in NoteContainer.Song)
-            {
-                File.AppendAllText(file, n.ToHTML());
+                    WriteToHTML();
+                    WriteToCSS();
+                }
             }
         }
-        private void CreateFooter(string file)
-        {
-            File.AppendAllText(file,
-                "<script>\n" +
-                "</script>\n" +
-                "</body>\n" +
-                "</html>\n");
-        }
-        #endregion
 
-        #region CSS
-        private void CreateCSS(string file)
+        private void WriteToHTML()
         {
-            File.AppendAllText(file, "/* This code was automatically generated. Any change may result in errors */\n");
+            HTML_Document htmlDocument = new HTML_Document(SongOptions.SongTitle, Path.GetFileName(PathToCss));
 
             //Header
-            File.AppendAllText(file,
-                ".TabHeader{\n" +
-                "width: 100%;\n" +
-                "height: " + SetValues.SizeHeader + "px;\n" +
-                "}\n");
+            HTML_Div divHeader = new HTML_Div(CSS_Header.ClassName, string.Empty);
+            HTML_P pSongTitel = new HTML_P(SongOptions.SongTitle, CSS_SongTitle.ClassName, string.Empty);
+            HTML_P pBPM = new HTML_P(SongOptions.BPM, CSS_BPM.ClassName, string.Empty);
+            divHeader.AddContent(pSongTitel);
+            divHeader.AddContent(pBPM);
+            htmlDocument.AddContent(divHeader);
 
-            //ChordLines
-            File.AppendAllText(file,
-                ".GuitarString{\n" +
-                "border-color: lightgray;\n" +
-                "margin-bottom: " + (SetValues.SizeChords / 6) + "px;\n" +
-                "}\n");
+            //Tabulator
+            HTML_Div divTabulator = new HTML_Div(CSS_Tabulator.ClassName, "AnimatedDiv");
+            HTML_Div divStringE = new HTML_Div(CSS_StringE.ClassName, string.Empty);
+            HTML_Div divStringA = new HTML_Div(CSS_StringA.ClassName, string.Empty);
+            HTML_Div divStringD = new HTML_Div(CSS_StringD.ClassName, string.Empty);
+            HTML_Div divStringG = new HTML_Div(CSS_StringG.ClassName, string.Empty);
+            HTML_Div divStringB = new HTML_Div(CSS_StringB.ClassName, string.Empty);
+            HTML_Div div_StringHighE = new HTML_Div(CSS_StringHighE.ClassName, string.Empty);
+            divTabulator.AddContent(divStringE);
+            divTabulator.AddContent(divStringA);
+            divTabulator.AddContent(divStringD);
+            divTabulator.AddContent(divStringG);
+            divTabulator.AddContent(divStringB);
+            divTabulator.AddContent(div_StringHighE);
 
-            //Sheet
-            File.AppendAllText(file,
-               ".Sheet{\n" +
-               "position: relative;\n" +
-               "height: " + SetValues.SizeChords + "px;\n" +
-               "min-width: 100%;\n" +
-               "width: " + SetValues.GetMaxWidth() + "px;\n" +
-               "}\n" );
+
+            //Musical Notes
+            foreach(MusicalNote musicalNote in MusicalStorage.Melodie)
+            {
+                divTabulator.AddContent(musicalNote.ToHTML());
+            }
+            htmlDocument.AddContent(divTabulator);
+
+            //Writing
+            File.WriteAllText(PathToHTML, htmlDocument.Serialize());
         }
-        #endregion
+
+        private void WriteToCSS()
+        {
+            File.WriteAllText(PathToCss, CSS_Storage.SerializeCss());
+        }
     }
 }
