@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GuitarLearning_TabulatorGenerator.CSS_Constants;
+using GuitarLearning_TabulatorGenerator.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,7 +44,9 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
             html += "<html lang=\"de\">\n";
             html += "<head>\n";
             html += "<meta charset=\"utf-8\">\n";
-            if(Style != string.Empty) html += "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + Style + "\">\n";
+            html += "<style>\n";
+            html += CSS_Storage.SerializeCss();
+            html += "</style>\n";
             if (Title != string.Empty) html += "<title>" + Title + "</title>\n";
             html += "</head>\n";
 
@@ -52,7 +56,8 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
             //Content
 
             //Script
-            html += "<script>\n";
+            html += "<script type=\"text/javascript\">\n";
+            html += GetSkript();
             html += "</script>\n";
 
             html += "</body>\n";
@@ -71,6 +76,29 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
                 html += htmlObj.Serialize();
             }
             return html;
+        }
+
+        private string GetSkript()
+        {
+            string js = string.Empty;
+
+            js += "function Animate() {\n";
+            js += "var tab = document.getElementById(\"" + StyleOptions.IdOfAnimatedDiv + "\");\n";
+            js += "posX = 0;\n";
+            js += "var id = setInterval(frame, " + StyleOptions.IntervallTime + ");\n";
+            js += "\n";
+            js += "function frame() {\n";
+            js += "if(posX == -2000) {\n"; //TODO: Get the value by comparing screen-size and song-size
+            js += "clearInterval(id);\n";
+            js += "}\n";
+            js += "else {\n";
+            js += "posX--;\n";
+            js += "tab.style.left = posX + \"px\";\n";
+            js += "}\n";
+            js += "}\n";
+            js += "}\n";
+
+            return js;
         }
     }
 }

@@ -21,9 +21,9 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
             Melodie.Clear();
         }
 
-        public static uint CalculateSongDuration()
+        public static int CalculateSongDuration()
         {
-            uint songDuration = StyleOptions.SizeOfQuarter * 4; //One stroke as default, so the tab is always rendered
+            int songDuration = StyleOptions.SizeOfQuarter * 4; //One stroke as default, so the tab is always rendered
             foreach(MusicalNote musicalNote in Melodie)
             {
                 songDuration += musicalNote.CalculateDuration();
@@ -46,12 +46,13 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
         public static string SerializeMelodieToCSS()
         {
             string css = string.Empty;
-            uint position = StyleOptions.SizeOfQuarter * 4; //We had one stroke as default previously, so in conclusion the first note has to start after
+            int position = StyleOptions.SizeOfQuarter * 4; //We had one stroke as default previously, so in conclusion the first note has to start after
 
             foreach (MusicalNote musicalNote in Melodie)
             {
                 css += musicalNote.ToCSS(position);
                 position += musicalNote.CalculateDuration();
+                if (musicalNote.IsStrokeChange) { css += musicalNote.StrokeSeperatorToCSS(position); } //Stroke has to be positioned after the duration of the note
             }
 
             return css;

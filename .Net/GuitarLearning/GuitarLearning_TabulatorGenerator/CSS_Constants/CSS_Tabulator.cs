@@ -24,14 +24,16 @@ namespace GuitarLearning_TabulatorGenerator.CSS_Constants
             css += "left: 0px;\n";
             css += "top: " + (StyleOptions.HeaderLength + 1) + "px;\n";
             css += "height: " + StyleOptions.ContentLength + "px;\n";
-            css += "width: " + MusicalStorage.CalculateSongDuration() + "px;\n";
+            css += "width: " + (MusicalStorage.CalculateSongDuration() + StyleOptions.TabInfoSize) + "px;\n";
 
             //Closing
             css += "}\n";
 
             //Generate the css that is needed for the tags inside the tabulator
             css += CSS_MusicalNote.SerializeCSS();
+            css += CSS_MusicalStroke.SerializeCSS();
             css += CSS_AllStrings.SerializeCSS();
+            css += CSS_RythmInfo.SerializeCSS();
             css += MusicalStorage.SerializeMelodieToCSS();
 
             return css;
@@ -61,5 +63,25 @@ namespace GuitarLearning_TabulatorGenerator.CSS_Constants
         }
     }
 
+    public static class CSS_MusicalStroke
+    {
+        public static string ClassName { get; private set; } = "divStroke";
+        public static string SerializeCSS()
+        {
+            string css = string.Empty;
 
+            //Opening
+            css += "." + ClassName + "{\n";
+
+            //Properties
+            css += "width: 1px;\n";
+            css += "height: " + StyleOptions.ContentLength + "px;\n";
+            css += "background-color: black;\n";
+
+            //Closing
+            css += "}\n";
+
+            return css;
+        }
+    }
 }

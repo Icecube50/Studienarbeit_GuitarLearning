@@ -19,6 +19,7 @@ namespace GuitarLearning_TabulatorGenerator.CSS_Constants
 
             css += CSS_Header.SerializeCSS();
             css += CSS_Tabulator.SerializeCSS();
+            css += CSS_Pointer.Serialize();
 
             return css;
         }

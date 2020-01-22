@@ -10,7 +10,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage.GuitarStrings
     {
         public abstract GuitarStringType StringType { get; set; }
         public abstract string StringName { get; set; }
-        public abstract uint CalculateTop(uint amountOfStrings);
+        public abstract int CalculateTop(int amountOfStrings);
     }
 
     public static class ClassicalGuitar

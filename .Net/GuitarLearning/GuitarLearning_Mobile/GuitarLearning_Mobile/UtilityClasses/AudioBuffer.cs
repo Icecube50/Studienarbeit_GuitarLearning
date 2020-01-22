@@ -9,7 +9,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
     {
         private readonly object _lock = new object();
 
-        public const int BUFFER_SIZE = 1000;
+        public const int BUFFER_SIZE = 10000;
         private Queue<float[]> BufferQueue { get; set; } = new Queue<float[]>();
 
         public void Add(float[] newAudioData)

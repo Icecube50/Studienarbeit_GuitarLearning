@@ -109,12 +109,47 @@ namespace GuitarLearning_Mobile.Pages
             {
                 EssentiaModel essentiaModel = model as EssentiaModel;
                 string[] chords = essentiaModel.chordData.Split(';');
-                foreach(string chord in chords)
+
+                var occurence = GetOccurence(chords);
+                lbCurrentChord.Text = GetChordFromOccurence(occurence);
+                await Task.Delay(1);
+            }
+        }
+
+        private Dictionary<string, int> GetOccurence(string[] chords)
+        {
+            Dictionary<string, int> ChordOccurence = new Dictionary<string, int>();
+            foreach (string chord in chords)
+            {
+                if (!ChordOccurence.ContainsKey(chord))
                 {
-                    lbCurrentChord.Text = chord;
-                    await Task.Delay(1);
+                    ChordOccurence.Add(chord, 1);
+                }
+                else
+                {
+                    ChordOccurence[chord]++;
                 }
             }
+            return ChordOccurence;
+        }
+
+        private string GetChordFromOccurence(Dictionary<string, int> occurence)
+        {
+            KeyValuePair<string, int> max;
+            bool first = true;
+            foreach(var kvp in occurence)
+            {
+                if (first)
+                {
+                    max = kvp;
+                    first = !first;
+                    continue;
+                }
+
+                if (kvp.Value > max.Value)
+                    max = kvp;
+            }
+            return max.Key;
         }
     }
 }

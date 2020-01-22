@@ -16,9 +16,9 @@ namespace GuitarLearning_TabulatorGenerator.Storage.GuitarStrings
             StringType = GuitarStringType.E;
         }
 
-        public override uint CalculateTop(uint amountOfStrings)
+        public override int CalculateTop(int amountOfStrings)
         {
-            uint minDistance = StyleOptions.HeaderLength + 1;
+            int minDistance = 1;
             return minDistance;
         }
     }

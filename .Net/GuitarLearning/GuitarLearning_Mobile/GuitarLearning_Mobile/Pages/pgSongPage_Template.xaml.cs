@@ -23,7 +23,7 @@ namespace GuitarLearning_Mobile.Pages
             };
 
             string html = string.Empty;
-            using (var streamReader = new StreamReader(AssetStorage.Manager.Open("TestTabulator.html")))
+            using (var streamReader = new StreamReader(AssetStorage.Manager.Open("test.html")))
             {
                 html = streamReader.ReadToEnd();
             }

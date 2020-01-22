@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="CSS_Constants\CSS_GuitarStrings.cs" />
     <Compile Include="CSS_Constants\CSS_Header.cs" />
+    <Compile Include="CSS_Constants\CSS_Pointer.cs" />
     <Compile Include="CSS_Constants\CSS_Storage.cs" />
     <Compile Include="CSS_Constants\CSS_Tabulator.cs" />
+    <Compile Include="CSS_Constants\CSS_TabulatorInfo.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +62,8 @@
     <Compile Include="HTML_Serializing\HTML_Document.cs" />
     <Compile Include="HTML_Serializing\HTML_NoteDiv.cs" />
     <Compile Include="HTML_Serializing\HTML_P.cs" />
+    <Compile Include="HTML_Serializing\HTML_RythmDiv.cs" />
+    <Compile Include="HTML_Serializing\HTML_TextDiv.cs" />
     <Compile Include="MusicalNotes\MusicalNote.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Quarter.cs" />
     <Compile Include="MusicalNotes\MusicalStorage.cs" />

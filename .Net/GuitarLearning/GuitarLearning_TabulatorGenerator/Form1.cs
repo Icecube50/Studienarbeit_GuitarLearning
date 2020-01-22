@@ -37,13 +37,19 @@ namespace GuitarLearning_TabulatorGenerator
         }
 
         private int IdCounter = 0;
+        private int stroke = 0;
         private void btnAddSingle_Click(object sender, EventArgs e)
         {
             GuitarStringType stringType = (GuitarStringType)cbString.SelectedItem;
-            uint track = Convert.ToUInt32(txtBund.Text);
+            int track = Convert.ToInt32(txtBund.Text);
             NoteTypes noteType = (NoteTypes)cbSingleLength.SelectedItem;
 
-            if (noteType == NoteTypes.Quarter) MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString()));
+            if (noteType == NoteTypes.Quarter)
+            {
+                stroke++;
+                if (stroke >= 4) { MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString(), true)); stroke = stroke - 4; }
+                else MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString(), false));
+            }
 
             IdCounter++;
             txtID.Text = IdCounter.ToString();
@@ -54,11 +60,11 @@ namespace GuitarLearning_TabulatorGenerator
             try
             {
                 SongOptions.SongTitle = txtSongName.Text;
-                SongOptions.SetBPM(Convert.ToUInt32(txtBPM.Text));
+                SongOptions.SetBPM(Convert.ToInt32(txtBPM.Text));
 
-                StyleOptions.SizeOfQuarter = Convert.ToUInt32(txtDistanceBeat.Text);
-                StyleOptions.HeaderLength = Convert.ToUInt32(txtHeaderLength.Text);
-                StyleOptions.ContentLength = Convert.ToUInt32(txtChordLength.Text);
+                StyleOptions.SizeOfQuarter = Convert.ToInt32(txtDistanceBeat.Text);
+                StyleOptions.HeaderLength = Convert.ToInt32(txtHeaderLength.Text);
+                StyleOptions.ContentLength = Convert.ToInt32(txtChordLength.Text);
 
                 btnAddSingle.Enabled = true;
                 btnGenerate.Enabled = true;
@@ -92,6 +98,8 @@ namespace GuitarLearning_TabulatorGenerator
 
                     WriteToHTML();
                     WriteToCSS();
+
+                    MessageBox.Show("DONE");
                 }
             }
         }
@@ -104,32 +112,68 @@ namespace GuitarLearning_TabulatorGenerator
             HTML_Div divHeader = new HTML_Div(CSS_Header.ClassName, string.Empty);
             HTML_P pSongTitel = new HTML_P(SongOptions.SongTitle, CSS_SongTitle.ClassName, string.Empty);
             HTML_P pBPM = new HTML_P(SongOptions.BPM, CSS_BPM.ClassName, string.Empty);
+            HTML_Div divPointer = new HTML_Div(CSS_Pointer.ClassName, string.Empty);
             divHeader.AddContent(pSongTitel);
             divHeader.AddContent(pBPM);
             htmlDocument.AddContent(divHeader);
+            htmlDocument.AddContent(divPointer);
 
             //Tabulator
-            HTML_Div divTabulator = new HTML_Div(CSS_Tabulator.ClassName, "AnimatedDiv");
+            HTML_Div divTabulator = new HTML_Div(CSS_Tabulator.ClassName, string.Empty);
+
+            //Tabulator - Info
+            HTML_Div divTabulatorInfo = new HTML_Div(CSS_TabulatorInfo.ClassName, string.Empty);
+            HTML_RythmDiv divUpperRythm = new HTML_RythmDiv(CSS_UpperRythm.ClassName, string.Empty, "4");
+            HTML_Div divRythmSeperator = new HTML_Div(CSS_RythmSeperator.ClassName, string.Empty);
+            HTML_RythmDiv divLowerRythm = new HTML_RythmDiv(CSS_LowerRythm.ClassName, string.Empty, "4");
+            divTabulatorInfo.AddContent(divUpperRythm);
+            divTabulatorInfo.AddContent(divRythmSeperator);
+            divTabulatorInfo.AddContent(divLowerRythm);
+
+            HTML_TextDiv divTextE = new HTML_TextDiv(CSS_StringNameE.ClassName, string.Empty, "E");
+            HTML_TextDiv divTextA = new HTML_TextDiv(CSS_StringNameA.ClassName, string.Empty, "A");
+            HTML_TextDiv divTextD = new HTML_TextDiv(CSS_StringNameD.ClassName, string.Empty, "D");
+            HTML_TextDiv divTextG = new HTML_TextDiv(CSS_StringNameG.ClassName, string.Empty, "G");
+            HTML_TextDiv divTextB = new HTML_TextDiv(CSS_StringNameB.ClassName, string.Empty, "B");
+            HTML_TextDiv divTextHighE = new HTML_TextDiv(CSS_StringNameHighE.ClassName, string.Empty, "E");
+            divTabulatorInfo.AddContent(divTextE);
+            divTabulatorInfo.AddContent(divTextA);
+            divTabulatorInfo.AddContent(divTextD);
+            divTabulatorInfo.AddContent(divTextG);
+            divTabulatorInfo.AddContent(divTextB);
+            divTabulatorInfo.AddContent(divTextHighE);
+            divTabulator.AddContent(divTabulatorInfo);
+
+
+            //Tabulator - Strings
+            HTML_Div divTabulatorChords = new HTML_Div(CSS_TabulatorChords.ClassName, StyleOptions.IdOfAnimatedDiv);
             HTML_Div divStringE = new HTML_Div(CSS_StringE.ClassName, string.Empty);
             HTML_Div divStringA = new HTML_Div(CSS_StringA.ClassName, string.Empty);
             HTML_Div divStringD = new HTML_Div(CSS_StringD.ClassName, string.Empty);
             HTML_Div divStringG = new HTML_Div(CSS_StringG.ClassName, string.Empty);
             HTML_Div divStringB = new HTML_Div(CSS_StringB.ClassName, string.Empty);
             HTML_Div div_StringHighE = new HTML_Div(CSS_StringHighE.ClassName, string.Empty);
-            divTabulator.AddContent(divStringE);
-            divTabulator.AddContent(divStringA);
-            divTabulator.AddContent(divStringD);
-            divTabulator.AddContent(divStringG);
-            divTabulator.AddContent(divStringB);
-            divTabulator.AddContent(div_StringHighE);
+            divTabulatorChords.AddContent(divStringE);
+            divTabulatorChords.AddContent(divStringA);
+            divTabulatorChords.AddContent(divStringD);
+            divTabulatorChords.AddContent(divStringG);
+            divTabulatorChords.AddContent(divStringB);
+            divTabulatorChords.AddContent(div_StringHighE);
 
 
             //Musical Notes
             foreach(MusicalNote musicalNote in MusicalStorage.Melodie)
             {
-                divTabulator.AddContent(musicalNote.ToHTML());
+                divTabulatorChords.AddContent(musicalNote.ToHTML());
+                if (musicalNote.IsStrokeChange) { divTabulatorChords.AddContent(musicalNote.StrokeSeperatorToHTML()); }
             }
+            divTabulator.AddContent(divTabulatorChords);
+
             htmlDocument.AddContent(divTabulator);
+
+            //Hack: Overlay to cover passing tabs
+            HTML_Div divOverlay = new HTML_Div(CSS_TabulatorOverlay.ClassName, string.Empty);
+            htmlDocument.AddContent(divOverlay);
 
             //Writing
             File.WriteAllText(PathToHTML, htmlDocument.Serialize());
