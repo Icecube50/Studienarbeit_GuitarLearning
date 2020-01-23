@@ -12,7 +12,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage
         public static int GetIntervallTime()
         {
             //Get time per beat
-            int bpm = SongOptions.BpmValue;
+            double bpm = SongOptions.BpmValue;
             double bps = 60 / bpm;
 
             //Get size of beat (in pixels)

@@ -51,6 +51,8 @@ namespace GuitarLearning_TabulatorGenerator.CSS_Constants
             css += "font-weight: bold;\n";
             css += "font-size: " + StyleOptions.TitleSize + "px;\n";
             css += "margin-left: 10px;\n";
+            css += "margin-top: 5px;\n";
+            css += "margin-bottom: 5px;\n";
 
             //Closing
             css += "}\n";
@@ -74,6 +76,8 @@ namespace GuitarLearning_TabulatorGenerator.CSS_Constants
             css += "font-weight: bold;\n";
             css += "font-size: " + StyleOptions.SubtitleSize + "px;\n";
             css += "margin-left: 10px;\n";
+            css += "margin-top: 0px;\n";
+            css += "margin-bottom: 10px;\n";
 
             //Closing
             css += "}\n";
