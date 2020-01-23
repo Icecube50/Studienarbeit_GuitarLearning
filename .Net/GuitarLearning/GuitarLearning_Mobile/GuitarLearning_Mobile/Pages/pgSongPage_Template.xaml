@@ -10,7 +10,7 @@
             <Grid HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
                 <WebView Grid.Row="0"
@@ -23,9 +23,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="►"
-                            FontSize="60"
-                            HeightRequest="80"
+                    <Button Text="Start"
+                            HeightRequest="60"
                             x:Name="btnStartAnimation"/>
                 </Grid>
             </Grid>

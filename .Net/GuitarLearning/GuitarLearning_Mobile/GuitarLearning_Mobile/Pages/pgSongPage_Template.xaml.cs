@@ -20,6 +20,7 @@ namespace GuitarLearning_Mobile.Pages
             btnStartAnimation.Clicked += async (s, e) =>
             {
                 await Animation();
+                //synchroner click handler => löst asynchrones event aus
             };
 
             string html = string.Empty;
@@ -30,7 +31,24 @@ namespace GuitarLearning_Mobile.Pages
             HtmlWebViewSource htmlSource = new HtmlWebViewSource();
             htmlSource.Html = html;
             wvTabContainer.Source = htmlSource;
+            wvTabContainer.IsEnabled = false;
+
+            //Laden des Notenblatt.xml
+            //Deserialisieren und Speichern
         }
+
+        //Handler für Stop
+
+        //Handler für Start
+        // + Init Recorder, Buffer, Helper
+        // + Start Recording
+        // + Start Animation
+
+        //Handler für NewChords
+        // + Häufigkeitsanalyse
+        // + Vergleich mit Notenblatt
+        // + Markieren?
+
 
         private async Task Animation()
         {
