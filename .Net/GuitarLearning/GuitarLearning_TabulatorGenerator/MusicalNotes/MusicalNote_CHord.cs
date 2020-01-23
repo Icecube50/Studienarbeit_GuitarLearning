@@ -17,12 +17,14 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
         public override IGuitarString StringOfNote { get => throw new NotImplementedException(); set => throw new NotImplementedException(); } //Not needed
 
 
+        public string ChordName { get; set; }
         public Tuple<IGuitarString, int>[] StringValueTuples { get; set; }
         public NoteTypes Duration { get; set; }
-        public MusicalNote_Chord(Tuple<GuitarStringType, int>[] tuples, string id, NoteTypes duration)
+        public MusicalNote_Chord(Tuple<GuitarStringType, int>[] tuples, string id, NoteTypes duration, string chordName)
         {
             NoteID = "Chord_" + id;
             Duration = duration;
+            ChordName = chordName;
 
             if (tuples.Length > 6) throw new Exception("Only six tupels are allowed (One for each guitar string)!");
             else
@@ -42,6 +44,15 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
             if (Duration == NoteTypes.Half) return StyleOptions.SizeOfQuarter * 2;
             if (Duration == NoteTypes.Quarter) return StyleOptions.SizeOfQuarter;
             if (Duration == NoteTypes.Eighth) return StyleOptions.SizeOfQuarter / 2;
+            return 0;
+        }
+
+        public override double GetMusicalDuration()
+        {
+            if (Duration == NoteTypes.Whole) return  4;
+            if (Duration == NoteTypes.Half) return 2;
+            if (Duration == NoteTypes.Quarter) return 1;
+            if (Duration == NoteTypes.Eighth) return 0.5;
             return 0;
         }
 

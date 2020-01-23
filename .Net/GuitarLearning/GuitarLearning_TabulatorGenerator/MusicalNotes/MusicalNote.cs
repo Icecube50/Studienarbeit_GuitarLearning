@@ -13,12 +13,11 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
         public abstract IGuitarString StringOfNote { get; set; }
         public abstract int NoteValue { get; set; }
         public abstract string NoteID { get; set; }
-        //public abstract bool IsStrokeChange { get; set; }
         public abstract int CalculateDuration();
         public abstract HTML_NoteDiv ToHTML();
         public abstract string ToCSS(double positionLeft);
         public abstract HTML_Div StrokeSeperatorToHTML();
-        //public abstract string StrokeSeperatorToCSS(int positionLeft);
+        public abstract double GetMusicalDuration();
     }
 
     public enum NoteTypes

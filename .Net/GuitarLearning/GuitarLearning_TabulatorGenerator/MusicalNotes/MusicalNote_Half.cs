@@ -28,6 +28,11 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
             return (StyleOptions.SizeOfQuarter * 2);
         }
 
+        public override double GetMusicalDuration()
+        {
+            return 2;
+        }
+
         public override string ToCSS(double positionLeft)
         {
             string css = string.Empty;

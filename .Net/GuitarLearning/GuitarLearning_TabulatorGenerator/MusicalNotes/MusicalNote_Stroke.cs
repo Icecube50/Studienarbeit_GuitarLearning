@@ -34,6 +34,11 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
             throw new NotImplementedException();
         }
 
+        public override double GetMusicalDuration()
+        {
+            throw new NotImplementedException();
+        }
+
         public override HTML_Div StrokeSeperatorToHTML()
         {
             HTML_Div divStroke = new HTML_Div(CSS_MusicalStroke.ClassName, NoteID);

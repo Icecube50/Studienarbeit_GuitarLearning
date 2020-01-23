@@ -69,6 +69,7 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
+            this.txtChordName = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtSongName
@@ -297,7 +298,7 @@
             // 
             this.btnAddChord.Enabled = false;
             this.btnAddChord.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnAddChord.Location = new System.Drawing.Point(400, 353);
+            this.btnAddChord.Location = new System.Drawing.Point(509, 358);
             this.btnAddChord.Name = "btnAddChord";
             this.btnAddChord.Size = new System.Drawing.Size(102, 23);
             this.btnAddChord.TabIndex = 25;
@@ -439,11 +440,19 @@
             this.textBox6.TabIndex = 46;
             this.textBox6.Text = "E";
             // 
+            // txtChordName
+            // 
+            this.txtChordName.Location = new System.Drawing.Point(404, 358);
+            this.txtChordName.Name = "txtChordName";
+            this.txtChordName.Size = new System.Drawing.Size(99, 20);
+            this.txtChordName.TabIndex = 47;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtChordName);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
@@ -535,6 +544,7 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtChordName;
     }
 }
 

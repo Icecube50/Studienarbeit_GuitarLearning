@@ -10,8 +10,8 @@ namespace GuitarLearning_TabulatorGenerator.Storage
     {
         public static int HeaderLength { get; set; } = 100;
         public static int ContentLength { get; set; } = 120;
-        public static int TitleSize => HeaderLength / 5;
-        public static int SubtitleSize => HeaderLength / 7;
+        public static int TitleSize => HeaderLength / 3;
+        public static int SubtitleSize => HeaderLength / 5;
         public static int SizeOfQuarter { get; set; } = 20;
         public static int TabInfoSize => TabInfoTextSize * 2;
         public static int TabInfoTextSize { get; set; } = 45;

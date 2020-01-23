@@ -94,6 +94,7 @@ namespace GuitarLearning_TabulatorGenerator
             string G = txtChordD.Text;
             string B = txtChordA.Text;
             string HighE = txtChordE.Text;
+            string ChordName = txtChordName.Text;
 
             if (noteTypes == NoteTypes.Whole) stroke += 4;
             else if (noteTypes == NoteTypes.Half) stroke += 2;
@@ -108,8 +109,9 @@ namespace GuitarLearning_TabulatorGenerator
             if (G != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.G, Convert.ToInt32(G)));
             if (B != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.B, Convert.ToInt32(B)));
             if (HighE != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.e, Convert.ToInt32(HighE)));
+            if (ChordName == "") ChordName = "NoName";
 
-            MusicalStorage.AddNote(new MusicalNote_Chord(ListTupel.ToArray(), IdCounter.ToString(), noteTypes));
+            MusicalStorage.AddNote(new MusicalNote_Chord(ListTupel.ToArray(), IdCounter.ToString(), noteTypes, ChordName));
 
 
             if (stroke >= 4)
@@ -157,13 +159,15 @@ namespace GuitarLearning_TabulatorGenerator
                     //HTML file
                     string file = sdlg.FileName;
                     if (File.Exists(file)) File.Delete(file);
-
-                    //CSS file
-                    string fileCSS = Path.GetFileNameWithoutExtension(file) + ".css";
-
                     PathToHTML = file;
 
+                    //CSS file
+                    string fileXML = Path.GetFileNameWithoutExtension(file) + ".xml";
+                    fileXML = Path.Combine(Path.GetDirectoryName(file), fileXML);
+                    if (File.Exists(fileXML)) File.Delete(fileXML);
+
                     WriteToHTML();
+                    SongOptions.SerializeJson(fileXML);
 
                     MessageBox.Show("DONE");
                 }

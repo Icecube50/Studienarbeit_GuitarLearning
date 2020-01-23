@@ -28,6 +28,11 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
             return StyleOptions.SizeOfQuarter;
         }
 
+        public override double GetMusicalDuration()
+        {
+            return 1;
+        }
+
         public override HTML_NoteDiv ToHTML()
         {
             HTML_NoteDiv divNote = new HTML_NoteDiv(CSS_MusicalNote.ClassName, NoteID, NoteValue.ToString());

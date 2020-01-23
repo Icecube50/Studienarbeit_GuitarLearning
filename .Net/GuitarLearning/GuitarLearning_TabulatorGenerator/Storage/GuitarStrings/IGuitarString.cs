@@ -32,6 +32,17 @@ namespace GuitarLearning_TabulatorGenerator.Storage.GuitarStrings
             if (stringType == GuitarStringType.e) return HighE;
             return null;
         }
+
+        public static GuitarStringType ObjToEnum(IGuitarString guitarString)
+        {
+            if (guitarString is String_E) return GuitarStringType.E;
+            if (guitarString is String_A) return GuitarStringType.A;
+            if (guitarString is String_D) return GuitarStringType.D;
+            if (guitarString is String_G) return GuitarStringType.G;
+            if (guitarString is String_B) return GuitarStringType.B;
+            if (guitarString is String_HighE) return GuitarStringType.e;
+            return GuitarStringType.E;
+        }
     }
 
     public enum GuitarStringType

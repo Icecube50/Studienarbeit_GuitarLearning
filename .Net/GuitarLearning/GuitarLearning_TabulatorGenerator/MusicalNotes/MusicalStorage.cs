@@ -33,16 +33,11 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
             return songDuration;
         }
 
-        public static string SerializeMelodieToHTML()
+        public static int SongDurationInMS()
         {
-            string html = string.Empty;
-
-            foreach(MusicalNote musicalNote in Melodie)
-            {
-                html += musicalNote.ToHTML();
-            }
-
-            return html;
+            int interval = JavascriptCalculations.GetIntervallTime();
+            int duration = CalculateSongDuration() * interval;
+            return duration;
         }
 
         public static string SerializeMelodieToCSS()

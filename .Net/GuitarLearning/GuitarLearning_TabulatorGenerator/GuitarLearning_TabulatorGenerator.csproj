@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,6 +67,7 @@
     <Compile Include="HTML_Serializing\HTML_P.cs" />
     <Compile Include="HTML_Serializing\HTML_RythmDiv.cs" />
     <Compile Include="HTML_Serializing\HTML_TextDiv.cs" />
+    <Compile Include="MusicalNotes\MusicalCalculator.cs" />
     <Compile Include="MusicalNotes\MusicalNote.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Chord.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Eighth.cs" />
@@ -96,6 +100,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,6 +114,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GuitarLearning_Essentials\GuitarLearning_Essentials.csproj">
+      <Project>{a2ec115a-69b2-4fb4-b99e-935c580615c1}</Project>
+      <Name>GuitarLearning_Essentials</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
