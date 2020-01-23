@@ -19,7 +19,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage.GuitarStrings
         public override int CalculateTop(int amountOfStrings)
         {
             int minDistance = 1;
-            int stringDistance = Convert.ToInt32((StyleOptions.ContentLength / amountOfStrings) * 2);
+            int stringDistance = Convert.ToInt32((StyleOptions.ContentLength / amountOfStrings) * 3);
             int actualDistance = minDistance + stringDistance;
             return actualDistance;
         }

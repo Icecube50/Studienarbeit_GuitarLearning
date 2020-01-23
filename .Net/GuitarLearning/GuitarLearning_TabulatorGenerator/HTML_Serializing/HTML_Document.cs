@@ -82,19 +82,47 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
         {
             string js = string.Empty;
 
+            //Globals
+            js += "var Tab;\n";
+            js += "var PosX;\n";
+            js += "var IntervalID;\n";
+
+            //Animate()
             js += "function Animate() {\n";
-            js += "var tab = document.getElementById(\"" + StyleOptions.IdOfAnimatedDiv + "\");\n";
-            js += "posX = 0;\n";
-            js += "var id = setInterval(frame, " + StyleOptions.IntervallTime + ");\n";
-            js += "\n";
+            js += "Tab = document.getElementById(\"" + StyleOptions.IdOfAnimatedDiv + "\");\n";
+            js += "PosX = 0;\n";
+            js += "IntervalID = setInterval(frame, " + JavascriptCalculations.GetIntervallTime() + ");\n";
+            js += "}\n";
+
+            //frame()
             js += "function frame() {\n";
-            js += "if(posX == -2000) {\n"; //TODO: Get the value by comparing screen-size and song-size
-            js += "clearInterval(id);\n";
+            js += "if(PosX == " + JavascriptCalculations.GetAnimationStoppingPoint() + ") {\n";
+            js += "clearInterval(IntervalID);\n";
             js += "}\n";
             js += "else {\n";
-            js += "posX--;\n";
-            js += "tab.style.left = posX + \"px\";\n";
+            js += "PosX--;\n";
+            js += "Tab.style.left = PosX + \"px\";\n";
             js += "}\n";
+            js += "}\n";
+
+            //AnimationStop()
+            js += "function AnimationStop() {\n";
+            js += "clearInterval(IntervalID);\n";
+            js += "}\n";
+
+            //HighlightCorrectNote()
+            js += "function HighlightCorrectNote(NoteID) {\n";
+            js += "var note = document.getElementById(NoteID);\n";
+            js += "if(note != null) {\n";
+            js += "note.style.backgroundColor = \"lightgreen\";\n";
+            js += "}\n";
+            js += "}\n";
+
+            //HighlightCorrectChord()
+            js += "function HighlightCorrectChord(ChordID) {\n";
+            js += "for(var i = 0; i < 6; i++) {\n";
+            js += "var NoteID = ChordID + \"-\" + i;\n";
+            js += "HighlightCorrectNote(NoteID);\n";
             js += "}\n";
             js += "}\n";
 

@@ -23,32 +23,99 @@ namespace GuitarLearning_TabulatorGenerator
             InitializeComponent();
 
             cbString.Items.Clear();
-            cbString.Items.Add(GuitarStringType.E);
-            cbString.Items.Add(GuitarStringType.A);
-            cbString.Items.Add(GuitarStringType.D);
-            cbString.Items.Add(GuitarStringType.G);
-            cbString.Items.Add(GuitarStringType.B);
             cbString.Items.Add(GuitarStringType.e);
-            cbString.SelectedItem = GuitarStringType.E;
+            cbString.Items.Add(GuitarStringType.B);
+            cbString.Items.Add(GuitarStringType.G);
+            cbString.Items.Add(GuitarStringType.D);
+            cbString.Items.Add(GuitarStringType.A);
+            cbString.Items.Add(GuitarStringType.E);
+            cbString.SelectedItem = GuitarStringType.e;
 
             cbSingleLength.Items.Clear();
+            cbSingleLength.Items.Add(NoteTypes.Whole);
+            cbSingleLength.Items.Add(NoteTypes.Half);
             cbSingleLength.Items.Add(NoteTypes.Quarter);
+            cbSingleLength.Items.Add(NoteTypes.Eighth);
             cbSingleLength.SelectedItem = NoteTypes.Quarter;
+
+            cbChordLength.Items.Clear();
+            cbChordLength.Items.Add(NoteTypes.Whole);
+            cbChordLength.Items.Add(NoteTypes.Half);
+            cbChordLength.Items.Add(NoteTypes.Quarter);
+            cbChordLength.Items.Add(NoteTypes.Eighth);
+            cbChordLength.SelectedItem = NoteTypes.Quarter;
         }
 
         private int IdCounter = 0;
-        private int stroke = 0;
+        private double stroke = 0;
         private void btnAddSingle_Click(object sender, EventArgs e)
         {
             GuitarStringType stringType = (GuitarStringType)cbString.SelectedItem;
             int track = Convert.ToInt32(txtBund.Text);
             NoteTypes noteType = (NoteTypes)cbSingleLength.SelectedItem;
 
-            if (noteType == NoteTypes.Quarter)
+            if (noteType == NoteTypes.Whole)
+            {
+                stroke += 4;
+                MusicalStorage.AddNote(new MusicalNote_Whole(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.Half)
+            {
+                stroke += 2;
+                MusicalStorage.AddNote(new MusicalNote_Half(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.Quarter)
             {
                 stroke++;
-                if (stroke >= 4) { MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString(), true)); stroke = stroke - 4; }
-                else MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString(), false));
+                MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString()));
+            }
+            else if(noteType == NoteTypes.Eighth)
+            {
+                stroke += 0.5;
+                MusicalStorage.AddNote(new MusicalNote_Eighth(stringType, track, IdCounter.ToString()));
+            }
+
+            if (stroke >= 4)
+            {
+                stroke = stroke - 4;
+                MusicalStorage.AddNote(new MusicalNote_Stroke(IdCounter.ToString(), stroke));
+            }
+
+            IdCounter++;
+            txtID.Text = IdCounter.ToString();
+        }
+
+        private void btnAddChord_Click(object sender, EventArgs e)
+        {
+            NoteTypes noteTypes = (NoteTypes)cbChordLength.SelectedItem;
+            string E = txtChordHighE.Text;
+            string D = txtChordG.Text;
+            string A = txtChordB.Text;
+            string G = txtChordD.Text;
+            string B = txtChordA.Text;
+            string HighE = txtChordE.Text;
+
+            if (noteTypes == NoteTypes.Whole) stroke += 4;
+            else if (noteTypes == NoteTypes.Half) stroke += 2;
+            else if (noteTypes == NoteTypes.Quarter) stroke += 1;
+            else if (noteTypes == NoteTypes.Eighth) stroke += 0.5;
+
+
+            var ListTupel = new List<Tuple<GuitarStringType, int>>();
+            if (E != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.E, Convert.ToInt32(E)));
+            if (A != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.A, Convert.ToInt32(A)));
+            if (D != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.D, Convert.ToInt32(D)));
+            if (G != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.G, Convert.ToInt32(G)));
+            if (B != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.B, Convert.ToInt32(B)));
+            if (HighE != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.e, Convert.ToInt32(HighE)));
+
+            MusicalStorage.AddNote(new MusicalNote_Chord(ListTupel.ToArray(), IdCounter.ToString(), noteTypes));
+
+
+            if (stroke >= 4)
+            {
+                stroke = stroke - 4;
+                MusicalStorage.AddNote(new MusicalNote_Stroke(IdCounter.ToString(), stroke));
             }
 
             IdCounter++;
@@ -66,8 +133,11 @@ namespace GuitarLearning_TabulatorGenerator
                 StyleOptions.HeaderLength = Convert.ToInt32(txtHeaderLength.Text);
                 StyleOptions.ContentLength = Convert.ToInt32(txtChordLength.Text);
 
+                MusicalStorage.DumpStorage();
+
                 btnAddSingle.Enabled = true;
                 btnGenerate.Enabled = true;
+                btnAddChord.Enabled = true;
             }
             catch
             {
@@ -90,14 +160,10 @@ namespace GuitarLearning_TabulatorGenerator
 
                     //CSS file
                     string fileCSS = Path.GetFileNameWithoutExtension(file) + ".css";
-                    string cssPath = Path.Combine(Path.GetDirectoryName(file), fileCSS);
-                    if (File.Exists(cssPath)) File.Delete(cssPath);
 
                     PathToHTML = file;
-                    PathToCss = cssPath;
 
                     WriteToHTML();
-                    WriteToCSS();
 
                     MessageBox.Show("DONE");
                 }
@@ -135,7 +201,7 @@ namespace GuitarLearning_TabulatorGenerator
             HTML_TextDiv divTextD = new HTML_TextDiv(CSS_StringNameD.ClassName, string.Empty, "D");
             HTML_TextDiv divTextG = new HTML_TextDiv(CSS_StringNameG.ClassName, string.Empty, "G");
             HTML_TextDiv divTextB = new HTML_TextDiv(CSS_StringNameB.ClassName, string.Empty, "B");
-            HTML_TextDiv divTextHighE = new HTML_TextDiv(CSS_StringNameHighE.ClassName, string.Empty, "E");
+            HTML_TextDiv divTextHighE = new HTML_TextDiv(CSS_StringNameHighE.ClassName, string.Empty, "e");
             divTabulatorInfo.AddContent(divTextE);
             divTabulatorInfo.AddContent(divTextA);
             divTabulatorInfo.AddContent(divTextD);
@@ -164,8 +230,22 @@ namespace GuitarLearning_TabulatorGenerator
             //Musical Notes
             foreach(MusicalNote musicalNote in MusicalStorage.Melodie)
             {
-                divTabulatorChords.AddContent(musicalNote.ToHTML());
-                if (musicalNote.IsStrokeChange) { divTabulatorChords.AddContent(musicalNote.StrokeSeperatorToHTML()); }
+                if (musicalNote is MusicalNote_Stroke)
+                {
+                    divTabulatorChords.AddContent(musicalNote.StrokeSeperatorToHTML());
+                }
+                else if(musicalNote is MusicalNote_Chord)
+                {
+                    var chord = ((MusicalNote_Chord)musicalNote).ChordToHTML();
+                    foreach(var note in chord)
+                    {
+                        divTabulatorChords.AddContent(note);
+                    }
+                }
+                else
+                {
+                    divTabulatorChords.AddContent(musicalNote.ToHTML());
+                }
             }
             divTabulator.AddContent(divTabulatorChords);
 
@@ -177,11 +257,6 @@ namespace GuitarLearning_TabulatorGenerator
 
             //Writing
             File.WriteAllText(PathToHTML, htmlDocument.Serialize());
-        }
-
-        private void WriteToCSS()
-        {
-            File.WriteAllText(PathToCss, CSS_Storage.SerializeCss());
         }
     }
 }

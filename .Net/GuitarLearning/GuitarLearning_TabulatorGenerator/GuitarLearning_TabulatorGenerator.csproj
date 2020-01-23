@@ -65,7 +65,12 @@
     <Compile Include="HTML_Serializing\HTML_RythmDiv.cs" />
     <Compile Include="HTML_Serializing\HTML_TextDiv.cs" />
     <Compile Include="MusicalNotes\MusicalNote.cs" />
+    <Compile Include="MusicalNotes\MusicalNote_Chord.cs" />
+    <Compile Include="MusicalNotes\MusicalNote_Eighth.cs" />
+    <Compile Include="MusicalNotes\MusicalNote_Half.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Quarter.cs" />
+    <Compile Include="MusicalNotes\MusicalNote_Stroke.cs" />
+    <Compile Include="MusicalNotes\MusicalNote_Whole.cs" />
     <Compile Include="MusicalNotes\MusicalStorage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +80,7 @@
     <Compile Include="Storage\GuitarStrings\String_E.cs" />
     <Compile Include="Storage\GuitarStrings\String_G.cs" />
     <Compile Include="Storage\GuitarStrings\String_HighE.cs" />
+    <Compile Include="Storage\JavascriptCalculations.cs" />
     <Compile Include="Storage\SongOptions.cs" />
     <Compile Include="Storage\GuitarStrings\String_A.cs" />
     <Compile Include="Storage\StyleOptions.cs" />
