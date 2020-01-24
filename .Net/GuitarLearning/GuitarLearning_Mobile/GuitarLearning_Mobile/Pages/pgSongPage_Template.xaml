@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="GuitarLearning_Mobile.Pages.pgSongPage_Template">
+             x:Class="GuitarLearning_Mobile.Pages.pgSongPage_Template"
+             Disappearing="OnLeave">
     <ContentPage.Content>
         <StackLayout Orientation="Horizontal">
             <Grid HorizontalOptions="FillAndExpand">
@@ -25,7 +26,8 @@
 
                     <Button Text="Start"
                             HeightRequest="60"
-                            x:Name="btnStartAnimation"/>
+                            x:Name="btnProcessState"
+                            Clicked="OnProcessStateChanged"/>
                 </Grid>
             </Grid>
         </StackLayout>

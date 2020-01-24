@@ -24,6 +24,7 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
     {
         Whole,
         Half,
+        PunctedQuarter,
         Quarter,
         Eighth,
     }

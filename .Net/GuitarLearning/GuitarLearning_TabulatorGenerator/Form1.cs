@@ -34,6 +34,7 @@ namespace GuitarLearning_TabulatorGenerator
             cbSingleLength.Items.Clear();
             cbSingleLength.Items.Add(NoteTypes.Whole);
             cbSingleLength.Items.Add(NoteTypes.Half);
+            cbSingleLength.Items.Add(NoteTypes.PunctedQuarter);
             cbSingleLength.Items.Add(NoteTypes.Quarter);
             cbSingleLength.Items.Add(NoteTypes.Eighth);
             cbSingleLength.SelectedItem = NoteTypes.Quarter;
@@ -41,6 +42,7 @@ namespace GuitarLearning_TabulatorGenerator
             cbChordLength.Items.Clear();
             cbChordLength.Items.Add(NoteTypes.Whole);
             cbChordLength.Items.Add(NoteTypes.Half);
+            cbChordLength.Items.Add(NoteTypes.PunctedQuarter);
             cbChordLength.Items.Add(NoteTypes.Quarter);
             cbChordLength.Items.Add(NoteTypes.Eighth);
             cbChordLength.SelectedItem = NoteTypes.Quarter;
@@ -63,6 +65,11 @@ namespace GuitarLearning_TabulatorGenerator
             {
                 stroke += 2;
                 MusicalStorage.AddNote(new MusicalNote_Half(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.PunctedQuarter)
+            {
+                stroke += 1.5;
+                MusicalStorage.AddNote(new MusicalNote_PunctedQuarter(stringType, track, IdCounter.ToString()));
             }
             else if (noteType == NoteTypes.Quarter)
             {
@@ -98,6 +105,7 @@ namespace GuitarLearning_TabulatorGenerator
 
             if (noteTypes == NoteTypes.Whole) stroke += 4;
             else if (noteTypes == NoteTypes.Half) stroke += 2;
+            else if (noteTypes == NoteTypes.PunctedQuarter) stroke += 1.5;
             else if (noteTypes == NoteTypes.Quarter) stroke += 1;
             else if (noteTypes == NoteTypes.Eighth) stroke += 0.5;
 

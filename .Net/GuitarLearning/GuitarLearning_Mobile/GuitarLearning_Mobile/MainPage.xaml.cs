@@ -32,14 +32,23 @@ namespace GuitarLearning_Mobile
             tapGestureRecognizerNetwork.Tapped += OnNetworkContainer_Tapped;
             grdNetwork.GestureRecognizers.Add(tapGestureRecognizerNetwork);
 
-            var tapGestureRecognizerSong = new TapGestureRecognizer();
-            tapGestureRecognizerSong.Tapped += OnSongContainer_Tapped;
-            grdSong.GestureRecognizers.Add(tapGestureRecognizerSong);
+            var tapGestureRecognizerSeptemberEnds = new TapGestureRecognizer();
+            tapGestureRecognizerSeptemberEnds.Tapped += OnSeptemberEnds_Tapped;
+            grdSeptemberEnds.GestureRecognizers.Add(tapGestureRecognizerSeptemberEnds);
+
+            var tapGestureRecognizerTestSong1 = new TapGestureRecognizer();
+            tapGestureRecognizerTestSong1.Tapped += OnTestSong1_Tapped;
+            grdSeptemberEnds.GestureRecognizers.Add(tapGestureRecognizerTestSong1);
         }
 
-        private void OnSongContainer_Tapped(object sender, EventArgs e)
+        private void OnTestSong1_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new pgSongPage_Template());
+            Navigation.PushAsync(new pgSongPage_Template("Test1"));
+        }
+
+        private void OnSeptemberEnds_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new pgSongPage_Template("WakeMeUpWhenSeptemberEnds"));
         }
 
         private void OnNetworkContainer_Tapped(object sender, EventArgs e)

@@ -42,6 +42,7 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
         {
             if (Duration == NoteTypes.Whole) return StyleOptions.SizeOfQuarter * 4;
             if (Duration == NoteTypes.Half) return StyleOptions.SizeOfQuarter * 2;
+            if (Duration == NoteTypes.PunctedQuarter) return (StyleOptions.SizeOfQuarter + (StyleOptions.SizeOfQuarter / 2)); 
             if (Duration == NoteTypes.Quarter) return StyleOptions.SizeOfQuarter;
             if (Duration == NoteTypes.Eighth) return StyleOptions.SizeOfQuarter / 2;
             return 0;
@@ -51,6 +52,7 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
         {
             if (Duration == NoteTypes.Whole) return  4;
             if (Duration == NoteTypes.Half) return 2;
+            if (Duration == NoteTypes.PunctedQuarter) return 1.5;
             if (Duration == NoteTypes.Quarter) return 1;
             if (Duration == NoteTypes.Eighth) return 0.5;
             return 0;

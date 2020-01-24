@@ -121,5 +121,11 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\test.html" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\WakeMeUpWhenSeptemberEnds.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\WakeMeUpWhenSeptemberEnds.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

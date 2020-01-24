@@ -31,8 +31,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage
             song.SongTitle = SongTitle;
             song.BPM = BpmValue;
             song.SongDuration = MusicalStorage.SongDurationInMS();
-            song.Notation = new List<Note>();
-            song.NotationChords = new List<Chord>();
+            song.Notation = new List<INote>();
 
             int beatCounter = -1; //2 strokes in the beginning, but we want to start with value 1
             double strokeCounter = 1;
@@ -49,7 +48,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage
                     notationChord.BeatNumber = beatCounter;
                     notationChord.StrokeNumber = strokeCounter;
                     notationChord.Name = chord.ChordName;
-                    song.NotationChords.Add(notationChord);
+                    song.Notation.Add(new INote(notationChord));
 
                     strokeCounter += notationChord.Duration;
                 }
@@ -61,7 +60,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage
                     notationNote.Duration = musicalNote.GetMusicalDuration();
                     notationNote.BeatNumber = beatCounter;
                     notationNote.StrokeNumber = strokeCounter;
-                    song.Notation.Add(notationNote);
+                    song.Notation.Add(new INote(notationNote));
 
                     strokeCounter += notationNote.Duration;    
                 }

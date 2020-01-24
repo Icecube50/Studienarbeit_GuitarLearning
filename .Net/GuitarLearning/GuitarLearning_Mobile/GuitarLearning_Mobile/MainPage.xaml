@@ -18,6 +18,8 @@
                     <RowDefinition Height="1"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="1"/>
                 </Grid.RowDefinitions>
 
                 <Grid Padding="20,0,20,0" Grid.Row="0" x:Name="grdAudio">
@@ -60,18 +62,38 @@
                        Grid.Column="1"/>
                 </Grid>
 
-                <Grid Padding="20,0,20,0" Grid.Row="4" x:Name="grdSong">
+                <Grid Padding="20,0,20,0" Grid.Row="4" x:Name="grdSeptemberEnds">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Text="Song Template"
+                    <Label Text="Wake Me Up When September Ends"
                      FontSize="35"
                      TextColor="Black"
                      HorizontalOptions="Start"
                      Grid.Column="0"
-                     x:Name="lbSongTemplate"/>
+                     x:Name="lbSeptemberEnds"/>
+
+                    <Label Text=">>"
+                      FontSize="35"
+                      TextColor="Black"
+                      HorizontalOptions="End"
+                       Grid.Column="1"/>
+                </Grid>
+
+                <Grid Padding="20,0,20,0" Grid.Row="6" x:Name="grdTestSong1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="TestSong1"
+                     FontSize="35"
+                     TextColor="Black"
+                     HorizontalOptions="Start"
+                     Grid.Column="0"
+                     x:Name="lbTestSong1"/>
 
                     <Label Text=">>"
                       FontSize="35"
@@ -85,6 +107,8 @@
                 <BoxView Grid.Row="3"
                      Color="Black"/>
                 <BoxView Grid.Row="5"
+                     Color="Black"/>
+                <BoxView Grid.Row="7"
                      Color="Black"/>
             </Grid>
         </StackLayout>

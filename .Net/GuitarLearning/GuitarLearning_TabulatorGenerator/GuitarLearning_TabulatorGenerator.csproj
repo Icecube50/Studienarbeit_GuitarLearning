@@ -72,6 +72,7 @@
     <Compile Include="MusicalNotes\MusicalNote_Chord.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Eighth.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Half.cs" />
+    <Compile Include="MusicalNotes\MusicalNote_PunctedQuarter.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Quarter.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Stroke.cs" />
     <Compile Include="MusicalNotes\MusicalNote_Whole.cs" />

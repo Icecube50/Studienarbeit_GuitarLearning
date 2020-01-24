@@ -21,7 +21,7 @@ namespace GuitarLearning_TabulatorGenerator.CSS_Constants
 
             //Properties
             css += "position: absolute;\n";
-            css += "left: " + StyleOptions.TabInfoSize + "px;\n";
+            css += "left: " + (StyleOptions.TabInfoSize + (StyleOptions.PreTabSize / 2)) + "px;\n";
             css += "top: " + (StyleOptions.HeaderLength - 9) + "px;\n";
             css += "width: 3px;\n";
             css += "height: " + (StyleOptions.ContentLength + 10) + "px;\n";

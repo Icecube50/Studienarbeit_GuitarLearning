@@ -39,6 +39,8 @@ namespace GuitarLearning_TabulatorGenerator.Storage
         public static int GetAnimationStoppingPoint()
         {
             double length = MusicalStorage.CalculateSongDuration() + StyleOptions.TabInfoSize;
+            length = length - StyleOptions.TabInfoSize;
+            length = length - (StyleOptions.PreTabSize / 2);
             double correctedLength = Math.Ceiling(length);
             double negatedLength = -correctedLength;
             return Convert.ToInt32(negatedLength);
