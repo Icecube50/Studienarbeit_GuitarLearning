@@ -19,8 +19,10 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 && InRange(songObject.TimePosition, elapsed)) { }
             else { songObject.Type = Highlight.None; }
 
-            if(SongHelper.IncreaseIndex())
+            if (SongHelper.IncreaseIndex(elapsed, songObject))
+            {
                 //Invoke Stop Event
+            }
 
             return songObject;
         }

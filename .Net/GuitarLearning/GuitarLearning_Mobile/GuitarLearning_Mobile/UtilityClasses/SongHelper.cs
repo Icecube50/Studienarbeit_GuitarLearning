@@ -51,7 +51,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             songObj.Type = Highlight.Chord;
             songObj.WebId = chord.ID;
             songObj.TimePosition = CalculatePosition(chord.StrokeNumber, chord.BeatNumber);
-            songObj.Duration = BPS * note.Duration;
+            songObj.Duration = BPS * chord.Duration;
             return songObj;
         }
 

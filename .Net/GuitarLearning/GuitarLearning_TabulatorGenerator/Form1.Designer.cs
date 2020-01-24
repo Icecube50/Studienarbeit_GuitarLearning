@@ -38,38 +38,38 @@
             this.txtHeaderLength = new System.Windows.Forms.TextBox();
             this.txtChordLength = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnAddSingle = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbSingleLength = new System.Windows.Forms.ComboBox();
-            this.cbString = new System.Windows.Forms.ComboBox();
-            this.txtBund = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.btnInit = new System.Windows.Forms.Button();
             this.btnGenerate = new System.Windows.Forms.Button();
-            this.txtID = new System.Windows.Forms.TextBox();
-            this.cbChordLength = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtChordHighE = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnAddChord = new System.Windows.Forms.Button();
-            this.txtChordB = new System.Windows.Forms.TextBox();
-            this.txtChordG = new System.Windows.Forms.TextBox();
-            this.txtChordD = new System.Windows.Forms.TextBox();
-            this.txtChordA = new System.Windows.Forms.TextBox();
-            this.txtChordE = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.txtChordName = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cckE = new System.Windows.Forms.CheckBox();
+            this.cckA = new System.Windows.Forms.CheckBox();
+            this.cckD = new System.Windows.Forms.CheckBox();
+            this.cckG = new System.Windows.Forms.CheckBox();
+            this.cckB = new System.Windows.Forms.CheckBox();
+            this.cckHighE = new System.Windows.Forms.CheckBox();
+            this.numValueE = new System.Windows.Forms.NumericUpDown();
+            this.numValueA = new System.Windows.Forms.NumericUpDown();
+            this.numValueD = new System.Windows.Forms.NumericUpDown();
+            this.numValueG = new System.Windows.Forms.NumericUpDown();
+            this.numValueB = new System.Windows.Forms.NumericUpDown();
+            this.numValueHighE = new System.Windows.Forms.NumericUpDown();
+            this.rbtnEighth = new System.Windows.Forms.RadioButton();
+            this.rbtnQuarter = new System.Windows.Forms.RadioButton();
+            this.rbtnPQuarter = new System.Windows.Forms.RadioButton();
+            this.rbtnHalf = new System.Windows.Forms.RadioButton();
+            this.rbtnWhole = new System.Windows.Forms.RadioButton();
+            this.btnNewNote = new System.Windows.Forms.Button();
+            this.btnNewChord = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtChordCounter = new System.Windows.Forms.TextBox();
+            this.txtNewChordName = new System.Windows.Forms.TextBox();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueA)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueG)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueHighE)).BeginInit();
             this.SuspendLayout();
             // 
             // txtSongName
@@ -152,80 +152,6 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Chords:";
             // 
-            // btnAddSingle
-            // 
-            this.btnAddSingle.Enabled = false;
-            this.btnAddSingle.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnAddSingle.Location = new System.Drawing.Point(401, 87);
-            this.btnAddSingle.Name = "btnAddSingle";
-            this.btnAddSingle.Size = new System.Drawing.Size(102, 23);
-            this.btnAddSingle.TabIndex = 10;
-            this.btnAddSingle.Text = "+ Note";
-            this.btnAddSingle.UseVisualStyleBackColor = true;
-            this.btnAddSingle.Click += new System.EventHandler(this.btnAddSingle_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(398, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(33, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Note:";
-            // 
-            // cbSingleLength
-            // 
-            this.cbSingleLength.FormattingEnabled = true;
-            this.cbSingleLength.Items.AddRange(new object[] {
-            "Ganze",
-            "Halbe",
-            "Viertel",
-            "Achtel"});
-            this.cbSingleLength.Location = new System.Drawing.Point(437, 6);
-            this.cbSingleLength.Name = "cbSingleLength";
-            this.cbSingleLength.Size = new System.Drawing.Size(194, 21);
-            this.cbSingleLength.TabIndex = 12;
-            // 
-            // cbString
-            // 
-            this.cbString.FormattingEnabled = true;
-            this.cbString.Items.AddRange(new object[] {
-            "E",
-            "A",
-            "D",
-            "G",
-            "B",
-            "e"});
-            this.cbString.Location = new System.Drawing.Point(437, 35);
-            this.cbString.Name = "cbString";
-            this.cbString.Size = new System.Drawing.Size(194, 21);
-            this.cbString.TabIndex = 13;
-            // 
-            // txtBund
-            // 
-            this.txtBund.Location = new System.Drawing.Point(437, 62);
-            this.txtBund.Name = "txtBund";
-            this.txtBund.Size = new System.Drawing.Size(193, 20);
-            this.txtBund.TabIndex = 14;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(398, 38);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(34, 13);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "Saite:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(398, 65);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(32, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Bund";
-            // 
             // btnInit
             // 
             this.btnInit.Location = new System.Drawing.Point(12, 136);
@@ -247,243 +173,315 @@
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
-            // txtID
+            // groupBox1
             // 
-            this.txtID.Enabled = false;
-            this.txtID.Location = new System.Drawing.Point(736, 12);
-            this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(52, 20);
-            this.txtID.TabIndex = 19;
-            this.txtID.Text = "0";
+            this.groupBox1.Controls.Add(this.txtNewChordName);
+            this.groupBox1.Controls.Add(this.txtChordCounter);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.btnNewChord);
+            this.groupBox1.Controls.Add(this.btnNewNote);
+            this.groupBox1.Controls.Add(this.cckE);
+            this.groupBox1.Controls.Add(this.cckA);
+            this.groupBox1.Controls.Add(this.cckD);
+            this.groupBox1.Controls.Add(this.cckG);
+            this.groupBox1.Controls.Add(this.cckB);
+            this.groupBox1.Controls.Add(this.cckHighE);
+            this.groupBox1.Controls.Add(this.numValueE);
+            this.groupBox1.Controls.Add(this.numValueA);
+            this.groupBox1.Controls.Add(this.numValueD);
+            this.groupBox1.Controls.Add(this.numValueG);
+            this.groupBox1.Controls.Add(this.numValueB);
+            this.groupBox1.Controls.Add(this.numValueHighE);
+            this.groupBox1.Controls.Add(this.rbtnEighth);
+            this.groupBox1.Controls.Add(this.rbtnQuarter);
+            this.groupBox1.Controls.Add(this.rbtnPQuarter);
+            this.groupBox1.Controls.Add(this.rbtnHalf);
+            this.groupBox1.Controls.Add(this.rbtnWhole);
+            this.groupBox1.Location = new System.Drawing.Point(278, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(454, 352);
+            this.groupBox1.TabIndex = 48;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Tabulator Input";
             // 
-            // cbChordLength
+            // cckE
             // 
-            this.cbChordLength.FormattingEnabled = true;
-            this.cbChordLength.Items.AddRange(new object[] {
-            "Ganze",
-            "Halbe",
-            "Viertel",
-            "Achtel"});
-            this.cbChordLength.Location = new System.Drawing.Point(437, 171);
-            this.cbChordLength.Name = "cbChordLength";
-            this.cbChordLength.Size = new System.Drawing.Size(194, 21);
-            this.cbChordLength.TabIndex = 20;
+            this.cckE.AutoSize = true;
+            this.cckE.Location = new System.Drawing.Point(36, 177);
+            this.cckE.Name = "cckE";
+            this.cckE.Size = new System.Drawing.Size(57, 17);
+            this.cckE.TabIndex = 16;
+            this.cckE.Text = "SaiteE";
+            this.cckE.UseVisualStyleBackColor = true;
+            this.cckE.CheckedChanged += new System.EventHandler(this.cckE_CheckedChanged);
             // 
-            // label9
+            // cckA
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(397, 174);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(33, 13);
-            this.label9.TabIndex = 21;
-            this.label9.Text = "Note:";
+            this.cckA.AutoSize = true;
+            this.cckA.Location = new System.Drawing.Point(36, 151);
+            this.cckA.Name = "cckA";
+            this.cckA.Size = new System.Drawing.Size(63, 17);
+            this.cckA.TabIndex = 15;
+            this.cckA.Text = "Saite: A";
+            this.cckA.UseVisualStyleBackColor = true;
+            this.cckA.CheckedChanged += new System.EventHandler(this.cckA_CheckedChanged);
             // 
-            // txtChordHighE
+            // cckD
             // 
-            this.txtChordHighE.Location = new System.Drawing.Point(532, 199);
-            this.txtChordHighE.Name = "txtChordHighE";
-            this.txtChordHighE.Size = new System.Drawing.Size(99, 20);
-            this.txtChordHighE.TabIndex = 23;
+            this.cckD.AutoSize = true;
+            this.cckD.Location = new System.Drawing.Point(36, 125);
+            this.cckD.Name = "cckD";
+            this.cckD.Size = new System.Drawing.Size(64, 17);
+            this.cckD.TabIndex = 14;
+            this.cckD.Text = "Saite: D";
+            this.cckD.UseVisualStyleBackColor = true;
+            this.cckD.CheckedChanged += new System.EventHandler(this.cckD_CheckedChanged);
             // 
-            // label10
+            // cckG
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(362, 202);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(70, 13);
-            this.label10.TabIndex = 24;
-            this.label10.Text = "Saite / Bund:";
+            this.cckG.AutoSize = true;
+            this.cckG.Location = new System.Drawing.Point(36, 99);
+            this.cckG.Name = "cckG";
+            this.cckG.Size = new System.Drawing.Size(64, 17);
+            this.cckG.TabIndex = 13;
+            this.cckG.Text = "Saite: G";
+            this.cckG.UseVisualStyleBackColor = true;
+            this.cckG.CheckedChanged += new System.EventHandler(this.cckG_CheckedChanged);
             // 
-            // btnAddChord
+            // cckB
             // 
-            this.btnAddChord.Enabled = false;
-            this.btnAddChord.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnAddChord.Location = new System.Drawing.Point(509, 358);
-            this.btnAddChord.Name = "btnAddChord";
-            this.btnAddChord.Size = new System.Drawing.Size(102, 23);
-            this.btnAddChord.TabIndex = 25;
-            this.btnAddChord.Text = "+ Akkord";
-            this.btnAddChord.UseVisualStyleBackColor = true;
-            this.btnAddChord.Click += new System.EventHandler(this.btnAddChord_Click);
+            this.cckB.AutoSize = true;
+            this.cckB.Location = new System.Drawing.Point(36, 73);
+            this.cckB.Name = "cckB";
+            this.cckB.Size = new System.Drawing.Size(63, 17);
+            this.cckB.TabIndex = 12;
+            this.cckB.Text = "Saite: B";
+            this.cckB.UseVisualStyleBackColor = true;
+            this.cckB.CheckedChanged += new System.EventHandler(this.cckB_CheckedChanged);
             // 
-            // txtChordB
+            // cckHighE
             // 
-            this.txtChordB.Location = new System.Drawing.Point(531, 225);
-            this.txtChordB.Name = "txtChordB";
-            this.txtChordB.Size = new System.Drawing.Size(99, 20);
-            this.txtChordB.TabIndex = 26;
+            this.cckHighE.AutoSize = true;
+            this.cckHighE.Location = new System.Drawing.Point(36, 48);
+            this.cckHighE.Name = "cckHighE";
+            this.cckHighE.Size = new System.Drawing.Size(62, 17);
+            this.cckHighE.TabIndex = 11;
+            this.cckHighE.Text = "Saite: e";
+            this.cckHighE.UseVisualStyleBackColor = true;
+            this.cckHighE.CheckedChanged += new System.EventHandler(this.cckHighE_CheckedChanged);
             // 
-            // txtChordG
+            // numValueE
             // 
-            this.txtChordG.Location = new System.Drawing.Point(531, 251);
-            this.txtChordG.Name = "txtChordG";
-            this.txtChordG.Size = new System.Drawing.Size(99, 20);
-            this.txtChordG.TabIndex = 28;
+            this.numValueE.Enabled = false;
+            this.numValueE.Location = new System.Drawing.Point(122, 176);
+            this.numValueE.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numValueE.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numValueE.Name = "numValueE";
+            this.numValueE.Size = new System.Drawing.Size(120, 20);
+            this.numValueE.TabIndex = 10;
             // 
-            // txtChordD
+            // numValueA
             // 
-            this.txtChordD.Location = new System.Drawing.Point(531, 277);
-            this.txtChordD.Name = "txtChordD";
-            this.txtChordD.Size = new System.Drawing.Size(99, 20);
-            this.txtChordD.TabIndex = 29;
+            this.numValueA.Enabled = false;
+            this.numValueA.Location = new System.Drawing.Point(122, 150);
+            this.numValueA.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numValueA.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numValueA.Name = "numValueA";
+            this.numValueA.Size = new System.Drawing.Size(120, 20);
+            this.numValueA.TabIndex = 9;
             // 
-            // txtChordA
+            // numValueD
             // 
-            this.txtChordA.Location = new System.Drawing.Point(531, 303);
-            this.txtChordA.Name = "txtChordA";
-            this.txtChordA.Size = new System.Drawing.Size(99, 20);
-            this.txtChordA.TabIndex = 30;
+            this.numValueD.Enabled = false;
+            this.numValueD.Location = new System.Drawing.Point(122, 124);
+            this.numValueD.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numValueD.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numValueD.Name = "numValueD";
+            this.numValueD.Size = new System.Drawing.Size(120, 20);
+            this.numValueD.TabIndex = 8;
             // 
-            // txtChordE
+            // numValueG
             // 
-            this.txtChordE.Location = new System.Drawing.Point(532, 329);
-            this.txtChordE.Name = "txtChordE";
-            this.txtChordE.Size = new System.Drawing.Size(99, 20);
-            this.txtChordE.TabIndex = 31;
+            this.numValueG.Enabled = false;
+            this.numValueG.Location = new System.Drawing.Point(122, 98);
+            this.numValueG.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numValueG.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numValueG.Name = "numValueG";
+            this.numValueG.Size = new System.Drawing.Size(120, 20);
+            this.numValueG.TabIndex = 7;
             // 
-            // label11
+            // numValueB
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(362, 228);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(70, 13);
-            this.label11.TabIndex = 36;
-            this.label11.Text = "Saite / Bund:";
+            this.numValueB.Enabled = false;
+            this.numValueB.Location = new System.Drawing.Point(122, 72);
+            this.numValueB.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numValueB.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numValueB.Name = "numValueB";
+            this.numValueB.Size = new System.Drawing.Size(120, 20);
+            this.numValueB.TabIndex = 6;
             // 
-            // label12
+            // numValueHighE
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(362, 254);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(70, 13);
-            this.label12.TabIndex = 37;
-            this.label12.Text = "Saite / Bund:";
+            this.numValueHighE.Enabled = false;
+            this.numValueHighE.Location = new System.Drawing.Point(122, 47);
+            this.numValueHighE.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numValueHighE.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.numValueHighE.Name = "numValueHighE";
+            this.numValueHighE.Size = new System.Drawing.Size(120, 20);
+            this.numValueHighE.TabIndex = 5;
             // 
-            // label13
+            // rbtnEighth
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(362, 280);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(70, 13);
-            this.label13.TabIndex = 38;
-            this.label13.Text = "Saite / Bund:";
+            this.rbtnEighth.AutoSize = true;
+            this.rbtnEighth.Location = new System.Drawing.Point(293, 18);
+            this.rbtnEighth.Name = "rbtnEighth";
+            this.rbtnEighth.Size = new System.Drawing.Size(55, 17);
+            this.rbtnEighth.TabIndex = 4;
+            this.rbtnEighth.Text = "Achtel";
+            this.rbtnEighth.UseVisualStyleBackColor = true;
             // 
-            // label14
+            // rbtnQuarter
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(362, 306);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(70, 13);
-            this.label14.TabIndex = 39;
-            this.label14.Text = "Saite / Bund:";
+            this.rbtnQuarter.AutoSize = true;
+            this.rbtnQuarter.Checked = true;
+            this.rbtnQuarter.Location = new System.Drawing.Point(233, 18);
+            this.rbtnQuarter.Name = "rbtnQuarter";
+            this.rbtnQuarter.Size = new System.Drawing.Size(54, 17);
+            this.rbtnQuarter.TabIndex = 3;
+            this.rbtnQuarter.TabStop = true;
+            this.rbtnQuarter.Text = "Viertel";
+            this.rbtnQuarter.UseVisualStyleBackColor = true;
             // 
-            // label15
+            // rbtnPQuarter
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(362, 329);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(70, 13);
-            this.label15.TabIndex = 40;
-            this.label15.Text = "Saite / Bund:";
+            this.rbtnPQuarter.AutoSize = true;
+            this.rbtnPQuarter.Location = new System.Drawing.Point(122, 18);
+            this.rbtnPQuarter.Name = "rbtnPQuarter";
+            this.rbtnPQuarter.Size = new System.Drawing.Size(105, 17);
+            this.rbtnPQuarter.TabIndex = 2;
+            this.rbtnPQuarter.Text = "Punktierte Viertel";
+            this.rbtnPQuarter.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // rbtnHalf
             // 
-            this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(437, 199);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(89, 20);
-            this.textBox1.TabIndex = 41;
-            this.textBox1.Text = "e";
+            this.rbtnHalf.AutoSize = true;
+            this.rbtnHalf.Location = new System.Drawing.Point(69, 18);
+            this.rbtnHalf.Name = "rbtnHalf";
+            this.rbtnHalf.Size = new System.Drawing.Size(47, 17);
+            this.rbtnHalf.TabIndex = 1;
+            this.rbtnHalf.Text = "Halb";
+            this.rbtnHalf.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // rbtnWhole
             // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(438, 225);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(89, 20);
-            this.textBox2.TabIndex = 42;
-            this.textBox2.Text = "B";
+            this.rbtnWhole.AutoSize = true;
+            this.rbtnWhole.Location = new System.Drawing.Point(7, 18);
+            this.rbtnWhole.Name = "rbtnWhole";
+            this.rbtnWhole.Size = new System.Drawing.Size(56, 17);
+            this.rbtnWhole.TabIndex = 0;
+            this.rbtnWhole.Text = "Ganze";
+            this.rbtnWhole.UseVisualStyleBackColor = true;
             // 
-            // textBox3
+            // btnNewNote
             // 
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(438, 251);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(89, 20);
-            this.textBox3.TabIndex = 43;
-            this.textBox3.Text = "G";
+            this.btnNewNote.Location = new System.Drawing.Point(263, 96);
+            this.btnNewNote.Name = "btnNewNote";
+            this.btnNewNote.Size = new System.Drawing.Size(75, 23);
+            this.btnNewNote.TabIndex = 17;
+            this.btnNewNote.Text = "+ Note";
+            this.btnNewNote.UseVisualStyleBackColor = true;
+            this.btnNewNote.Click += new System.EventHandler(this.btnNewNote_Click);
             // 
-            // textBox4
+            // btnNewChord
             // 
-            this.textBox4.Enabled = false;
-            this.textBox4.Location = new System.Drawing.Point(438, 277);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(89, 20);
-            this.textBox4.TabIndex = 44;
-            this.textBox4.Text = "D";
+            this.btnNewChord.Location = new System.Drawing.Point(263, 145);
+            this.btnNewChord.Name = "btnNewChord";
+            this.btnNewChord.Size = new System.Drawing.Size(75, 23);
+            this.btnNewChord.TabIndex = 18;
+            this.btnNewChord.Text = "+ Akkord";
+            this.btnNewChord.UseVisualStyleBackColor = true;
+            this.btnNewChord.Click += new System.EventHandler(this.btnNewChord_Click);
             // 
-            // textBox5
+            // label16
             // 
-            this.textBox5.Enabled = false;
-            this.textBox5.Location = new System.Drawing.Point(438, 303);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(89, 20);
-            this.textBox5.TabIndex = 45;
-            this.textBox5.Text = "A";
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(388, 20);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(47, 13);
+            this.label16.TabIndex = 19;
+            this.label16.Text = "Counter:";
             // 
-            // textBox6
+            // txtChordCounter
             // 
-            this.textBox6.Enabled = false;
-            this.textBox6.Location = new System.Drawing.Point(438, 329);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(89, 20);
-            this.textBox6.TabIndex = 46;
-            this.textBox6.Text = "E";
+            this.txtChordCounter.Enabled = false;
+            this.txtChordCounter.Location = new System.Drawing.Point(384, 36);
+            this.txtChordCounter.Name = "txtChordCounter";
+            this.txtChordCounter.Size = new System.Drawing.Size(51, 20);
+            this.txtChordCounter.TabIndex = 20;
             // 
-            // txtChordName
+            // txtNewChordName
             // 
-            this.txtChordName.Location = new System.Drawing.Point(404, 358);
-            this.txtChordName.Name = "txtChordName";
-            this.txtChordName.Size = new System.Drawing.Size(99, 20);
-            this.txtChordName.TabIndex = 47;
+            this.txtNewChordName.Location = new System.Drawing.Point(344, 145);
+            this.txtNewChordName.Name = "txtNewChordName";
+            this.txtNewChordName.Size = new System.Drawing.Size(100, 20);
+            this.txtNewChordName.TabIndex = 21;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.txtChordName);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.txtChordE);
-            this.Controls.Add(this.txtChordA);
-            this.Controls.Add(this.txtChordD);
-            this.Controls.Add(this.txtChordG);
-            this.Controls.Add(this.txtChordB);
-            this.Controls.Add(this.btnAddChord);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.txtChordHighE);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.cbChordLength);
-            this.Controls.Add(this.txtID);
+            this.ClientSize = new System.Drawing.Size(747, 479);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.btnInit);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtBund);
-            this.Controls.Add(this.cbString);
-            this.Controls.Add(this.cbSingleLength);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.btnAddSingle);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtChordLength);
             this.Controls.Add(this.txtHeaderLength);
@@ -496,6 +494,14 @@
             this.Controls.Add(this.txtSongName);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueA)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueG)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numValueHighE)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,38 +519,31 @@
         private System.Windows.Forms.TextBox txtHeaderLength;
         private System.Windows.Forms.TextBox txtChordLength;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnAddSingle;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cbSingleLength;
-        private System.Windows.Forms.ComboBox cbString;
-        private System.Windows.Forms.TextBox txtBund;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button btnInit;
         private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.ComboBox cbChordLength;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtChordHighE;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btnAddChord;
-        private System.Windows.Forms.TextBox txtChordB;
-        private System.Windows.Forms.TextBox txtChordG;
-        private System.Windows.Forms.TextBox txtChordD;
-        private System.Windows.Forms.TextBox txtChordA;
-        private System.Windows.Forms.TextBox txtChordE;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox txtChordName;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rbtnEighth;
+        private System.Windows.Forms.RadioButton rbtnQuarter;
+        private System.Windows.Forms.RadioButton rbtnPQuarter;
+        private System.Windows.Forms.RadioButton rbtnHalf;
+        private System.Windows.Forms.RadioButton rbtnWhole;
+        private System.Windows.Forms.CheckBox cckE;
+        private System.Windows.Forms.CheckBox cckA;
+        private System.Windows.Forms.CheckBox cckD;
+        private System.Windows.Forms.CheckBox cckG;
+        private System.Windows.Forms.CheckBox cckB;
+        private System.Windows.Forms.CheckBox cckHighE;
+        private System.Windows.Forms.NumericUpDown numValueE;
+        private System.Windows.Forms.NumericUpDown numValueA;
+        private System.Windows.Forms.NumericUpDown numValueD;
+        private System.Windows.Forms.NumericUpDown numValueG;
+        private System.Windows.Forms.NumericUpDown numValueB;
+        private System.Windows.Forms.NumericUpDown numValueHighE;
+        private System.Windows.Forms.TextBox txtChordCounter;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button btnNewChord;
+        private System.Windows.Forms.Button btnNewNote;
+        private System.Windows.Forms.TextBox txtNewChordName;
     }
 }
 

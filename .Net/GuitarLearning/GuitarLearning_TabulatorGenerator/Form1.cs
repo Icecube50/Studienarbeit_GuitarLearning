@@ -22,114 +22,23 @@ namespace GuitarLearning_TabulatorGenerator
         {
             InitializeComponent();
 
-            cbString.Items.Clear();
-            cbString.Items.Add(GuitarStringType.e);
-            cbString.Items.Add(GuitarStringType.B);
-            cbString.Items.Add(GuitarStringType.G);
-            cbString.Items.Add(GuitarStringType.D);
-            cbString.Items.Add(GuitarStringType.A);
-            cbString.Items.Add(GuitarStringType.E);
-            cbString.SelectedItem = GuitarStringType.e;
-
-            cbSingleLength.Items.Clear();
-            cbSingleLength.Items.Add(NoteTypes.Whole);
-            cbSingleLength.Items.Add(NoteTypes.Half);
-            cbSingleLength.Items.Add(NoteTypes.PunctedQuarter);
-            cbSingleLength.Items.Add(NoteTypes.Quarter);
-            cbSingleLength.Items.Add(NoteTypes.Eighth);
-            cbSingleLength.SelectedItem = NoteTypes.Quarter;
-
-            cbChordLength.Items.Clear();
-            cbChordLength.Items.Add(NoteTypes.Whole);
-            cbChordLength.Items.Add(NoteTypes.Half);
-            cbChordLength.Items.Add(NoteTypes.PunctedQuarter);
-            cbChordLength.Items.Add(NoteTypes.Quarter);
-            cbChordLength.Items.Add(NoteTypes.Eighth);
-            cbChordLength.SelectedItem = NoteTypes.Quarter;
+            txtSongName.Text = "NoName";
+            txtBPM.Text = "96";
+            txtDistanceBeat.Text = "50";
+            txtHeaderLength.Text = "70";
+            txtChordLength.Text = "120";
         }
 
         private int IdCounter = 0;
         private double stroke = 0;
         private void btnAddSingle_Click(object sender, EventArgs e)
         {
-            GuitarStringType stringType = (GuitarStringType)cbString.SelectedItem;
-            int track = Convert.ToInt32(txtBund.Text);
-            NoteTypes noteType = (NoteTypes)cbSingleLength.SelectedItem;
-
-            if (noteType == NoteTypes.Whole)
-            {
-                stroke += 4;
-                MusicalStorage.AddNote(new MusicalNote_Whole(stringType, track, IdCounter.ToString()));
-            }
-            else if (noteType == NoteTypes.Half)
-            {
-                stroke += 2;
-                MusicalStorage.AddNote(new MusicalNote_Half(stringType, track, IdCounter.ToString()));
-            }
-            else if (noteType == NoteTypes.PunctedQuarter)
-            {
-                stroke += 1.5;
-                MusicalStorage.AddNote(new MusicalNote_PunctedQuarter(stringType, track, IdCounter.ToString()));
-            }
-            else if (noteType == NoteTypes.Quarter)
-            {
-                stroke++;
-                MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString()));
-            }
-            else if(noteType == NoteTypes.Eighth)
-            {
-                stroke += 0.5;
-                MusicalStorage.AddNote(new MusicalNote_Eighth(stringType, track, IdCounter.ToString()));
-            }
-
-            if (stroke >= 4)
-            {
-                stroke = stroke - 4;
-                MusicalStorage.AddNote(new MusicalNote_Stroke(IdCounter.ToString(), stroke));
-            }
-
-            IdCounter++;
-            txtID.Text = IdCounter.ToString();
+            
         }
 
         private void btnAddChord_Click(object sender, EventArgs e)
         {
-            NoteTypes noteTypes = (NoteTypes)cbChordLength.SelectedItem;
-            string E = txtChordHighE.Text;
-            string D = txtChordG.Text;
-            string A = txtChordB.Text;
-            string G = txtChordD.Text;
-            string B = txtChordA.Text;
-            string HighE = txtChordE.Text;
-            string ChordName = txtChordName.Text;
 
-            if (noteTypes == NoteTypes.Whole) stroke += 4;
-            else if (noteTypes == NoteTypes.Half) stroke += 2;
-            else if (noteTypes == NoteTypes.PunctedQuarter) stroke += 1.5;
-            else if (noteTypes == NoteTypes.Quarter) stroke += 1;
-            else if (noteTypes == NoteTypes.Eighth) stroke += 0.5;
-
-
-            var ListTupel = new List<Tuple<GuitarStringType, int>>();
-            if (E != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.E, Convert.ToInt32(E)));
-            if (A != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.A, Convert.ToInt32(A)));
-            if (D != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.D, Convert.ToInt32(D)));
-            if (G != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.G, Convert.ToInt32(G)));
-            if (B != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.B, Convert.ToInt32(B)));
-            if (HighE != "") ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.e, Convert.ToInt32(HighE)));
-            if (ChordName == "") ChordName = "NoName";
-
-            MusicalStorage.AddNote(new MusicalNote_Chord(ListTupel.ToArray(), IdCounter.ToString(), noteTypes, ChordName));
-
-
-            if (stroke >= 4)
-            {
-                stroke = stroke - 4;
-                MusicalStorage.AddNote(new MusicalNote_Stroke(IdCounter.ToString(), stroke));
-            }
-
-            IdCounter++;
-            txtID.Text = IdCounter.ToString();
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
@@ -145,9 +54,9 @@ namespace GuitarLearning_TabulatorGenerator
 
                 MusicalStorage.DumpStorage();
 
-                btnAddSingle.Enabled = true;
+                btnNewChord.Enabled = true;
                 btnGenerate.Enabled = true;
-                btnAddChord.Enabled = true;
+                btnNewNote.Enabled = true;
             }
             catch
             {
@@ -269,6 +178,140 @@ namespace GuitarLearning_TabulatorGenerator
 
             //Writing
             File.WriteAllText(PathToHTML, htmlDocument.Serialize());
+        }
+
+        private NoteTypes GetCheckedType()
+        {
+            if (rbtnWhole.Checked) return NoteTypes.Whole;
+            if (rbtnHalf.Checked) return NoteTypes.Half;
+            if (rbtnPQuarter.Checked) return NoteTypes.PunctedQuarter;
+            if (rbtnQuarter.Checked) return NoteTypes.Quarter;
+            else return NoteTypes.Eighth;
+        }
+
+        private GuitarStringType GetSelectedString()
+        {
+            if (cckHighE.Checked) return GuitarStringType.e;
+            if (cckB.Checked) return GuitarStringType.B;
+            if (cckG.Checked) return GuitarStringType.G;
+            if (cckD.Checked) return GuitarStringType.D;
+            if (cckA.Checked) return GuitarStringType.A;
+            else return GuitarStringType.E;
+        }
+
+        private int GetStringValue(GuitarStringType stringType)
+        {
+            if (stringType == GuitarStringType.e) return Convert.ToInt32(numValueHighE.Value);
+            if (stringType == GuitarStringType.B) return Convert.ToInt32(numValueB.Value);
+            if (stringType == GuitarStringType.G) return Convert.ToInt32(numValueG.Value);
+            if (stringType == GuitarStringType.D) return Convert.ToInt32(numValueD.Value);
+            if (stringType == GuitarStringType.A) return Convert.ToInt32(numValueA.Value);
+            else return Convert.ToInt32(numValueE.Value);
+        }
+
+        private void cckHighE_CheckedChanged(object sender, EventArgs e)
+        {
+            numValueHighE.Enabled = cckHighE.Checked;
+        }
+
+        private void cckB_CheckedChanged(object sender, EventArgs e)
+        {
+            numValueB.Enabled = cckB.Checked;
+        }
+
+        private void cckG_CheckedChanged(object sender, EventArgs e)
+        {
+            numValueG.Enabled = cckG.Checked;
+        }
+
+        private void cckD_CheckedChanged(object sender, EventArgs e)
+        {
+            numValueD.Enabled = cckD.Checked;
+        }
+
+        private void cckA_CheckedChanged(object sender, EventArgs e)
+        {
+            numValueA.Enabled = cckA.Checked;
+        }
+
+        private void cckE_CheckedChanged(object sender, EventArgs e)
+        {
+            numValueE.Enabled = cckE.Checked;
+        }
+
+        private void btnNewNote_Click(object sender, EventArgs e)
+        {
+            GuitarStringType stringType = GetSelectedString();
+            NoteTypes noteType = GetCheckedType();
+            int track = GetStringValue(stringType);
+
+            if (noteType == NoteTypes.Whole)
+            {
+                stroke += 4;
+                MusicalStorage.AddNote(new MusicalNote_Whole(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.Half)
+            {
+                stroke += 2;
+                MusicalStorage.AddNote(new MusicalNote_Half(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.PunctedQuarter)
+            {
+                stroke += 1.5;
+                MusicalStorage.AddNote(new MusicalNote_PunctedQuarter(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.Quarter)
+            {
+                stroke++;
+                MusicalStorage.AddNote(new MusicalNote_Quarter(stringType, track, IdCounter.ToString()));
+            }
+            else if (noteType == NoteTypes.Eighth)
+            {
+                stroke += 0.5;
+                MusicalStorage.AddNote(new MusicalNote_Eighth(stringType, track, IdCounter.ToString()));
+            }
+
+            if (stroke >= 4)
+            {
+                stroke = stroke - 4;
+                MusicalStorage.AddNote(new MusicalNote_Stroke(IdCounter.ToString(), stroke));
+            }
+
+            IdCounter++;
+            txtChordCounter.Text = IdCounter.ToString();
+        }
+
+        private void btnNewChord_Click(object sender, EventArgs e)
+        {
+            NoteTypes noteType = GetCheckedType();
+
+            if (noteType == NoteTypes.Whole) stroke += 4;
+            else if (noteType == NoteTypes.Half) stroke += 2;
+            else if (noteType == NoteTypes.PunctedQuarter) stroke += 1.5;
+            else if (noteType == NoteTypes.Quarter) stroke += 1;
+            else if (noteType == NoteTypes.Eighth) stroke += 0.5;
+
+            string ChordName = txtNewChordName.Text;
+            var ListTupel = new List<Tuple<GuitarStringType, int>>();
+            if (cckHighE.Checked) ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.e, Convert.ToInt32(numValueHighE.Value)));
+            if (cckB.Checked) ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.B, Convert.ToInt32(numValueB.Value)));
+            if (cckG.Checked) ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.G, Convert.ToInt32(numValueG.Value)));
+            if (cckD.Checked) ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.D, Convert.ToInt32(numValueD.Value)));
+            if (cckA.Checked) ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.A, Convert.ToInt32(numValueA.Value)));
+            if (cckE.Checked) ListTupel.Add(new Tuple<GuitarStringType, int>(GuitarStringType.E, Convert.ToInt32(numValueE.Value)));
+            if (ChordName == "") ChordName = "NoName";
+
+            MusicalStorage.AddNote(new MusicalNote_Chord(ListTupel.ToArray(), IdCounter.ToString(), noteType, ChordName));
+
+
+            if (stroke >= 4)
+            {
+                stroke = stroke - 4;
+                MusicalStorage.AddNote(new MusicalNote_Stroke(IdCounter.ToString(), stroke));
+            }
+
+            IdCounter++;
+            txtChordCounter.Text = IdCounter.ToString();
         }
     }
 }
