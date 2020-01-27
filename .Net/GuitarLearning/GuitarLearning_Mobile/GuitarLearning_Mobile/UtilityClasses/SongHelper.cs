@@ -16,7 +16,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             SongIndex = 0;
             BPS = song.BPM != 0 ? ((60 / song.BPM) * 1000) : 0;
 
-            if (SongIndex < Song.Notation.Count) throw new Exception("Invalid Index");
+            if (SongIndex >= Song.Notation.Count) throw new Exception("Invalid Index");
         }
 
         public static bool IncreaseIndex(double elapsed, SongObject obj)

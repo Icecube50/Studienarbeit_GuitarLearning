@@ -15,6 +15,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             SongObject songObject = SongHelper.GetNext();
             double elapsed = TimeHelper.GetElapsedTime();
 
+            Logger.Log("Comparing: " + songObject.Name + " - " + noteToCompare);
             if (songObject.Name.Contains(noteToCompare)
                 && InRange(songObject.TimePosition, elapsed)) { }
             else { songObject.Type = Highlight.None; }

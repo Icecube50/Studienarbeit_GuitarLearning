@@ -62,13 +62,13 @@
                        Grid.Column="1"/>
                 </Grid>
 
-                <Grid Padding="20,0,20,0" Grid.Row="4" x:Name="grdSeptemberEnds">
+                <Grid Padding="20,0,20,0" Grid.Row="4" x:Name="grdTestSong1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Text="Wake Me Up When September Ends"
+                    <Label Text="TestSong1"
                      FontSize="35"
                      TextColor="Black"
                      HorizontalOptions="Start"
@@ -82,13 +82,13 @@
                        Grid.Column="1"/>
                 </Grid>
 
-                <Grid Padding="20,0,20,0" Grid.Row="6" x:Name="grdTestSong1">
+                <Grid Padding="20,0,20,0" Grid.Row="6" x:Name="grdTestSong2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Text="TestSong1"
+                    <Label Text="TestSong2"
                      FontSize="35"
                      TextColor="Black"
                      HorizontalOptions="Start"

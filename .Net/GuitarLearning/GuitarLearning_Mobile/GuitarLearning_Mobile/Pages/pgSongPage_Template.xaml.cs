@@ -38,9 +38,9 @@ namespace GuitarLearning_Mobile.Pages
 
                 //Get Info-Sheet
                 string xmlFile = SongName + ".xml";
-                using (var reader = new StreamReader(xmlFile))
+                using (var reader = new StreamReader(AssetStorage.Manager.Open(xmlFile)))
                 {
-                    var serializer = new XmlSerializer(CurrentSong.GetType());
+                    var serializer = new XmlSerializer(typeof(Song));
                     CurrentSong = (Song)serializer.Deserialize(reader);
                     if (CurrentSong == null) throw new Exception();
                 }

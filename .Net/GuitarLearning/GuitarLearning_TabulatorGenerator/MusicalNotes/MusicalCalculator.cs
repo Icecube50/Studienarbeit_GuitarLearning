@@ -20,7 +20,7 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
         private static int GetStartPosition(GuitarStringType guitarString)
         {
             if (guitarString == GuitarStringType.E) return 4;
-            if (guitarString == GuitarStringType.D) return 3;
+            if (guitarString == GuitarStringType.D) return 2;
             if (guitarString == GuitarStringType.A) return 9;
             if (guitarString == GuitarStringType.G) return 7;
             if (guitarString == GuitarStringType.B) return 11;
