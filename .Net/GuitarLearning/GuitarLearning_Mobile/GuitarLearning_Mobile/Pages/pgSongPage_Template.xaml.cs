@@ -59,11 +59,26 @@ namespace GuitarLearning_Mobile.Pages
             //Init events
             IsInUseChanged += async (s, e) => { await Animation(); };
             IsInUseChanged += ChangeProcessState;
+            IsInUseChanged += ChangeButtonLabel;
+            DataAnalyzer.SongEnded += (s, e) =>
+            {
+                IsInUse = !IsInUse;
+                IsInUseChanged?.Invoke(null, new EventArgs());
+            };
 
             //Init Utility
             UtilityHelper = new UtilityHelper(CurrentSong);
             UtilityHelper.JavaScript_HighlightChord += async (s, e) => { await HighlightChord(s); };
             UtilityHelper.JavaScript_HighlightNote += async (s, e) => { await HighlightNote(s); };
+        }
+
+        private void ChangeButtonLabel(object sender, EventArgs e)
+        {
+            if (IsInUse)
+            {
+                btnProcessState.Text = "Stop";
+            }
+            else { btnProcessState.Text = "Start"; }
         }
 
         private void ChangeProcessState(object sender, EventArgs e)
@@ -95,11 +110,6 @@ namespace GuitarLearning_Mobile.Pages
         private void OnProcessStateChanged(object sender, EventArgs e)
         {
             IsInUse = !IsInUse;
-            if (IsInUse)
-            {
-                btnProcessState.Text = "Stop";
-            }
-            else { btnProcessState.Text = "Start"; }
             IsInUseChanged?.Invoke(null, new EventArgs());
         }
 

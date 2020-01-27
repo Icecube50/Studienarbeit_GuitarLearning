@@ -58,7 +58,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             if (IsRecording)
                 StopRecording();
-            AudioRecorder.Dispose();
+            AudioRecorder.Release();
             AudioBuffer.Clean();
             Helper.StopAPI();
         }

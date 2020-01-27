@@ -8,6 +8,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
 {
     public static class DataAnalyzer
     {
+        public static event EventHandler SongEnded;
+
         public const double DEVIATION = 300;
         public static SongObject CompareWithSheet(EssentiaModel essentiaData)
         {
@@ -22,7 +24,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
 
             if (SongHelper.IncreaseIndex(elapsed, songObject))
             {
-                //Invoke Stop Event
+                SongEnded?.Invoke(null, new EventArgs());
             }
 
             return songObject;

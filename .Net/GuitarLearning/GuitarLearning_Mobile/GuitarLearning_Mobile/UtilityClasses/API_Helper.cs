@@ -51,21 +51,28 @@ namespace GuitarLearning_Mobile.UtilityClasses
             {
                 httpClient.Timeout = new TimeSpan(0, 0, 12);
 
-                while (DoProcessFlag)
+                try
                 {
-                    if (AudioBuffer.Peek() != null)
+                    while (DoProcessFlag)
                     {
-                        EssentiaModel essentiaModel = new EssentiaModel(AudioBuffer.Get());
-                        var chordData = await DoAPICall(essentiaModel, httpClient);
-                        UpdateUI?.Invoke(chordData, new EventArgs());
+                        if (AudioBuffer.Peek() != null)
+                        {
+                            EssentiaModel essentiaModel = new EssentiaModel(AudioBuffer.Get());
+                            var chordData = await DoAPICall(essentiaModel, httpClient);
+                            UpdateUI?.Invoke(chordData, new EventArgs());
 #if DEBUG
-                        DoLog(chordData.chordData);
+                            DoLog(chordData.chordData);
 #endif
+                        }
+                        else
+                        {
+                            await Task.Delay(5);
+                        }
                     }
-                    else
-                    {
-                        await Task.Delay(5);
-                    }
+                }
+                catch(OperationCanceledException e)
+                {
+                    ;
                 }
             }
         }

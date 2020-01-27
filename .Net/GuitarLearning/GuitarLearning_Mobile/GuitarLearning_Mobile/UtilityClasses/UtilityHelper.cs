@@ -18,6 +18,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
             AudioRecording = new AudioRecording();
             AudioRecording.GetHelper().UpdateUI += ProcessResults;
 
+            DataAnalyzer.SongEnded += OnSongEnded;
+
             SongHelper.InitHelper(song);
         }
 
@@ -38,6 +40,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
         }
 
         public void Stop()
+        {
+            AudioRecording.StopRecording();
+        }
+
+        private void OnSongEnded(object sender, EventArgs e)
         {
             AudioRecording.StopRecording();
         }
