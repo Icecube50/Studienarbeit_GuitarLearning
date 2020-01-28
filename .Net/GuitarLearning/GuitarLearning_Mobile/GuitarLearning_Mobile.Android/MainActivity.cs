@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.Threading.Tasks;
 
 namespace GuitarLearning_Mobile.Droid
 {
@@ -24,13 +25,20 @@ namespace GuitarLearning_Mobile.Droid
             LoadApplication(new App());
 
             AssetStorage.Manager = this.Assets;
+
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.Log("Error:" + sender.ToString());
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
     }
 }

@@ -2,22 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
     public class AudioRecording
     {
-        public event EventHandler StartProcessing;
-
         private AudioRecord AudioRecorder { get; set; } = null;
         private float[] InputBuffer { get; set; } = null;
-        private bool IsRecording { get; set; } = false;
-
         private AudioBuffer AudioBuffer { get; set; } = null;
-        private API_Helper Helper { get; set; } = null;
-
-        public AudioRecording()
+        CancellationTokenSource cts;
+        public AudioRecording(AudioBuffer audioBuffer)
         {
             InputBuffer = new float[AudioBuffer.BUFFER_SIZE];
             AudioRecorder = new AudioRecord(
@@ -28,56 +24,64 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 InputBuffer.Length
                 );
 
-            AudioBuffer = new AudioBuffer();
-            Helper = new API_Helper(AudioBuffer);
-
-            StartProcessing += async (s, e) =>
-            {
-                await ReadDataToBuffer();
-            };
+            AudioBuffer = audioBuffer;
+            cts = new CancellationTokenSource();
         }
 
         public void StartRecording()
         {
-            if (IsRecording)
-                return;
-            IsRecording = true;
-            StartProcessing?.Invoke(this, new EventArgs());
-            Helper.StartAPI();
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await ReadDataToBuffer(cts.Token);
+                }
+                catch (OperationCanceledException e)
+                {
+                    //Ignore, just return
+                }
+                catch (Exception e)
+                {
+                    Logger.Log("Recorder - Error: " + e.Message);
+                }
+            });
         }
 
         public void StopRecording()
         {
-            if (!IsRecording)
-                return;
-            IsRecording = false;
-            Helper.StopAPI();
+            if (!cts.IsCancellationRequested)
+            {
+                cts.Cancel();
+            }
         }
 
         public void CleanUp()
         {
-            if (IsRecording)
-                StopRecording();
-            AudioRecorder.Release();
-            AudioBuffer.Clean();
-            Helper.StopAPI();
+            SafeGetRecorder()?.Release();
+            AudioBuffer?.Clean();
         }
 
-        public API_Helper GetHelper()
+        private object _lock = new object();
+        private AudioRecord SafeGetRecorder()
         {
-            return Helper;
-        }
-
-        private async Task ReadDataToBuffer()
-        {
-            AudioRecorder.StartRecording();
-            while (IsRecording)
+            lock(_lock)
             {
-                await AudioRecorder.ReadAsync(InputBuffer, 0, InputBuffer.Length, 0);
-                AudioBuffer.Add(InputBuffer);
+                return this.AudioRecorder;
+            }
+        }
+
+        private async Task ReadDataToBuffer(CancellationToken ct)
+        {
+            ct.ThrowIfCancellationRequested();
+            SafeGetRecorder().StartRecording();
+            while (!ct.IsCancellationRequested)
+            {
+                await SafeGetRecorder().ReadAsync(InputBuffer, 0, InputBuffer.Length, 0);
+                AudioBuffer?.Add(new AudioData(InputBuffer, TimeHelper.GetElapsedTime()));
                 InputBuffer = new float[InputBuffer.Length];
             }
-            AudioRecorder?.Stop();
+            SafeGetRecorder()?.Stop();
+            ct.ThrowIfCancellationRequested();
         }
 
     }

@@ -39,6 +39,8 @@ namespace GuitarLearning_Mobile
             var tapGestureRecognizerTestSong2 = new TapGestureRecognizer();
             tapGestureRecognizerTestSong2.Tapped += OnSeptemberEnds_Tapped;
             grdTestSong2.GestureRecognizers.Add(tapGestureRecognizerTestSong2);
+
+            Logger.Log("########### New Startup ############");
         }
 
         private void OnTestSong1_Tapped(object sender, EventArgs e)

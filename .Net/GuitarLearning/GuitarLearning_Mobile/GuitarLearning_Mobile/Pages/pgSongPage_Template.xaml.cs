@@ -24,9 +24,10 @@ namespace GuitarLearning_Mobile.Pages
         {
             InitializeComponent();
 
-            this.Title = SongName;
             try
             {
+                this.Title = SongName;
+
                 //Get Tabulator-Sheet
                 string htmlFile = SongName + ".html";
                 string html = string.Empty;
@@ -49,27 +50,21 @@ namespace GuitarLearning_Mobile.Pages
                 htmlSource.Html = html;
                 wvTabContainer.Source = htmlSource;
                 wvTabContainer.IsEnabled = false;
+
+                //Init events
+                IsInUseChanged += async (s, e) => { await AnimationAsync(s, e); };
+                IsInUseChanged += ChangeProcessState;
+                IsInUseChanged += ChangeButtonLabel;
+
+                //Init Utility
+                UtilityHelper = new UtilityHelper(CurrentSong);
             }
             catch (Exception e)
             {
                 DisplayAlert("Fehler", "Das Notenblatt ist korrumpiert, bitte wählen Sie ein anderes", "OK");
+                Logger.Log("Error: " + e.Message);
                 Navigation.PopAsync();
             }
-
-            //Init events
-            IsInUseChanged += async (s, e) => { await Animation(); };
-            IsInUseChanged += ChangeProcessState;
-            IsInUseChanged += ChangeButtonLabel;
-            DataAnalyzer.SongEnded += (s, e) =>
-            {
-                IsInUse = !IsInUse;
-                IsInUseChanged?.Invoke(null, new EventArgs());
-            };
-
-            //Init Utility
-            UtilityHelper = new UtilityHelper(CurrentSong);
-            UtilityHelper.JavaScript_HighlightChord += async (s, e) => { await HighlightChord(s); };
-            UtilityHelper.JavaScript_HighlightNote += async (s, e) => { await HighlightNote(s); };
         }
 
         private void ChangeButtonLabel(object sender, EventArgs e)
@@ -83,28 +78,37 @@ namespace GuitarLearning_Mobile.Pages
 
         private void ChangeProcessState(object sender, EventArgs e)
         {
-            if (IsInUse) UtilityHelper.Start();
-            else UtilityHelper.Stop();
+            if (IsInUse)
+            {
+                UtilityHelper.Start(wvTabContainer);
+            } 
+            else 
+            {
+                UtilityHelper.Stop();
+            }
         }
 
-        private async Task Animation()
+        private async Task AnimationAsync(object sender, EventArgs e)
         {
-            if (IsInUse) await wvTabContainer.EvaluateJavaScriptAsync($"Animate()");
-            else await wvTabContainer.EvaluateJavaScriptAsync($"AnimationStop()");
-        }
-
-        private async Task HighlightChord(object model)
-        {
-            var songObj = model as SongObject;
-            string scriptName = $"HighlightCorrectChord('" + songObj.WebId +"')";
-            await wvTabContainer.EvaluateJavaScriptAsync(scriptName);
-        }
-
-        private async Task HighlightNote(object model)
-        {
-            var songObj = model as SongObject;
-            string scriptName = $"HighlightCorrectNote('" + songObj.WebId + "')";
-            await wvTabContainer.EvaluateJavaScriptAsync(scriptName);
+            try
+            {
+                if (IsInUse)
+                {
+                    await wvTabContainer.EvaluateJavaScriptAsync($"Animate()");
+                }
+                else
+                {
+                    await wvTabContainer.EvaluateJavaScriptAsync($"AnimationStop()");
+                }
+            }
+            catch(OperationCanceledException ex)
+            {
+                //Ignore
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("SongPage - Error: " + ex.Message);
+            }
         }
 
         private void OnProcessStateChanged(object sender, EventArgs e)
@@ -115,6 +119,8 @@ namespace GuitarLearning_Mobile.Pages
 
         private void OnLeave(object sender, EventArgs e)
         {
+            if(IsInUse)
+                UtilityHelper.Stop();
             UtilityHelper.CleanUp();
         }
     }

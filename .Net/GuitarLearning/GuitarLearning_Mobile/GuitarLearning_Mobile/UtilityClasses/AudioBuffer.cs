@@ -10,9 +10,9 @@ namespace GuitarLearning_Mobile.UtilityClasses
         private readonly object _lock = new object();
 
         public const int BUFFER_SIZE = 10000;
-        private Queue<float[]> BufferQueue { get; set; } = new Queue<float[]>();
+        private Queue<AudioData> BufferQueue { get; set; } = new Queue<AudioData>();
 
-        public void Add(float[] newAudioData)
+        public void Add(AudioData newAudioData)
         {
             lock (_lock)
             {
@@ -20,7 +20,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             }
         }
 
-        public float[] Get()
+        public AudioData Get()
         {
             lock (_lock)
             {
@@ -28,7 +28,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             }
         }
 
-        public float[] Peek()
+        public AudioData Peek()
         {
             lock (_lock)
             {
@@ -47,6 +47,17 @@ namespace GuitarLearning_Mobile.UtilityClasses
             {
                 BufferQueue.Clear();
             }
+        }
+    }
+
+    public class AudioData
+    {
+        public float[] Data { get; set; }
+        public double Time { get; set; }
+        public AudioData(float[] data, double time)
+        {
+            Data = data;
+            Time = time;
         }
     }
 }

@@ -3,50 +3,59 @@ using GuitarLearning_Essentials.SongModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
     public class UtilityHelper
     {
         private AudioRecording AudioRecording { get; set; } = null;
+        private AudioBuffer AudioBuffer { get; set; } = null;
+        private API_Helper API_Helper { get; set; } = null;
+        private ResultBuffer ResultBuffer { get; set; } = null;
+        private DataAnalyzer DataAnalyzer { get; set; } = null;
+        private CancellationTokenSource cts;
 
-        public event EventHandler JavaScript_HighlightNote;
-        public event EventHandler JavaScript_HighlightChord;
         public UtilityHelper(Song song)
         {
-            AudioRecording = new AudioRecording();
-            AudioRecording.GetHelper().UpdateUI += ProcessResults;
+            //Init Buffer
+            AudioBuffer = new AudioBuffer();
+            ResultBuffer = new ResultBuffer();
 
-            DataAnalyzer.SongEnded += OnSongEnded;
+            //Init Classes
+            AudioRecording = new AudioRecording(AudioBuffer);
+            API_Helper = new API_Helper(AudioBuffer, ResultBuffer);
+            DataAnalyzer = new DataAnalyzer(ResultBuffer);
 
             SongHelper.InitHelper(song);
+
+            cts = new CancellationTokenSource();
         }
 
-        private void ProcessResults(object model, EventArgs e)
-        {
-            if (model is EssentiaModel)
-            {
-                var songObj = DataAnalyzer.CompareWithSheet(model as EssentiaModel);
-                if (songObj.Type == Highlight.Chord) JavaScript_HighlightChord?.Invoke(songObj, new EventArgs());
-                else if (songObj.Type == Highlight.Note) JavaScript_HighlightNote?.Invoke(songObj, new EventArgs());
-            }
-        }
-
-        public void Start()
+        public void Start(WebView webView)
         {
             TimeHelper.SetStartTime();
+
             AudioRecording.StartRecording();
+            API_Helper.StartAPI();
+            DataAnalyzer.AnalyseAsync(cts.Token, webView);
         }
 
         public void Stop()
         {
             AudioRecording.StopRecording();
+            API_Helper.StopAPI();
+            cts.Cancel();
+
+            EmptyBuffer();
         }
 
-        private void OnSongEnded(object sender, EventArgs e)
+        private void EmptyBuffer()
         {
-            AudioRecording.StopRecording();
+            AudioBuffer.Clean();
+            ResultBuffer.Clean();
         }
 
         public void CleanUp()

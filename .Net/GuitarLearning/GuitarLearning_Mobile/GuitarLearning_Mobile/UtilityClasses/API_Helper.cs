@@ -5,80 +5,75 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
     public class API_Helper
     {
-        public event EventHandler UpdateUI;
-
         private string ApiAddress { get; set; } = string.Empty;
         private AudioBuffer AudioBuffer { get; set; } = null;
-        private bool DoProcessFlag { get; set; } = false;
+        private ResultBuffer ResultBuffer { get; set; } = null;
+        private CancellationTokenSource cancellationToken;
 
-        private event EventHandler DoProcess;
-
-        public API_Helper(AudioBuffer audioBuffer, string apiAddress = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
+        public API_Helper(AudioBuffer audioBuffer, ResultBuffer resultBuffer, string apiAddress = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
         {
             AudioBuffer = audioBuffer;
+            ResultBuffer = resultBuffer;
             ApiAddress = apiAddress;
-
-            DoProcess += async (s, e) =>
-            {
-                await ProcessingCycle();
-            };
+            cancellationToken = new CancellationTokenSource();
         }
 
         public void StopAPI()
         {
-            if (!DoProcessFlag)
-                return;
-            DoProcessFlag = false;
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                cancellationToken.Cancel();
+            }
         }
 
         public void StartAPI()
         {
-            if (DoProcessFlag)
-                return;
-            DoProcessFlag = true;
-            DoProcess?.Invoke(this, new EventArgs());
-        }
-
-        private async Task ProcessingCycle()
-        {
-            using(HttpClient httpClient = new HttpClient())
+            Task.Run(async () =>
             {
-                httpClient.Timeout = new TimeSpan(0, 0, 12);
-
                 try
                 {
-                    while (DoProcessFlag)
-                    {
-                        if (AudioBuffer.Peek() != null)
-                        {
-                            EssentiaModel essentiaModel = new EssentiaModel(AudioBuffer.Get());
-                            var chordData = await DoAPICall(essentiaModel, httpClient);
-                            UpdateUI?.Invoke(chordData, new EventArgs());
-#if DEBUG
-                            DoLog(chordData.chordData);
-#endif
-                        }
-                        else
-                        {
-                            await Task.Delay(5);
-                        }
-                    }
+                    await ProcessingCycle(cancellationToken.Token);
                 }
-                catch(OperationCanceledException e)
+                catch (OperationCanceledException e)
                 {
-                    ;
+                    //Ignore, just return 
+                }
+                catch (Exception e)
+                {
+                    Logger.Log("API_Helper - Error: " + e.Message);
+                }
+            });
+        }
+
+        private async Task ProcessingCycle(CancellationToken ct)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 0, 12);
+                while (true)
+                {
+                    ct.ThrowIfCancellationRequested();
+                    if (AudioBuffer?.Peek() != null)
+                    {
+                        var data = AudioBuffer?.Get();
+                        EssentiaModel essentiaModel = new EssentiaModel(data.Data, data.Time);
+                        var chordData = await DoAPICall(essentiaModel, httpClient, ct);
+                        ResultBuffer.Add(chordData);
+                    }
                 }
             }
         }
 
-        private async Task<EssentiaModel> DoAPICall(EssentiaModel currentModel, HttpClient myClient)
+        private async Task<EssentiaModel> DoAPICall(EssentiaModel currentModel, HttpClient myClient, CancellationToken ct)
         {
+            ct.ThrowIfCancellationRequested();
             EssentiaModel apiModel = null;
             using (HttpRequestMessage request = new HttpRequestMessage())
             {
@@ -88,6 +83,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 var requestContent = JsonConvert.SerializeObject(currentModel);
                 request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
 
+                ct.ThrowIfCancellationRequested();
                 HttpResponseMessage response = await myClient.SendAsync(request);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -96,15 +92,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     apiModel = JsonConvert.DeserializeObject<EssentiaModel>(json);
                 }             
             }
+            ct.ThrowIfCancellationRequested();
             return apiModel;
-        }
-
-        private void DoLog(string chordData)
-        {
-            string msg = "Failed";
-            if (chordData != null)
-                msg = chordData;
-            Logger.Log("Data: " + msg);
         }
     }
 }

@@ -32,11 +32,11 @@ namespace GuitarLearning_Mobile.Pages
             InitializeComponent();
 
             IsRecordingChanged += OnIsRecordingChanged;
-            audioRecording = new AudioRecording();
+            /*audioRecording = new AudioRecording();
             audioRecording.GetHelper().UpdateUI += async (s, e) =>
             {
                 await UpdateChordLabel(s);
-            };
+            };*/
 
             btnRecording.Clicked += async (s, e) =>
             {
