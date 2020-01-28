@@ -1,6 +1,7 @@
 ﻿using Android.Content.Res;
 using GuitarLearning_Mobile.Pages;
 using NAudio.Wave;
+using Plugin.Connectivity;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System;
@@ -37,7 +38,7 @@ namespace GuitarLearning_Mobile
             grdTestSong1.GestureRecognizers.Add(tapGestureRecognizerTestSong1);
 
             var tapGestureRecognizerTestSong2 = new TapGestureRecognizer();
-            tapGestureRecognizerTestSong2.Tapped += OnSeptemberEnds_Tapped;
+            tapGestureRecognizerTestSong2.Tapped += OnTestSong2_Tapped;
             grdTestSong2.GestureRecognizers.Add(tapGestureRecognizerTestSong2);
 
             Logger.Log("########### New Startup ############");
@@ -45,22 +46,26 @@ namespace GuitarLearning_Mobile
 
         private void OnTestSong1_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new pgSongPage_Template("TestSong1"));
+            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
+            else Navigation.PushAsync(new pgSongPage_Template("Test1"));
         }
 
-        private void OnSeptemberEnds_Tapped(object sender, EventArgs e)
+        private void OnTestSong2_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new pgSongPage_Template("TestSong2"));
+            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
+            else Navigation.PushAsync(new pgSongPage_Template("Test2"));
         }
 
         private void OnNetworkContainer_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new pgNetworkTesting());
+            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
+            else Navigation.PushAsync(new pgNetworkTesting());
         }
 
         private void OnAudioContainer_Tapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new pgAudioRecording());
+            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
+            else Navigation.PushAsync(new pgAudioRecording());
         }
     }
 

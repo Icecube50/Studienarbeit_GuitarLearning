@@ -14,7 +14,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         public static double GetElapsedTime()
         {
             DateTime now = DateTime.Now;
-            var elapsed = StartTime.Subtract(now);
+            var elapsed = now.Subtract(StartTime);
             return elapsed.TotalMilliseconds;
         }
     }

@@ -12,5 +12,10 @@ namespace GuitarLearning_Essentials.SongModel
         public int BeatNumber { get; set; }
         public double StrokeNumber { get; set; }
         public double Duration { get; set; }
+
+        public Chord()
+        {
+
+        }
     }
 }
