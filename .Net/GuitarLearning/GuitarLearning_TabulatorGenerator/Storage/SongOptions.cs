@@ -34,7 +34,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage
             song.Notation = new List<INote>();
 
             int beatCounter = -1; //2 strokes in the beginning, but we want to start with value 1
-            double strokeCounter = 1;
+            double strokeCounter = 0;
             foreach (var musicalNote in MusicalStorage.Melodie)
             {
                 if (musicalNote is MusicalNote_Stroke) { beatCounter++; if(strokeCounter >= 4) strokeCounter -= 4; }
