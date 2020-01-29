@@ -18,7 +18,7 @@
                          x:Name="wvTabContainer"/>
 
                 <Grid BackgroundColor="DodgerBlue"
-                         HeightRequest="80" Grid.Row="1">
+                         HeightRequest="60" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GuitarLearning_Mobile.Pages.pgDeveloperSettings">
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <CheckBox VerticalOptions="Center"
+                      HeightRequest="30"
+                      Color="DodgerBlue"
+                      x:Name="cckLogging"
+                      Grid.Column="1"
+                      HorizontalOptions="Start"
+                      CheckedChanged="OnDoLoggingChanged">
+                </CheckBox>
+                <Label Text="EnableLogging:"
+                       HeightRequest="30"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,20,0"
+                       FontSize="20">
+                </Label>
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="DEVIATION:"
+                       HeightRequest="30"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="20">
+                </Label>
+                <Entry Grid.Column="1"
+                       x:Name="etyDeviation"
+                       Placeholder="300"
+                       >
+                </Entry>
+            </Grid>
+            <Button Text="Übernehmen"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End"
+                    FontSize="20"
+                    BackgroundColor="DodgerBlue"
+                    TextColor="White"
+                    Clicked="OnApllyClicked">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

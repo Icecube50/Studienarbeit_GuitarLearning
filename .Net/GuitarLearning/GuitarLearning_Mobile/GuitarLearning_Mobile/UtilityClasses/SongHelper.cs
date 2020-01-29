@@ -1,38 +1,75 @@
 ﻿using GuitarLearning_Essentials.SongModel;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
+    /// <summary>
+    /// Prepare the static data given by the music sheet, by calculating the expected timings. 
+    /// </summary>
     public static class SongHelper
     {
+        /// <summary>
+        /// Song object that is serialised from the "SongName.xml". Contains all generic song data.
+        /// </summary>
+        /// <value>Gets/Sets the Song <see cref="GuitarLearning_Essentials.SongModel.Song"/> field.</value>
         private static Song Song { get; set; }
+        /// <summary>
+        /// Index of the array that matches the current (next) note to be analysed.
+        /// </summary>
+        /// <valu>Gets/Sets the SongIndex int field.</valu>
         private static int SongIndex { get; set; }
+        /// <summary>
+        /// Property that stores the "beats per second" of the song, is needed for further calculations.
+        /// </summary>
+        /// <value>Gets/Sets the BPS double field.</value>
         private static double BPS { get; set; }
+        /// <summary>
+        /// Array of <see cref="INote"/> => can contain <see cref="Note"/> and <see cref="Chord"/> and can be accessed via index.
+        /// </summary>
+        /// <value>Gets/Sets the IndexedSong INote[] field.</value>
+        private static INote[] IndexedSong { get; set; }
+        /// <summary>
+        /// Initialise the properties of this class.
+        /// </summary>
+        /// <param name="song">Song object, serialised through the "SongName.xml"</param>
         public static void InitHelper(Song song)
         {
             Song = song;
             SongIndex = 0;
             BPS = song.BPM != 0 ? ((60 / song.BPM) * 1000) : 0;
 
-            if (SongIndex >= Song.Notation.Count) throw new Exception("Invalid Index");
-        }
+            IndexedSong = new INote[Song.Notation.Count];
+            Song.Notation.CopyTo(IndexedSong);
 
+            if (SongIndex >= IndexedSong.Length) throw new Exception("Invalid Index");
+        }
+        /// <summary>
+        /// Checks wether enough time has passed to determine a new index or to keep the old one.
+        /// </summary>
+        /// <param name="elapsed">Time in milliseconds that has elapsed since the start of the song.</param>
+        /// <param name="obj">Last SongObject that has been analysed.</param>
+        /// <returns></returns>
         public static bool IncreaseIndex(double elapsed, SongObject obj)
         {
             if ((obj.TimePosition + obj.Duration) <= elapsed) { SongIndex++; }
-            if (SongIndex < Song.Notation.Count) return true;
+            if (SongIndex < IndexedSong.Length) return true;
             else return false;
         }
-
+        /// <summary>
+        /// Get the SongObject that is stored at the current index.
+        /// </summary>
+        /// <returns><see cref="SongObject"/></returns>
         public static SongObject GetNext()
         {
-            var obj = Song.Notation[SongIndex];
+            var obj = IndexedSong[SongIndex];
             if (obj.Note != null) return GetNext_Note(obj.Note);
             else return GetNext_Chord(obj.Chord);
         }
-
+        /// <summary>
+        /// Initialises a new SongObject and set the <see cref="SongObject.Type"/> property to <see cref="Highlight.Note"/>
+        /// </summary>
+        /// <param name="note"><see cref="Note"/> from which a new SongObject shall be created.</param>
+        /// <returns<see cref="SongObject"/></returns>
         private static SongObject GetNext_Note(Note note)
         {
             var songObj = new SongObject();
@@ -43,7 +80,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
             songObj.Duration = BPS * note.Duration;
             return songObj;
         }
-
+        /// <summary>
+        /// Initialises a new SongObject and set the <see cref="SongObject.Type"/> property to <see cref="Highlight.Chord"/>
+        /// </summary>
+        /// <param name="chord"><see cref="Chord"/> from which a new SongObject shall be created.</param>
+        /// <returns><see cref="SongObject"/></returns>
         private static SongObject GetNext_Chord(Chord chord)
         {
             var songObj = new SongObject();
@@ -54,7 +95,12 @@ namespace GuitarLearning_Mobile.UtilityClasses
             songObj.Duration = BPS * chord.Duration;
             return songObj;
         }
-
+        /// <summary>
+        /// Calculates the point of time on which the note is expected.
+        /// </summary>
+        /// <param name="StrokeNumber">Number of strokes inside the current beat.</param>
+        /// <param name="BeatNumber">Number of beats.</param>
+        /// <returns>int, time in milliseconds since start of the song.</returns>
         private static int CalculatePosition(double StrokeNumber, double BeatNumber)
         {
             double timePerBeat = 4 * BPS;
@@ -65,12 +111,35 @@ namespace GuitarLearning_Mobile.UtilityClasses
         }
     }
 
+    /// <summary>
+    /// Class that stores all important information about a chord or note. Is needed for the analysation.
+    /// </summary>
     public class SongObject
     {
+        /// <summary>
+        /// Point in time the note is expected.
+        /// </summary>
+        /// <value>Gets/Sets the TimePosition int field in milliseconds since start of the song.</value>
         public int TimePosition { get; set; }
+        /// <summary>
+        /// Name of the note
+        /// </summary>
+        /// <value>Gets/Sets the Name string field.</value>
         public string Name { get; set; }
+        /// <summary>
+        /// Type that is needed to determin which highlighting-method has to be called.
+        /// </summary>
+        /// <value>Gets/Sets the Type <see cref="Highlight"/> field.</value>
         public Highlight Type { get; set; }
+        /// <summary>
+        /// The ID, that is used in the html document, which refers to the note.
+        /// </summary>
+        /// <value>Gets/Sets the WebId string field.</value>
         public string WebId { get; set; }
+        /// <summary>
+        /// Duration of the note.
+        /// </summary>
+        /// <value>Gets/Sets the Duration double field, in milliseconds.</value>
         public double Duration { get; set; }
     }
 }

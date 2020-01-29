@@ -6,11 +6,10 @@
              mc:Ignorable="d"
              x:Class="GuitarLearning_Mobile.MainPage"
              Title="GuitarLearning"
-             x:Name="AppRoot"
-             >
+             x:Name="AppRoot">
     <ScrollView>
         <StackLayout Orientation="Vertical">
-            <Grid>
+            <Grid VerticalOptions="StartAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1"/>
@@ -110,6 +109,20 @@
                      Color="Black"/>
                 <BoxView Grid.Row="7"
                      Color="Black"/>
+            </Grid>
+
+            <Grid BackgroundColor="LimeGreen"
+                  HeightRequest="60" Grid.Row="1"
+                  VerticalOptions="End">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Text="Einstellungen"
+                            HeightRequest="60"
+                            x:Name="btnSettings"
+                            Clicked="OnSettingsClicked"/>
             </Grid>
         </StackLayout>
     </ScrollView>
