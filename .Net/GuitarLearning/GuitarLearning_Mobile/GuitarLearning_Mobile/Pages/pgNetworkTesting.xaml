@@ -39,54 +39,66 @@
 
                     <Button Text="Check Connectivity"
                         VerticalOptions="Fill"
-                        FontSize="18"
+                        FontSize="20"
                         HeightRequest="75"
                         Grid.Row="0"
                         Grid.Column="0"
                         x:Name="btnCheckConnectivity"
-                        Clicked="DoCheckConnectivity"/>
+                        Clicked="DoCheckConnectivity"
+                        BackgroundColor="Green"
+                        TextColor="White"/>
 
                     <Button Text="Ping"
                         VerticalOptions="Fill"
-                        FontSize="18"
+                        FontSize="20"
                         HeightRequest="75"
                         Grid.Row="0"
                         Grid.Column="1"
-                        x:Name="btnPing"/>
+                        x:Name="btnPing"
+                        BackgroundColor="Green"
+                        TextColor="White"/>
 
                     <Button Text="Ping Remote"
                         VerticalOptions="Fill"
-                        FontSize="18"
+                        FontSize="20"
                         HeightRequest="75"
                         Grid.Row="1"
                         Grid.Column="0"
-                        x:Name="btnRemotePing"/>
+                        x:Name="btnRemotePing"
+                        BackgroundColor="Green"
+                        TextColor="White"/>
 
                     <Button Text="Get Guitar-API"
                         VerticalOptions="Fill"
-                        FontSize="18"
+                        FontSize="20"
                         HeightRequest="75"
                         Grid.Row="1"
                         Grid.Column="1"
-                        x:Name="btnGet"/>
+                        x:Name="btnGet"
+                        BackgroundColor="Green"
+                        TextColor="White"/>
 
                     <Button Text="Post Sample Data"
                         VerticalOptions="Fill"
-                        FontSize="18"
+                        FontSize="20"
                         HeightRequest="75"
                         Grid.Row="2"
                         Grid.Column="0"
-                        x:Name="btnPost"/>
+                        x:Name="btnPost"
+                        BackgroundColor="Green"
+                        TextColor="White"/>
 
 
                     <Button Text="Create Test Log"
                         VerticalOptions="Fill"
-                        FontSize="18"
+                        FontSize="20"
                         HeightRequest="75"
                         Grid.Row="2"
                         Grid.Column="1"
                         x:Name="btnLog"
-                        Clicked="OnCreateLog"/>
+                        Clicked="OnCreateLog"
+                        BackgroundColor="Green"
+                        TextColor="White"/>
                 </Grid>
             </StackLayout>
         </ScrollView>

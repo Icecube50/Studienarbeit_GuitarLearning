@@ -1,10 +1,7 @@
 ﻿using GuitarLearning_Essentials.SongModel;
 using GuitarLearning_Mobile.UtilityClasses;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Xamarin.Forms;
@@ -12,14 +9,38 @@ using Xamarin.Forms.Xaml;
 
 namespace GuitarLearning_Mobile.Pages
 {
+    /// <summary>
+    /// Application page which implements the user interface for the "GuitarLearning" feature.
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class pgSongPage_Template : ContentPage
     {
+        /// <summary>
+        /// Musical sheet which is rendered by this instance of the <see cref="pgSongPage_Template"/> class.
+        /// </summary>
+        /// <value>Gets/Sets Song which is serialised from the "SongName.xml". Default value is <code>null</code>.</value>
         private Song CurrentSong { get; set; } = null;
+        /// <summary>
+        /// Instance of the UtilityHelper that will handle all the processing.
+        /// </summary>
+        /// <value>Gets/Sets the UtilityHelper <see cref="UtilityClasses.UtilityHelper"/> field. Default value is <code>null</code>.</value>
         private UtilityHelper UtilityHelper { get; set; } = null;
+        /// <summary>
+        /// Determines whether the application is currently processing or not.
+        /// </summary>
+        /// <value>Gets/Sets the IsInUse bool field. Default value is false.</value>
         private bool IsInUse { get; set; } = false;
-
+        /// <summary>
+        /// Event that is invoked when <see cref="IsInUse"/> is changed. 
+        /// </summary>
         private event EventHandler IsInUseChanged;
+        /// <summary>
+        /// Constructor
+        /// <para>Loads the "SongName.html" from the application's assets.
+        /// Loads the "SongName.xml" from the application's assets and serialises it.
+        /// Initialises all event bindings and fields.</para>
+        /// </summary>
+        /// <param name="SongName">Name of the song this instance of <see cref="pgSongPage_Template"/> will use.</param>
         public pgSongPage_Template(string SongName)
         {
             InitializeComponent();
@@ -66,7 +87,11 @@ namespace GuitarLearning_Mobile.Pages
                 Navigation.PopAsync();
             }
         }
-
+        /// <summary>
+        /// Subscribed to <see cref="IsInUseChanged"/>. Changes the text of the "Start/Stop"-button.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Eventarguments</param>
         private void ChangeButtonLabel(object sender, EventArgs e)
         {
             if (IsInUse)
@@ -76,6 +101,11 @@ namespace GuitarLearning_Mobile.Pages
             else { btnProcessState.Text = "Start"; }
         }
 
+        /// <summary>
+        /// Subscribed to <see cref="IsInUseChanged"/>. Starts or stops the processing, depending on the value of <see cref="IsInUse"/>.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Eventarguments</param>
         private void ChangeProcessState(object sender, EventArgs e)
         {
             if (IsInUse)
@@ -87,7 +117,12 @@ namespace GuitarLearning_Mobile.Pages
                 UtilityHelper.Stop();
             }
         }
-
+        /// <summary>
+        /// Subscribed to <see cref="IsInUseChanged"/>. Runs asynchronously, runs the "Animation"-javascript functions of the WebView.
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Eventarguments</param>
+        /// <returns>Task, so the method can be run asynchronously</returns>
         private async Task AnimationAsync(object sender, EventArgs e)
         {
             try
@@ -110,13 +145,23 @@ namespace GuitarLearning_Mobile.Pages
                 Logger.Log("SongPage - Error: " + ex.Message);
             }
         }
-
+        /// <summary>
+        /// Event that is invoked when the "Start/Stop"-button is clicked.
+        /// Changes <see cref="IsInUse"/> and invokes <see cref="IsInUseChanged"/>.
+        /// </summary>
+        /// <param name="sender">Button that invokes the event.</param>
+        /// <param name="e">Eventarguments</param>
         private void OnProcessStateChanged(object sender, EventArgs e)
         {
             IsInUse = !IsInUse;
             IsInUseChanged?.Invoke(null, new EventArgs());
         }
 
+        /// <summary>
+        /// Event which is invoked when the user leaves this page.
+        /// </summary>
+        /// <param name="sender">Page that invoked the event.</param>
+        /// <param name="e">Eventarguments</param>
         private void OnLeave(object sender, EventArgs e)
         {
             if(IsInUse)

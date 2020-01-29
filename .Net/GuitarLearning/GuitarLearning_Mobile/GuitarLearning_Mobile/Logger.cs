@@ -95,7 +95,7 @@ namespace GuitarLearning_Mobile
         static readonly object _apiLocker = new object();
         /// <summary>
         /// Logging method that is used for logs specific to the API.
-        /// The File is writte to <code>Android.OS.Environment.GetExternalStoragePublicDirectory(string.Empty).AbsolutePath + "GuitarLearning\ApiLog.txt"</code>
+        /// The File is written to <code>Android.OS.Environment.GetExternalStoragePublicDirectory(string.Empty).AbsolutePath + "GuitarLearning\ApiLog.txt"</code>
         /// </summary>
         /// <param name="logMessage">Message that shall be written into the log file.</param>
         public static void APILog(string logMessage)
@@ -175,7 +175,7 @@ namespace GuitarLearning_Mobile
         }
 
         /// <summary>
-        /// Setter for the string field, <see cref="logFilePath"/>/>
+        /// Setter for the string field, <see cref="logFilePath"/>
         /// </summary>
         /// <param name="newPath">New file path</param>
         public static void ChangeLogFilePath(string newPath)

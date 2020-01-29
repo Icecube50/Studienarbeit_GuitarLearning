@@ -2,23 +2,24 @@
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GuitarLearning_Mobile.Pages
 {
+    /// <summary>
+    /// Application page which implements the user interface with which several networking options can be tested.
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class pgNetworkTesting : ContentPage
     {
+        /// <summary>
+        /// Static sample data, so the HttpPost can be tested.
+        /// </summary>
         private EssentiaModel exampleData { get; } = new EssentiaModel()
         {
             audioData = new float[1000]
@@ -96,162 +97,207 @@ namespace GuitarLearning_Mobile.Pages
             },
             chordData = string.Empty
         };
-
+        /// <summary>
+        /// Constructor
+        /// <para>Initialises all asynchronous events.</para>
+        /// </summary>
         public pgNetworkTesting()
         {
             InitializeComponent();
 
             btnPing.Clicked += async (s, e) =>
             {
-                string address = etyURl.Text;
-
-                editorOutput = string.Empty;
-                editorOutput += "Pinging " + address + "...\n";
-                try
-                {
-                    bool result = await CrossConnectivity.Current.IsReachable(address);
-                    if (result)
-                    {
-                        editorOutput += address + " is reachable\n";
-                    }
-                    else
-                    {
-                        editorOutput += address + " cannot be reached\n";
-                    }
-                }
-                catch
-                {
-                    editorOutput += "Error during ping\n";
-                    editorOutput += "Please make sure the address is valid\n";
-                }
+                await Ping();
             };
 
             btnRemotePing.Clicked += async (s, e) =>
             {
-                string address = etyURl.Text;
-
-                editorOutput = string.Empty;
-                editorOutput += "Pinging " + address + "...\n";
-
-                try
-                {
-                    bool result = await CrossConnectivity.Current.IsRemoteReachable(address);
-                    if (result)
-                    {
-                        editorOutput += address + " is reachable\n";
-                    }
-                    else
-                    {
-                        editorOutput += address + " cannot be reached\n";
-                    }
-                }
-                catch
-                {
-                    editorOutput += "Error during ping\n";
-                    editorOutput += "Please make sure the address is valid\n";
-                }
+                await RemotePing();
             };
 
             btnGet.Clicked += async (s, e) =>
             {
-                string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia";
-                editorOutput = string.Empty;
-                editorOutput += "Communication with: " + address + "\n";
-                editorOutput += "Sending Get-Request...\n";
-
-                try
-                {
-                    using (HttpRequestMessage request = new HttpRequestMessage())
-                    {
-                        request.RequestUri = new Uri(address);
-                        request.Method = HttpMethod.Get;
-                        request.Headers.Add("Accept", "application/json");
-                        Logger.Log("Request - " + request);
-                        using (HttpClient httpClient = new HttpClient())
-                        {
-                            httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
-                            HttpResponseMessage response = await httpClient.SendAsync(request);
-                            if (response.StatusCode == HttpStatusCode.OK)
-                            {
-                                editorOutput += "Status: OK\n";
-                                HttpContent content = response.Content;
-                                string json = await content.ReadAsStringAsync();
-                                editorOutput += "Content:\n" + json;
-                                Logger.Log("Response - " + "Status: " + response.StatusCode + " Content: " + json);
-                            }
-                            else
-                            {
-                                editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
-                                Logger.Log("Response - " + "Status: " + response.StatusCode);
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                    editorOutput += "Timeout\n";
-                    editorOutput += "Could't reach server\n";
-                }
+                await GetRequest();
             };
 
             btnPost.Clicked += async (s, e) =>
             {
-                string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia";
-                editorOutput = string.Empty;
-                editorOutput += "Communication with: " + address + "\n";
-                editorOutput += "Sending Post-Request...\n";
+                await PostRequest();
+            };
+        }
+        /// <summary>
+        /// Uses the <see cref="exampleData"/> to perform a test post-request.
+        /// </summary>
+        /// <returns>Task, so the method can be run asynchronously.</returns>
+        private async Task PostRequest()
+        {
+            string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia";
+            editorOutput = string.Empty;
+            editorOutput += "Communication with: " + address + "\n";
+            editorOutput += "Sending Post-Request...\n";
 
-                try
+            try
+            {
+                using (HttpRequestMessage request = new HttpRequestMessage())
                 {
-                    using (HttpRequestMessage request = new HttpRequestMessage())
-                    {
-                        request.RequestUri = new Uri(address);
-                        request.Method = HttpMethod.Post;
-                        request.Headers.Add("Accept", "application/json");
-                        var requestContent = JsonConvert.SerializeObject(exampleData);
-                        request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
-                        Logger.Log("Request - " + request);
-                        Logger.Log("Content - " + request.Content);
-                        Logger.Log("Model - " + exampleData.audioData.Length + " - " + exampleData.audioData.ToString() + " - " + exampleData.audioData);
+                    request.RequestUri = new Uri(address);
+                    request.Method = HttpMethod.Post;
+                    request.Headers.Add("Accept", "application/json");
+                    var requestContent = JsonConvert.SerializeObject(exampleData);
+                    request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
+                    Logger.Log("Request - " + request);
+                    Logger.Log("Content - " + request.Content);
+                    Logger.Log("Model - " + exampleData.audioData.Length + " - " + exampleData.audioData.ToString() + " - " + exampleData.audioData);
 
-                        using (HttpClient httpClient = new HttpClient())
+                    using (HttpClient httpClient = new HttpClient())
+                    {
+                        httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
+                        HttpResponseMessage response = await httpClient.SendAsync(request);
+                        if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
-                            HttpResponseMessage response = await httpClient.SendAsync(request);
-                            if (response.StatusCode == HttpStatusCode.OK)
-                            {
-                                editorOutput += "Status: OK\n";
-                                HttpContent content = response.Content;
-                                string json = await content.ReadAsStringAsync();
-                                var responseContent = JsonConvert.DeserializeObject<EssentiaModel>(json);
-                                editorOutput += "Chords:\n" + responseContent.chordData;
-                                Logger.Log("Response - " + "Status: " + response.StatusCode + " Content" + responseContent.chordData);
-                            }
-                            else
-                            {
-                                editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
-                                Logger.Log("Response - " + "Status: " + response.StatusCode);
-                            }
+                            editorOutput += "Status: OK\n";
+                            HttpContent content = response.Content;
+                            string json = await content.ReadAsStringAsync();
+                            var responseContent = JsonConvert.DeserializeObject<EssentiaModel>(json);
+                            editorOutput += "Chords:\n" + responseContent.chordData;
+                            Logger.Log("Response - " + "Status: " + response.StatusCode + " Content" + responseContent.chordData);
+                        }
+                        else
+                        {
+                            editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                            Logger.Log("Response - " + "Status: " + response.StatusCode);
                         }
                     }
                 }
-                catch
+            }
+            catch
+            {
+                editorOutput += "Timeout\n";
+                editorOutput += "Could't reach server\n";
+            }
+        }
+        /// <summary>
+        /// Performs a test get-request.
+        /// </summary>
+        /// <returns>Task, so the method can be run asynchronously.</returns>
+        private async Task GetRequest()
+        {
+            string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia";
+            editorOutput = string.Empty;
+            editorOutput += "Communication with: " + address + "\n";
+            editorOutput += "Sending Get-Request...\n";
+
+            try
+            {
+                using (HttpRequestMessage request = new HttpRequestMessage())
                 {
-                    editorOutput += "Timeout\n";
-                    editorOutput += "Could't reach server\n";
+                    request.RequestUri = new Uri(address);
+                    request.Method = HttpMethod.Get;
+                    request.Headers.Add("Accept", "application/json");
+                    Logger.Log("Request - " + request);
+                    using (HttpClient httpClient = new HttpClient())
+                    {
+                        httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
+                        HttpResponseMessage response = await httpClient.SendAsync(request);
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            editorOutput += "Status: OK\n";
+                            HttpContent content = response.Content;
+                            string json = await content.ReadAsStringAsync();
+                            editorOutput += "Content:\n" + json;
+                            Logger.Log("Response - " + "Status: " + response.StatusCode + " Content: " + json);
+                        }
+                        else
+                        {
+                            editorOutput += "Status: " + response.StatusCode.ToString() + "\n";
+                            Logger.Log("Response - " + "Status: " + response.StatusCode);
+                        }
+                    }
                 }
-            };
+            }
+            catch
+            {
+                editorOutput += "Timeout\n";
+                editorOutput += "Could't reach server\n";
+            }
+        }
+        /// <summary>
+        /// Reads the url from the entry and tries to ping it (Can only ping remote addresses).
+        /// </summary>
+        /// <returns>Task, so the method can be run asynchronously.</returns>
+        private async Task RemotePing()
+        {
+            string address = etyURl.Text;
+
+            editorOutput = string.Empty;
+            editorOutput += "Pinging " + address + "...\n";
+
+            try
+            {
+                bool result = await CrossConnectivity.Current.IsRemoteReachable(address);
+                if (result)
+                {
+                    editorOutput += address + " is reachable\n";
+                }
+                else
+                {
+                    editorOutput += address + " cannot be reached\n";
+                }
+            }
+            catch
+            {
+                editorOutput += "Error during ping\n";
+                editorOutput += "Please make sure the address is valid\n";
+            }
+        }
+        /// <summary>
+        /// Reads the IP from the entry and tries to ping it (Can only ping local addresses).
+        /// </summary>
+        /// <returns>Task, so the method can be performed asynchronously.</returns>
+        private async Task Ping()
+        {
+            string address = etyURl.Text;
+
+            editorOutput = string.Empty;
+            editorOutput += "Pinging " + address + "...\n";
+            try
+            {
+                bool result = await CrossConnectivity.Current.IsReachable(address);
+                if (result)
+                {
+                    editorOutput += address + " is reachable\n";
+                }
+                else
+                {
+                    editorOutput += address + " cannot be reached\n";
+                }
+            }
+            catch
+            {
+                editorOutput += "Error during ping\n";
+                editorOutput += "Please make sure the address is valid\n";
+            }
         }
 
+        /// <summary>
+        /// Bindable property, is used to automatically update the bond output control.
+        /// </summary>
         public static readonly BindableProperty editorOutputProperty =
             BindableProperty.Create("editorOutput", typeof(string), typeof(pgNetworkTesting));
-
+        /// <summary>
+        /// Getter/Setter for the <see cref="editorOutputProperty"/>.
+        /// </summary>
+        /// <value>String which is shown in the output control.</value>
         public string editorOutput
         {
             get { return (string)GetValue(editorOutputProperty); }
             set { SetValue(editorOutputProperty, value); }
         }
-
+        /// <summary>
+        /// This method is invoked by a button click. It determines whether the dive is connected to any internet connection or not.
+        /// </summary>
+        /// <param name="sender">Button that invoked the event.</param>
+        /// <param name="e">Eventarguments</param>
         private void DoCheckConnectivity(object sender, EventArgs e)
         {
             editorOutput = string.Empty;
@@ -265,7 +311,11 @@ namespace GuitarLearning_Mobile.Pages
                 editorOutput += "Device has no connection\n";
             }
         }
-
+        /// <summary>
+        /// This method is invoked by a button click. It creates a test-log-file
+        /// </summary>
+        /// <param name="sender">Button that invoked the event.</param>
+        /// <param name="e">Eventarguments</param>
         private void OnCreateLog(object sender, EventArgs e)
         {
             string address = etyURl.Text;

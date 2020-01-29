@@ -111,8 +111,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <summary>
         /// Compares the timing of the musical note with the recorded note.
         /// </summary>
-        /// <param name="shouldTime">Time given by the sheet, in miliseconds since the start of the song.</param>
-        /// <param name="isTime">Time of recording, in miliseconds since the start of the song.</param>
+        /// <param name="shouldTime">Time given by the sheet, in milliseconds since the start of the song.</param>
+        /// <param name="isTime">Time of recording, in milliseconds since the start of the song.</param>
         /// <returns>true when the timing is about equal, otherwise false.</returns>
         private static bool InRange(double shouldTime, double isTime)
         {

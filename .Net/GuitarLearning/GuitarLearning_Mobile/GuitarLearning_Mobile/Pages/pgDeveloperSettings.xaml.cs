@@ -1,10 +1,6 @@
 ﻿using GuitarLearning_Mobile.DeveloperSupport;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +8,7 @@ using Xamarin.Forms.Xaml;
 namespace GuitarLearning_Mobile.Pages
 {
     /// <summary>
-    /// This Xamarin.Forms page is used to provide a GUI with which the developer fields in <see cref="DevFlags"/> can be changed./>
+    /// This Xamarin.Forms page is used to provide a GUI with which the developer fields in <see cref="DevFlags"/> can be changed.
     /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class pgDeveloperSettings : ContentPage
@@ -45,19 +41,26 @@ namespace GuitarLearning_Mobile.Pages
         /// <summary>
         /// Event that is called when the user confirms the changes made.
         /// Updates the <see cref="DevFlags.Deviation"/> filed with the new value.
-        /// When the entered value is not a number, a DisplayAlter is shown to the user./>
+        /// When the entered value is not a number, a DisplayAlter is shown to the user.
         /// </summary>
         /// <param name="sender">Button that invokes the event</param>
         /// <param name="e">Eventarguments</param>
         private void OnApllyClicked(object sender, EventArgs e)
         {
-            string unsafeNumber = etyDeviation.Text;
-            if(Regex.IsMatch(unsafeNumber, "^[0-9]+$"))
+            try
             {
-                int safeNumber = Convert.ToInt32(unsafeNumber);
-                DevFlags.Deviation = safeNumber;
+                string unsafeNumber = etyDeviation.Text;
+                if (Regex.IsMatch(unsafeNumber, "^[0-9]+$"))
+                {
+                    int safeNumber = Convert.ToInt32(unsafeNumber);
+                    DevFlags.Deviation = safeNumber;
+                }
+                else { DisplayAlert("Error", "Bitte wählen Sie eine ganze Zahl", "OK"); }
             }
-            else { DisplayAlert("Error", "Bitte wählen Sie eine ganze Zahl", "OK"); }
+            catch
+            {
+                DisplayAlert("Error", "Etwas ist schief gelaufen", "OK");
+            }
         }
     }
 }

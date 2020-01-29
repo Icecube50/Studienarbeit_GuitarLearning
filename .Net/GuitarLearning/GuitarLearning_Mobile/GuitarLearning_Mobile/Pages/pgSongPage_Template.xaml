@@ -17,8 +17,8 @@
                 <WebView Grid.Row="0"
                          x:Name="wvTabContainer"/>
 
-                <Grid BackgroundColor="DodgerBlue"
-                         HeightRequest="60" Grid.Row="1">
+                <Grid BackgroundColor="LimeGreen"
+                         HeightRequest="60" Grid.Row="1" Padding="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -26,8 +26,12 @@
 
                     <Button Text="Start"
                             HeightRequest="60"
+                            WidthRequest="100"
                             x:Name="btnProcessState"
-                            Clicked="OnProcessStateChanged"/>
+                            Clicked="OnProcessStateChanged"
+                            BackgroundColor="Green"
+                            TextColor="White"
+                            FontSize="20"/>
                 </Grid>
             </Grid>
         </StackLayout>

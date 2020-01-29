@@ -14,7 +14,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
 
         /// <summary>
         /// Constant, limits the amount of data that can be recorded and processed at once.
-        /// Value: 10 000
+        /// <para>Value: 10.000</para>
         /// </summary>
         public const int BUFFER_SIZE = 10000;
         /// <summary>
@@ -46,9 +46,9 @@ namespace GuitarLearning_Mobile.UtilityClasses
             }
         }
         /// <summary>
-        /// Look at the top of the queue to determin wether an object can be dequed.
+        /// Look at the top of the queue to determin whether an object can be dequed.
         /// </summary>
-        /// <returns><see cref="AudioData"/>, <code>null</code> is returned when the buffer is empty.</returns>
+        /// <returns><see cref="AudioData"/>, null is returned when the buffer is empty.</returns>
         public AudioData Peek()
         {
             lock (_lock)
@@ -91,7 +91,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <summary>
         /// Point in time on which the audio data was recorded.
         /// </summary>
-        /// <value>Gets/Sets the Time property double field. Time is stored as miliseconds in double.</value>
+        /// <value>Gets/Sets the Time property double field. Time is stored as milliseconds in double.</value>
         public double Time { get; set; }
         /// <summary>
         /// Constructor

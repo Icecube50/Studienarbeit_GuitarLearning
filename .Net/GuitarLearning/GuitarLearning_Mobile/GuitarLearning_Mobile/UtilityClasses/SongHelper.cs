@@ -44,7 +44,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             if (SongIndex >= IndexedSong.Length) throw new Exception("Invalid Index");
         }
         /// <summary>
-        /// Checks wether enough time has passed to determine a new index or to keep the old one.
+        /// Checks whether enough time has passed to determine a new index or to keep the old one.
         /// </summary>
         /// <param name="elapsed">Time in milliseconds that has elapsed since the start of the song.</param>
         /// <param name="obj">Last SongObject that has been analysed.</param>

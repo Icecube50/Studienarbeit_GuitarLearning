@@ -40,9 +40,9 @@ namespace GuitarLearning_Mobile.UtilityClasses
             }
         }
         /// <summary>
-        /// Look at the top of the queue to determin wether an object can be dequeued.
+        /// Look at the top of the queue to determin whether an object can be dequeued.
         /// </summary>
-        /// <returns><see cref="EssentiaModel"/>, <code>null</code> is returned when the buffer is emtpy.</returns>
+        /// <returns><see cref="EssentiaModel"/>, null is returned when the buffer is emtpy.</returns>
         public EssentiaModel Peek()
         {
             lock(_lock)

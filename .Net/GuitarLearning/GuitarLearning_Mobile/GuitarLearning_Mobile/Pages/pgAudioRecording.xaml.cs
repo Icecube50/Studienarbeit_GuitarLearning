@@ -3,8 +3,6 @@ using GuitarLearning_Mobile.UtilityClasses;
 using Plugin.Permissions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -12,6 +10,10 @@ using Xamarin.Forms.Xaml;
 
 namespace GuitarLearning_Mobile.Pages
 {
+    /// <summary>
+    /// CURRENTLY NOT WORKING DUE TO CHANGES TO <see cref="UtilityClasses"/>.
+    /// DO NOT USE!
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class pgAudioRecording : ContentPage
     {

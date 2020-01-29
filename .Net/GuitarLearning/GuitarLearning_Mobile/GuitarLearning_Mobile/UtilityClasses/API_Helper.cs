@@ -50,7 +50,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         }
 
         /// <summary>
-        /// Uses the <see cref="cancellationToken"/> to cancel all tasks./>
+        /// Uses the <see cref="cancellationToken"/> to cancel all tasks.
         /// </summary>
         public void StopAPI()
         {

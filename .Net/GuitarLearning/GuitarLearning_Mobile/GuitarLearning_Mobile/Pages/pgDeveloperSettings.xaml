@@ -14,7 +14,7 @@
                 </Grid.ColumnDefinitions>
                 <CheckBox VerticalOptions="Center"
                       HeightRequest="30"
-                      Color="DodgerBlue"
+                      Color="Green"
                       x:Name="cckLogging"
                       Grid.Column="1"
                       HorizontalOptions="Start"
@@ -52,7 +52,7 @@
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="End"
                     FontSize="20"
-                    BackgroundColor="DodgerBlue"
+                    BackgroundColor="Green"
                     TextColor="White"
                     Clicked="OnApllyClicked">
             </Button>
