@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Song xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SongTitle>Test 2</SongTitle>
+  <SongTitle>Chord Test</SongTitle>
   <BPM>80</BPM>
-  <SongDuration>10600</SongDuration>
+  <SongDuration>39750</SongDuration>
   <Notation>
     <INote>
       <Chord>

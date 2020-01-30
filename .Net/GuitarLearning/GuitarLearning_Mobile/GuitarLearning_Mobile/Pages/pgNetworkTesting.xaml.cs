@@ -136,6 +136,9 @@ namespace GuitarLearning_Mobile.Pages
             editorOutput += "Communication with: " + address + "\n";
             editorOutput += "Sending Post-Request...\n";
 
+            DateTime start;
+            DateTime end;
+
             try
             {
                 using (HttpRequestMessage request = new HttpRequestMessage())
@@ -152,7 +155,12 @@ namespace GuitarLearning_Mobile.Pages
                     using (HttpClient httpClient = new HttpClient())
                     {
                         httpClient.Timeout = new TimeSpan(0, 0, 0, 5);
+                        start = DateTime.Now;
                         HttpResponseMessage response = await httpClient.SendAsync(request);
+                        end = DateTime.Now;
+                        editorOutput += "S: " + start.ToString() + "\n";
+                        editorOutput += "E: " + end.ToString() + "\n";
+                        editorOutput += "D: " + end.Subtract(start).ToString() + "\n";
                         if (response.StatusCode == HttpStatusCode.OK)
                         {
                             editorOutput += "Status: OK\n";

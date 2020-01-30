@@ -35,9 +35,17 @@ namespace GuitarLearning_TabulatorGenerator.MusicalNotes
 
         public static int SongDurationInMS()
         {
-            int interval = JavascriptCalculations.GetIntervallTime();
-            int duration = CalculateSongDuration() * interval;
-            return duration;
+            double interval = JavascriptCalculations.GetBPS();
+
+            double songDuration = (StyleOptions.PreStrokes / 2) * interval;
+            foreach (MusicalNote musicalNote in Melodie)
+            {
+                if (musicalNote is MusicalNote_Stroke) continue;
+                songDuration += musicalNote.GetMusicalDuration() * interval;
+            }
+
+            double duration = songDuration;
+            return Convert.ToInt32(duration);
         }
 
         public static string SerializeMelodieToCSS()

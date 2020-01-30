@@ -58,7 +58,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             lock (_lock)
             {
-                if (DevFlags.LoggingEnabled && Buffer.Count > 0) 
+                if (Buffer.Count > 0) 
                 {
                     string msg = "----- Buffer Output -----\n";
                     foreach(var item in Buffer)

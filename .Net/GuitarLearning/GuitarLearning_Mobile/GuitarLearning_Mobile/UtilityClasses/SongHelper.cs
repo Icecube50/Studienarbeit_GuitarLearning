@@ -129,7 +129,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         private static int CalculatePosition(double StrokeNumber, double BeatNumber)
         {
             double timePerBeat = 4 * BPS;
-            double positionTime = timePerBeat * BeatNumber;
+            double positionTime = timePerBeat * (BeatNumber + 0.5);
             positionTime += (BPS * StrokeNumber);
             positionTime = Math.Round(positionTime);
             return Convert.ToInt32(positionTime);

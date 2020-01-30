@@ -18,6 +18,7 @@ namespace GuitarLearning_TabulatorGenerator.Storage
         public static string IdOfAnimatedDiv { get; set; } = "AnimatedDiv";
         public static int IntervallTime { get; set; } = 5;
         public static int ExtraSizeAfterStroke { get; set; } = 5;
-        public static int PreTabSize => SizeOfQuarter * 12;
+        public static int PreTabSize => SizeOfQuarter * PreStrokes;
+        public static int PreStrokes { get; set; } = 12;
     }
 }

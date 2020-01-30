@@ -27,6 +27,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <value>Gets/Sets the AudioBuffer AudioBuffer field.</value>
         private AudioBuffer AudioBuffer { get; set; } = null;
         /// <summary>
+        /// Countes the number of times audio data was recorded.
+        /// </summary>
+        /// <value>Gets/Sets the RecordCount int field.</value>
+        private int RecordCount { get; set; } = 0;
+        /// <summary>
         /// Token that can be used to cancel all running tasks.
         /// </summary>
         CancellationTokenSource cts;
@@ -65,6 +70,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 {
                     //Ignore, just return
                     if (DevFlags.LoggingEnabled) Logger.RecordingLog("Recording was cancelled");
+                    Logger.RecordingLog("Number of times audio was recorded: " + RecordCount);
                 }
                 catch (Exception e)
                 {
@@ -115,6 +121,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             {
                 //if (DevFlags.LoggingEnabled) Logger.RecordingLog("Looping");
                 await SafeGetRecorder().ReadAsync(InputBuffer, 0, InputBuffer.Length, 0);
+                RecordCount++;
                 AudioBuffer?.Add(new AudioData(InputBuffer, TimeHelper.GetElapsedTime()));
                 InputBuffer = new float[InputBuffer.Length];
             }

@@ -23,6 +23,7 @@ namespace GuitarLearning_Mobile.Pages
             InitializeComponent();
 
             etyDeviation.Placeholder = Convert.ToString(DevFlags.Deviation);
+            cckLogging.IsChecked = DevFlags.LoggingEnabled;
         }
 
         /// <summary>

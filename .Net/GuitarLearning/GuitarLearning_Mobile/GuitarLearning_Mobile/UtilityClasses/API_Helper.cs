@@ -34,6 +34,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// The cancellationToken field contains the token that can be used to end all asynchronous running tasks.
         /// </summary>
         private CancellationTokenSource cancellationToken;
+        /// <summary>
+        /// The Amount of responses recieved from the server
+        /// </summary>
+        /// <value>Gets/Sets the ResponsesRecieved int field.</value>
+        private int ResponsesRecieved { get; set; } = 0;
 
         /// <summary>
         /// Constructor
@@ -77,6 +82,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 {
                     //Ignore, just return 
                     if (DevFlags.LoggingEnabled) Logger.APILog("Processing task was cancelled");
+                    Logger.APILog("Recieved " + ResponsesRecieved + " responses");
                 }
                 catch (Exception e)
                 {
@@ -134,6 +140,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 HttpResponseMessage response = await myClient.SendAsync(request);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    ResponsesRecieved++;
                     if (DevFlags.LoggingEnabled) Logger.APILog("Response == OK");
                     HttpContent content = response.Content;
                     string json = await content.ReadAsStringAsync();

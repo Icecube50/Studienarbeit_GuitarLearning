@@ -9,31 +9,42 @@ namespace GuitarLearning_TabulatorGenerator.Storage
 {
     public static class JavascriptCalculations
     {
-        public static int GetIntervallTime()
+        public static FrameOptions GetIntervallTime(int optionNumber)
+        {
+            double timeDuration = MusicalStorage.SongDurationInMS();
+
+            double physDuration = MusicalStorage.CalculateSongDuration();
+
+            double delta = physDuration / timeDuration;
+
+            if(optionNumber == 0)
+            {
+                double interval = 1.0 / delta;
+                var options = new FrameOptions();
+                options.frameInterval = interval;
+                options.numberOfPixels = 1;
+                return options;
+            }
+            else if(optionNumber == 1)
+            {
+                var options = new FrameOptions();
+                options.frameInterval = 1;
+                options.numberOfPixels = delta;
+                return options;
+            }
+            else
+            {
+                throw new Exception("invalid optionNumber");
+            }
+        }
+
+        public static double GetBPS()
         {
             //Get time per beat
             double bpm = SongOptions.BpmValue;
             double bps = 60 / bpm;
-
-            //Get size of beat (in pixels)
-            int size = (StyleOptions.SizeOfQuarter * 4) + StyleOptions.ExtraSizeAfterStroke;
-
-            //Get time per pixel
-            double pixelPerSec = size / bps;
-            double pixelPerMSec = pixelPerSec / 1000;
-
-            //Calculate time needed for 1 pixel
-            if(pixelPerMSec <= 1)
-            {
-                double intervalTime = 1 / pixelPerMSec;
-                double correctedIntervalTime = Math.Ceiling(intervalTime); //Get a nice number, add a small margin of error
-                return Convert.ToInt32(correctedIntervalTime);
-            }
-            else
-            {
-                throw new Exception("The choosen bpm is way to high, please choose a maximum value of 200");
-            }
-
+            bps = bps * 1000; //Convert to ms
+            return bps;
         }
 
         public static int GetAnimationStoppingPoint()
@@ -45,5 +56,11 @@ namespace GuitarLearning_TabulatorGenerator.Storage
             double negatedLength = -correctedLength;
             return Convert.ToInt32(negatedLength);
         }
+    }
+
+    public struct FrameOptions
+    {
+        public double numberOfPixels;
+        public double frameInterval;
     }
 }

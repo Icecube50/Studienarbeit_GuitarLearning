@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GuitarLearning_Mobile.UtilityClasses
@@ -90,13 +91,21 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     {
                         if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
                         string scriptName = $"HighlightCorrectChord('" + song.WebId + "')";
-                        await webView.EvaluateJavaScriptAsync(scriptName);
+
+                        MainThread.BeginInvokeOnMainThread(async () =>
+                        {
+                            await webView.EvaluateJavaScriptAsync(scriptName);
+                        });
                     }
                     else if (song.Type == Highlight.Note)
                     {
                         if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
                         string scriptName = $"HighlightCorrectNote('" + song.WebId + "')";
-                        await webView.EvaluateJavaScriptAsync(scriptName);
+
+                        MainThread.BeginInvokeOnMainThread(async () =>
+                        {
+                            await webView.EvaluateJavaScriptAsync(scriptName);
+                        });          
                     }
                 }
             }
@@ -152,7 +161,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         private static bool InRange(double shouldTime, double isTime)
         {
             if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Is: " + isTime + " - Should: " + shouldTime);
-             bool isInRange = true;
+            bool isInRange = true;
             if (isTime < shouldTime - DevFlags.Deviation) isInRange = false;
             if (isTime > shouldTime + DevFlags.Deviation) isInRange = false;
             return isInRange;

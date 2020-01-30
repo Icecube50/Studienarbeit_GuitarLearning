@@ -87,11 +87,14 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
             js += "var PosX;\n";
             js += "var IntervalID;\n";
 
+            var frame = JavascriptCalculations.GetIntervallTime(0);
+            var doubleString = frame.frameInterval.ToString();
+            doubleString = doubleString.Replace(",", ".");
             //Animate()
             js += "function Animate() {\n";
             js += "Tab = document.getElementById(\"" + StyleOptions.IdOfAnimatedDiv + "\");\n";
             js += "PosX = 0;\n";
-            js += "IntervalID = setInterval(frame, " + JavascriptCalculations.GetIntervallTime() + ");\n";
+            js += "IntervalID = setInterval(frame, " + doubleString + ");\n";
             js += "}\n";
 
             //frame()
@@ -100,7 +103,7 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
             js += "clearInterval(IntervalID);\n";
             js += "}\n";
             js += "else {\n";
-            js += "PosX--;\n";
+            js += "PosX = PosX - " + frame.numberOfPixels + ";\n";
             js += "Tab.style.left = PosX + \"px\";\n";
             js += "}\n";
             js += "}\n";
