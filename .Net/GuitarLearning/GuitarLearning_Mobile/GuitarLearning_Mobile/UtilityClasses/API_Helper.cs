@@ -98,7 +98,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 httpClient.Timeout = new TimeSpan(0, 0, 12);
                 while (true)
                 {
-                    if (DevFlags.LoggingEnabled) Logger.APILog("Looping");
+                    //if (DevFlags.LoggingEnabled) Logger.APILog("Looping");
                     ct.ThrowIfCancellationRequested();
                     if (AudioBuffer?.Peek() != null)
                     {
@@ -134,12 +134,12 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 HttpResponseMessage response = await myClient.SendAsync(request);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    if (DevFlags.LoggingEnabled) Logger.APILog("Respons == OK");
+                    if (DevFlags.LoggingEnabled) Logger.APILog("Response == OK");
                     HttpContent content = response.Content;
                     string json = await content.ReadAsStringAsync();
                     apiModel = JsonConvert.DeserializeObject<EssentiaModel>(json);
                 }
-                else if (DevFlags.LoggingEnabled) Logger.APILog("Rsponse != OK");
+                else if (DevFlags.LoggingEnabled) Logger.APILog("Response != OK");
             }
             ct.ThrowIfCancellationRequested();
             return apiModel;

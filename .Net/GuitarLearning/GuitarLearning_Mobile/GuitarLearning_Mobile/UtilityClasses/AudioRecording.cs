@@ -113,7 +113,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             SafeGetRecorder().StartRecording();
             while (!ct.IsCancellationRequested)
             {
-                if (DevFlags.LoggingEnabled) Logger.RecordingLog("Looping");
+                //if (DevFlags.LoggingEnabled) Logger.RecordingLog("Looping");
                 await SafeGetRecorder().ReadAsync(InputBuffer, 0, InputBuffer.Length, 0);
                 AudioBuffer?.Add(new AudioData(InputBuffer, TimeHelper.GetElapsedTime()));
                 InputBuffer = new float[InputBuffer.Length];

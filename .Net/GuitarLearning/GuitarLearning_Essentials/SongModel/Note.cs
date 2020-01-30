@@ -42,5 +42,18 @@ namespace GuitarLearning_Essentials.SongModel
         {
 
         }
+        /// <summary>
+        /// Constructor
+        /// <para>Copy-Constructor</para>
+        /// </summary>
+        /// <param name="n">Note to copy</param>
+        public Note(Note n)
+        {
+            Name = n.Name;
+            ID = n.ID;
+            BeatNumber = n.BeatNumber;
+            StrokeNumber = n.StrokeNumber;
+            Duration = n.Duration;
+        }
     }
 }

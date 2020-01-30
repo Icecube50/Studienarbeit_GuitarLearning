@@ -21,14 +21,14 @@ namespace GuitarLearning_API
             {
                 audioData[i] = Convert.ToSingle(splittedString[i]);
             }
-            Logger.Log("InputString - " + inputData);
+            if(Logger.DEBUGFLAG) Logger.Log("InputString - " + inputData);
             return audioData;
         }
 
         public static string CalculateChordsFrom(float[] audioData)
         {
             string chords = CalculateChords(audioData, audioData.Length);
-            Logger.Log("ChordString - " + chords);
+            if(Logger.DEBUGFLAG) Logger.Log("ChordString - " + chords);
             return chords;
         }
     }

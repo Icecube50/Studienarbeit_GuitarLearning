@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials;
+using GuitarLearning_Mobile.DeveloperSupport;
 using System.Collections.Generic;
 
 namespace GuitarLearning_Mobile.UtilityClasses
@@ -57,6 +58,15 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             lock (_lock)
             {
+                if (DevFlags.LoggingEnabled && Buffer.Count > 0) 
+                {
+                    string msg = "----- Buffer Output -----\n";
+                    foreach(var item in Buffer)
+                    {
+                        msg += item.chordData + " - " + item.time + "\n";
+                    }
+                    Logger.AnalyzerLog(msg);
+                }
                 Buffer.Clear();
             }
         }

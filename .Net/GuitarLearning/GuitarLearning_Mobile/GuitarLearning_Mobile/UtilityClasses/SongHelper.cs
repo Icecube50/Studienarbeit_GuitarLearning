@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials.SongModel;
+using GuitarLearning_Mobile.DeveloperSupport;
 using System;
 
 namespace GuitarLearning_Mobile.UtilityClasses
@@ -29,14 +30,19 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <value>Gets/Sets the IndexedSong INote[] field.</value>
         private static INote[] IndexedSong { get; set; }
         /// <summary>
+        /// Mutex, used to restrict access on the song.
+        /// </summary>
+        private static readonly object _locker = new object();
+        /// <summary>
         /// Initialise the properties of this class.
         /// </summary>
         /// <param name="song">Song object, serialised through the "SongName.xml"</param>
         public static void InitHelper(Song song)
         {
-            Song = song;
+            Song = new Song(song);
             SongIndex = 0;
-            BPS = song.BPM != 0 ? ((60 / song.BPM) * 1000) : 0;
+            if (Song.BPM > 0) BPS = ((60.0 / Song.BPM) * 1000.0);
+            else BPS = 0;
 
             IndexedSong = new INote[Song.Notation.Count];
             Song.Notation.CopyTo(IndexedSong);
@@ -51,9 +57,19 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <returns></returns>
         public static bool IncreaseIndex(double elapsed, SongObject obj)
         {
-            if ((obj.TimePosition + obj.Duration) <= elapsed) { SongIndex++; }
-            if (SongIndex < IndexedSong.Length) return true;
-            else return false;
+            lock (_locker)
+            {
+                if (DevFlags.LoggingEnabled) Logger.AnalyzerLog((obj.TimePosition + obj.Duration) + "/" + elapsed);
+                if ((obj.TimePosition + obj.Duration) <= elapsed)
+                {
+                    SongIndex++;
+                }
+                if (SongIndex >= IndexedSong.Length)
+                {
+                    return true;
+                }
+                else return false;
+            }
         }
         /// <summary>
         /// Get the SongObject that is stored at the current index.
@@ -61,9 +77,14 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <returns><see cref="SongObject"/></returns>
         public static SongObject GetNext()
         {
-            var obj = IndexedSong[SongIndex];
-            if (obj.Note != null) return GetNext_Note(obj.Note);
-            else return GetNext_Chord(obj.Chord);
+            lock (_locker)
+            {
+                var obj = IndexedSong[SongIndex];
+                if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Index: " + SongIndex + "/" + IndexedSong.Length);
+                //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("From Xml: " + obj.ToString());
+                if (obj.Note != null) return GetNext_Note(obj.Note);
+                else return GetNext_Chord(obj.Chord);
+            }
         }
         /// <summary>
         /// Initialises a new SongObject and set the <see cref="SongObject.Type"/> property to <see cref="Highlight.Note"/>
@@ -72,12 +93,14 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <returns<see cref="SongObject"/></returns>
         private static SongObject GetNext_Note(Note note)
         {
+            //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Name_Before: " + note.Name);
             var songObj = new SongObject();
             songObj.Name = note.Name;
             songObj.Type = Highlight.Note;
             songObj.WebId = note.ID;
             songObj.TimePosition = CalculatePosition(note.StrokeNumber, note.BeatNumber);
             songObj.Duration = BPS * note.Duration;
+            //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Name_After: " + songObj.Name);
             return songObj;
         }
         /// <summary>
@@ -87,12 +110,14 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <returns><see cref="SongObject"/></returns>
         private static SongObject GetNext_Chord(Chord chord)
         {
+            //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Name_Before: " + chord.Name);
             var songObj = new SongObject();
             songObj.Name = chord.Name;
             songObj.Type = Highlight.Chord;
             songObj.WebId = chord.ID;
             songObj.TimePosition = CalculatePosition(chord.StrokeNumber, chord.BeatNumber);
             songObj.Duration = BPS * chord.Duration;
+            //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Name_After: " + songObj.Name);
             return songObj;
         }
         /// <summary>

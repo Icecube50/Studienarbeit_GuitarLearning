@@ -19,6 +19,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <value>Gets/Sets the ResultBuffer <see cref="UtilityClasses.ResultBuffer"/> field. The default value is <code>null</code>.</value>
         private ResultBuffer ResultBuffer { get; set; } = null;
         /// <summary>
+        /// Store all data that was analysed so it can be logged later (hopefully faster than direct logging).
+        /// </summary>
+        /// <value>Gets/Sets the AnalysedData Stack field.</value>
+        private Stack<SongObject> AnalysedData { get; set; } = new Stack<SongObject>();
+        /// <summary>
         /// Constructor
         /// <para>Sets the <see cref="ResultBuffer"/>.</para>
         /// </summary>
@@ -40,41 +45,62 @@ namespace GuitarLearning_Mobile.UtilityClasses
             {
                 try
                 {
-                    while (!ct.IsCancellationRequested)
-                    {
-                        if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Looping");
-                        if (ResultBuffer.Peek() != null)
-                        {
-                            ct.ThrowIfCancellationRequested();
-                            var data = ResultBuffer.Get();
-                            var song = CompareWithSheet(data);
-
-                            if (song.Type == Highlight.Chord) 
-                            {
-                                if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
-                                string scriptName = $"HighlightCorrectChord('" + song.WebId + "')";
-                                await webView.EvaluateJavaScriptAsync(scriptName);
-                            }
-                            else if (song.Type == Highlight.Note)
-                            {
-                                if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
-                                string scriptName = $"HighlightCorrectNote('" + song.WebId + "')";
-                                await webView.EvaluateJavaScriptAsync(scriptName);
-                            }
-                        }
-                    }
-                    ct.ThrowIfCancellationRequested();
+                    await Analyse(webView, ct);
                 }
                 catch (OperationCanceledException e)
                 {
                     //Ignore
                     if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Analysing cancelled");
+
+                    string output = "AnalysedData: ["+ AnalysedData.Count +"]\n";
+                    foreach(var obj in AnalysedData)
+                    {
+                        output += obj.Name + " " + obj.TimePosition + "\n";
+                    }
+                    Logger.AnalyzerLog(output);
                 }
                 catch (Exception e)
                 {
                     Logger.Log("Analysier - Error: " + e.Message);
                 }
             });
+        }
+        /// <summary>
+        /// Analyse the data
+        /// </summary>
+        /// <param name="webView">WebView in which the sheet is rendered.</param>
+        /// <param name="ct">Token which is used to cancel the task.</param>
+        /// <returns></returns>
+        private async Task Analyse(WebView webView, CancellationToken ct)
+        {
+            while (!ct.IsCancellationRequested)
+            {
+                //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Looping");
+                if (ResultBuffer.Peek() != null)
+                {
+                    if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Analysing");
+                    ct.ThrowIfCancellationRequested();
+                    var data = ResultBuffer.Get();
+                    var song = CompareWithSheet(data);
+
+                    //Hack: In case something failed in CompareWithSheet skip this cycle, hopefully the next one will work
+                    if (song == null) continue;
+                    AnalysedData.Push(song);
+                    if (song.Type == Highlight.Chord)
+                    {
+                        if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
+                        string scriptName = $"HighlightCorrectChord('" + song.WebId + "')";
+                        await webView.EvaluateJavaScriptAsync(scriptName);
+                    }
+                    else if (song.Type == Highlight.Note)
+                    {
+                        if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
+                        string scriptName = $"HighlightCorrectNote('" + song.WebId + "')";
+                        await webView.EvaluateJavaScriptAsync(scriptName);
+                    }
+                }
+            }
+            ct.ThrowIfCancellationRequested();
         }
 
 
@@ -87,6 +113,14 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             string noteToCompare = GetNoteFromData(essentiaData);
             SongObject songObject = SongHelper.GetNext();
+
+            //SongHelper.GetNext() sometimes returns an invalid object
+            //Temporary Hack (not even working...)
+            if(songObject == null)
+            {
+                if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("songObject couldn't be loaded - " + songObject.ToString());
+                return null;
+            }
 
             if(DevFlags.LoggingEnabled) Logger.AnalyzerLog("Comparing: " + songObject.Name + " - " + noteToCompare);
             if (songObject.Name.Contains(noteToCompare)
@@ -104,6 +138,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             {
                 //End of Song
                 Logger.Log("Analyzer: END OF SONG, now crashing?");
+                throw new Exception("End of Song");
             }
 
             return songObject;
@@ -116,7 +151,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <returns>true when the timing is about equal, otherwise false.</returns>
         private static bool InRange(double shouldTime, double isTime)
         {
-            bool isInRange = true;
+            if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Is: " + isTime + " - Should: " + shouldTime);
+             bool isInRange = true;
             if (isTime < shouldTime - DevFlags.Deviation) isInRange = false;
             if (isTime > shouldTime + DevFlags.Deviation) isInRange = false;
             return isInRange;

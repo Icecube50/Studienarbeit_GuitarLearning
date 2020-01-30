@@ -8,6 +8,7 @@ namespace GuitarLearning_API
 {
     public static class Logger
     {
+        public const bool DEBUGFLAG = false;
         static readonly object _locker = new object();
 
         public static void Log(string logMessage)

@@ -165,8 +165,8 @@ namespace GuitarLearning_Mobile.Pages
         private void OnLeave(object sender, EventArgs e)
         {
             if(IsInUse)
-                UtilityHelper.Stop();
-            UtilityHelper.CleanUp();
+                UtilityHelper?.Stop();
+            UtilityHelper?.CleanUp();
         }
     }
 }

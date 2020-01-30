@@ -62,5 +62,14 @@ namespace GuitarLearning_Mobile.Pages
                 DisplayAlert("Error", "Etwas ist schief gelaufen", "OK");
             }
         }
+        /// <summary>
+        /// Event that is called when the user clicks the "DeleteLogs"-button. All log-files will be deleted.
+        /// </summary>
+        /// <param name="sender">Button that invoked the event</param>
+        /// <param name="e">Eventarguments</param>
+        private void OnDeleteLogsClicked(object sender, EventArgs e)
+        {
+            Logger.CleanLogs();
+        }
     }
 }

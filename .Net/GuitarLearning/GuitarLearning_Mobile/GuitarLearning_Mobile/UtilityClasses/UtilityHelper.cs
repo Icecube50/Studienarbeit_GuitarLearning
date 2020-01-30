@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials.SongModel;
+using GuitarLearning_Mobile.DeveloperSupport;
 using System.Threading;
 using Xamarin.Forms;
 
@@ -67,6 +68,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <param name="webView">WebView which renders the music sheet.</param>
         public void Start(WebView webView)
         {
+            if (DevFlags.LoggingEnabled) Logger.Log("Starting now");
             TimeHelper.SetStartTime();
 
             AudioRecording.StartRecording();

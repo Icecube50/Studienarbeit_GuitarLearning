@@ -38,6 +38,23 @@ namespace GuitarLearning_Essentials.SongModel
         {
 
         }
+        /// <summary>
+        /// Constructor
+        /// <para>Copy-Constructor</para>
+        /// </summary>
+        /// <param name="song">Song to copy</param>
+        public Song(Song song)
+        {
+            SongTitle = song.SongTitle;
+            BPM = song.BPM;
+            SongDuration = song.SongDuration;
+
+            Notation = new List<INote>();
+            foreach(INote n in song.Notation)
+            {
+                Notation.Add(new INote(n));
+            }
+        }
     }
 
     /// <summary>
@@ -76,6 +93,24 @@ namespace GuitarLearning_Essentials.SongModel
         {
             Chord = chord;
             Note = null;
+        }
+        /// <summary>
+        /// Constructor
+        /// <para>Copy-Constructor</para>
+        /// </summary>
+        /// <param name="note">INote to copy</param>
+        public INote(INote note)
+        {
+            if(note.Chord != null)
+            {
+                Note = null;
+                Chord = new Chord(note.Chord);
+            }
+            else
+            {
+                Note = new Note(note.Note);
+                Chord = null;
+            }
         }
         /// <summary>
         /// Constructor
