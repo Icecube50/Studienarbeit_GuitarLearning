@@ -56,7 +56,7 @@ namespace GuitarLearning_Mobile.Pages
 
                 if(status == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
                 {
-                    ChangeIsRecording(!IsRecording);
+                    //ChangeIsRecording(!IsRecording);
                 }
                 else
                 {

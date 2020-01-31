@@ -1,4 +1,5 @@
 ﻿using Android.Content.Res;
+using GuitarLearning_Mobile.DeveloperSupport;
 using GuitarLearning_Mobile.Pages;
 using Plugin.Connectivity;
 using System;
@@ -104,6 +105,16 @@ namespace GuitarLearning_Mobile
         private void OnSettingsClicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new pgDeveloperSettings());
+        }
+
+        /// <summary>
+        /// Ask the user for permissions
+        /// </summary>
+        /// <param name="sender">Page that invoked the event</param>
+        /// <param name="e">Eventarguments</param>
+        private void AfterLoad(object sender, EventArgs e)
+        {
+            PermissionHelper.AskForAllPermissions();
         }
     }
 

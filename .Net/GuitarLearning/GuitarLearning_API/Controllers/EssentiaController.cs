@@ -14,6 +14,11 @@ namespace GuitarLearning_API.Controllers
     public class EssentiaController : ControllerBase
     {
         // GET: api/Essentia
+        /// <summary>
+        /// HTTP GET
+        /// <para>Used to check if the a connection to the server can be established.</para>
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -29,6 +34,11 @@ namespace GuitarLearning_API.Controllers
         }
 
         // GET: api/Essentia/5
+        /// <summary>
+        /// Obsolete
+        /// </summary>
+        /// <param name="inputString"></param>
+        /// <returns></returns>
         [HttpGet("{inputString}", Name = "Get")]
         public string Get(string inputString)
         {
@@ -47,6 +57,12 @@ namespace GuitarLearning_API.Controllers
             return new ChordItem() { Chords = "%" + chordData + "%" };
         }*/
 
+        /// <summary>
+        /// HTTP POST
+        /// <para>API function which accepts a <see cref="EssentiaModel"/> containing the raw audio data. The model is analysed and then returned to the client.</para>
+        /// </summary>
+        /// <param name="input">Input model containing the raw audio data.</param>
+        /// <returns>Output model containing a string of chords which were calculated from the data.</returns>
         [HttpPost]
         public EssentiaModel Post(EssentiaModel input)
         {

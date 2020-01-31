@@ -26,6 +26,7 @@ namespace GuitarLearning_Mobile.Droid
 
             AssetStorage.Manager = this.Assets;
 
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
         }
 
