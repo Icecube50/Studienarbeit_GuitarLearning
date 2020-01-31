@@ -490,12 +490,12 @@ background-color: red;
 z-index: 3;
 }
 </style>
-<title>Test 1</title>
+<title>Note Test</title>
 </head>
 <body>
 <div class="divTabulatorHeader">
 <p class="pSongTitle">
-Test 1
+Note Test
 </p>
 <p class="pBPM">
 80 BPM
@@ -575,7 +575,7 @@ Test 1
 <div class="divMusicalNote" id="Quarter_27">6</div>
 <div class="divStroke" id="Stroke_27">
 </div>
-<div class="divMusicalNote" id="Quarter_28">6</div>
+<div class="divMusicalNote" id="Quarter_28">7</div>
 <div class="divMusicalNote" id="Quarter_29">7</div>
 <div class="divMusicalNote" id="Quarter_30">7</div>
 <div class="divMusicalNote" id="Quarter_31">7</div>
@@ -616,14 +616,14 @@ var IntervalID;
 function Animate() {
 Tab = document.getElementById("AnimatedDiv");
 PosX = 0;
-IntervalID = setInterval(frame, 4);
+IntervalID = setInterval(frame, 13.2352941176471);
 }
 function frame() {
 if(PosX == -2760) {
 clearInterval(IntervalID);
 }
 else {
-PosX--;
+PosX = PosX - 1;
 Tab.style.left = PosX + "px";
 }
 }

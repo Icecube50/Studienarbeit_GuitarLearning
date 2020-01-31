@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Song xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <SongTitle>Test 1</SongTitle>
+  <SongTitle>Note Test</SongTitle>
   <BPM>80</BPM>
-  <SongDuration>12240</SongDuration>
+  <SongDuration>40500</SongDuration>
   <Notation>
     <INote>
       <Note>
@@ -258,7 +258,7 @@
     </INote>
     <INote>
       <Note>
-        <Name>C#</Name>
+        <Name>D</Name>
         <ID>Quarter_28</ID>
         <BeatNumber>8</BeatNumber>
         <StrokeNumber>0</StrokeNumber>

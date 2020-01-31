@@ -1754,14 +1754,14 @@ var IntervalID;
 function Animate() {
 Tab = document.getElementById("AnimatedDiv");
 PosX = 0;
-IntervalID = setInterval(frame, 15);
+IntervalID = setInterval(frame, 13.0188679245283);
 }
 function frame() {
 if(PosX == -2350) {
 clearInterval(IntervalID);
 }
 else {
-PosX--;
+PosX = PosX - 1;
 Tab.style.left = PosX + "px";
 }
 }

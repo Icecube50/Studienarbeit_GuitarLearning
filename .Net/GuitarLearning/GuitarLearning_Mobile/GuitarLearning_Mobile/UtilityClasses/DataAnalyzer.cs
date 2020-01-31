@@ -63,6 +63,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 catch (Exception e)
                 {
                     Logger.Log("Analysier - Error: " + e.Message);
+                    Logger.AnalyzerLog("Analysed " + AnalysedData.Count + "notes");
                 }
             });
         }

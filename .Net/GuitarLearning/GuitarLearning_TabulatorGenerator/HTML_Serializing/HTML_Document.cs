@@ -97,13 +97,15 @@ namespace GuitarLearning_TabulatorGenerator.HTML_Serializing
             js += "IntervalID = setInterval(frame, " + doubleString + ");\n";
             js += "}\n";
 
+            doubleString = frame.numberOfPixels.ToString();
+            doubleString = doubleString.Replace(",", ".");
             //frame()
             js += "function frame() {\n";
-            js += "if(PosX == " + JavascriptCalculations.GetAnimationStoppingPoint() + ") {\n";
+            js += "if(PosX <= " + JavascriptCalculations.GetAnimationStoppingPoint() + ") {\n";
             js += "clearInterval(IntervalID);\n";
             js += "}\n";
             js += "else {\n";
-            js += "PosX = PosX - " + frame.numberOfPixels + ";\n";
+            js += "PosX = PosX - " + doubleString + ";\n";
             js += "Tab.style.left = PosX + \"px\";\n";
             js += "}\n";
             js += "}\n";
