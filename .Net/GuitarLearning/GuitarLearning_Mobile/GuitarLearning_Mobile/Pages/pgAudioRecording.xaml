@@ -25,7 +25,8 @@
                     VerticalOptions="EndAndExpand"
                     HeightRequest="75"
                     x:Name="btnRecording"
-                    FontSize="20"/>
+                    FontSize="20"
+                    Clicked="Start_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

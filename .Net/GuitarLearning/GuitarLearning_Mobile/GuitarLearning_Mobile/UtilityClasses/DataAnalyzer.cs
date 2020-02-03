@@ -2,6 +2,7 @@
 using GuitarLearning_Mobile.DeveloperSupport;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -68,6 +69,40 @@ namespace GuitarLearning_Mobile.UtilityClasses
             });
         }
         /// <summary>
+        /// Used by the "AudioRecording"-page, gets the note name from the essentia model and visualises it.
+        /// </summary>
+        /// <param name="ct">Token to cancel the current task.</param>
+        /// <param name="label">Label which will visualise the current note.</param>
+        public void VisualiseApiData(CancellationToken ct, Label label)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    while (!ct.IsCancellationRequested)
+                    {
+                    //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Looping");
+                    if (ResultBuffer.Peek() != null)
+                        {
+                            ct.ThrowIfCancellationRequested();
+                            var data = ResultBuffer.Get();
+                            string note = GetNoteFromData(data);
+
+                            MainThread.BeginInvokeOnMainThread(() =>
+                            {
+                                label.Text = note;
+                            });
+                        }
+                    }
+                });
+            }
+            catch (OperationCanceledException e)
+            {
+                //Ignore
+            }
+        }
+
+        /// <summary>
         /// Analyse the data
         /// </summary>
         /// <param name="webView">WebView in which the sheet is rendered.</param>
@@ -132,8 +167,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 return null;
             }
 
-            if(DevFlags.LoggingEnabled) Logger.AnalyzerLog("Comparing: " + songObject.Name + " - " + noteToCompare);
-            if (songObject.Name.Contains(noteToCompare)
+            //if(DevFlags.LoggingEnabled) Logger.AnalyzerLog("Comparing: " + songObject.Name + " - " + noteToCompare);
+            if (CompareNamesOf(songObject.Name, noteToCompare)
                 && InRange(songObject.TimePosition, essentiaData.time))
             {
                 if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Equal");
@@ -166,6 +201,18 @@ namespace GuitarLearning_Mobile.UtilityClasses
             if (isTime < shouldTime - DevFlags.Deviation) isInRange = false;
             if (isTime > shouldTime + DevFlags.Deviation) isInRange = false;
             return isInRange;
+        }
+        /// <summary>
+        /// Compares the name of the two notes
+        /// </summary>
+        /// <param name="sheetNote">Name the note has to have to be correct</param>
+        /// <param name="apiNode">Name the note actually has</param>
+        /// <returns>true when the names are equal</returns>
+        private static bool CompareNamesOf(string sheetNote, string apiNode)
+        {
+            string pattern = "^" + sheetNote + "$";
+            if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Comparing: " + apiNode + " with " + pattern);
+            return Regex.IsMatch(apiNode, pattern);
         }
         /// <summary>
         /// Splits the data string that was returned by the API and the most propable note.

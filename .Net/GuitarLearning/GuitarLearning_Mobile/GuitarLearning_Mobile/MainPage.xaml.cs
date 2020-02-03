@@ -53,8 +53,8 @@ namespace GuitarLearning_Mobile
         /// <param name="e">Eventarguments</param>
         private void OnTestSong1_Tapped(object sender, EventArgs e)
         {
-            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
-            else Navigation.PushAsync(new pgSongPage_Template("Test1"));
+            if (IsAllowedToLoadSong())
+                Navigation.PushAsync(new pgSongPage_Template("Test1"));
         }
 
         /// <summary>
@@ -66,8 +66,8 @@ namespace GuitarLearning_Mobile
         /// <param name="e">Eventarguments</param>
         private void OnTestSong2_Tapped(object sender, EventArgs e)
         {
-            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
-            else Navigation.PushAsync(new pgSongPage_Template("Test2"));
+            if (IsAllowedToLoadSong())
+                Navigation.PushAsync(new pgSongPage_Template("Test2"));
         }
 
         /// <summary>
@@ -79,8 +79,7 @@ namespace GuitarLearning_Mobile
         /// <param name="e">Eventarguments</param>
         private void OnNetworkContainer_Tapped(object sender, EventArgs e)
         {
-            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
-            else Navigation.PushAsync(new pgNetworkTesting());
+            Navigation.PushAsync(new pgNetworkTesting());
         }
 
         /// <summary>
@@ -92,8 +91,8 @@ namespace GuitarLearning_Mobile
         /// <param name="e">Eventarguments</param>
         private void OnAudioContainer_Tapped(object sender, EventArgs e)
         {
-            if (!CrossConnectivity.Current.IsConnected) DisplayAlert("Fehler", "Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.", "OK");
-            else Navigation.PushAsync(new pgAudioRecording());
+            if (IsAllowedToLoadSong())
+                Navigation.PushAsync(new pgAudioRecording());
         }
 
         /// <summary>
@@ -115,6 +114,32 @@ namespace GuitarLearning_Mobile
         private void AfterLoad(object sender, EventArgs e)
         {
             PermissionHelper.AskForAllPermissions();
+        }
+        /// <summary>
+        /// Check whether all prerequisites are met. 
+        /// </summary>
+        /// <returns>true: when everything is alright and the next page can be loaded, otherwise false.</returns>
+        private bool IsAllowedToLoadSong()
+        {
+            if (!ConnectionChecker.HasConnectionToNetwork())
+            {
+                NotifyUser("Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.");
+                return false;
+            }
+            if (!ConnectionChecker.CanReachApiAt())
+            {
+                NotifyUser("Der Server ist zurzeit nicht erreichbar. Versuchen Sie es später erneut.");
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// Notify the user about the application state by showing a DisplayAlert containing the message.
+        /// </summary>
+        /// <param name="msg">Message that is shown to the user.</param>
+        private void NotifyUser(string msg)
+        {
+            DisplayAlert("Fehler", msg, "OK");
         }
     }
 
