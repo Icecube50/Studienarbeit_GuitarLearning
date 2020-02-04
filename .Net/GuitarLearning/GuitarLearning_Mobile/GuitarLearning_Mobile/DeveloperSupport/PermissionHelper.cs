@@ -16,10 +16,11 @@ namespace GuitarLearning_Mobile.DeveloperSupport
         public static async Task<Plugin.Permissions.Abstractions.PermissionStatus> RequestPermission(Plugin.Permissions.Abstractions.Permission permission)
         {
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
-            if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
+            if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted || DevFlags.ForcePermissionRequest)
             {
-                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(permission))
+                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(permission) || DevFlags.ForcePermissionRequest)
                 {
+                    Logger.Log("Asking for permission: " + permission.ToString());
                     var results = await CrossPermissions.Current.RequestPermissionsAsync(new Plugin.Permissions.Abstractions.Permission[] { permission });
                     status = results[permission];
                 }

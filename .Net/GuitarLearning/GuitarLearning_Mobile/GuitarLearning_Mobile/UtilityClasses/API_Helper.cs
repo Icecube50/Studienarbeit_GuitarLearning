@@ -141,10 +141,10 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     ResponsesRecieved++;
-                    if (DevFlags.LoggingEnabled) Logger.APILog("Response == OK");
                     HttpContent content = response.Content;
                     string json = await content.ReadAsStringAsync();
                     apiModel = JsonConvert.DeserializeObject<EssentiaModel>(json);
+                    if (DevFlags.LoggingEnabled) Logger.APILog("Response == OK -" + apiModel.chordData);
                 }
                 else if (DevFlags.LoggingEnabled) Logger.APILog("Response != OK");
             }

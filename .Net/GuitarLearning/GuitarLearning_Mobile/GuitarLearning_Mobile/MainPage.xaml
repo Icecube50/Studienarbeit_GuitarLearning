@@ -8,126 +8,28 @@
              Title="GuitarLearning"
              x:Name="AppRoot"
              Appearing="AfterLoad">
-    <ScrollView>
-        <StackLayout Orientation="Vertical">
-            <Grid VerticalOptions="StartAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="1"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="1"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="1"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="1"/>
-                </Grid.RowDefinitions>
-
-                <Grid Padding="20,0,20,0" Grid.Row="0" x:Name="grdAudio">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="Audio Recording"
-                     FontSize="35"
-                     TextColor="Black"
-                     HorizontalOptions="Start"
-                     Grid.Column="0"
-                     x:Name="lbAudioRecording"/>
-
-                    <Label Text=">>"
-                      FontSize="35"
-                      TextColor="Black"
-                      HorizontalOptions="End"
-                       Grid.Column="1"/>
-                </Grid>
-
-                <Grid Padding="20,0,20,0" Grid.Row="2" x:Name="grdNetwork">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="Network Testing"
-                     FontSize="35"
-                     TextColor="Black"
-                     HorizontalOptions="Start"
-                     Grid.Column="0"
-                     x:Name="lbNetworkTesting"/>
-
-                    <Label Text=">>"
-                      FontSize="35"
-                      TextColor="Black"
-                      HorizontalOptions="End"
-                       Grid.Column="1"/>
-                </Grid>
-
-                <Grid Padding="20,0,20,0" Grid.Row="4" x:Name="grdTestSong1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="TestSong1"
-                     FontSize="35"
-                     TextColor="Black"
-                     HorizontalOptions="Start"
-                     Grid.Column="0"
-                     x:Name="lbSeptemberEnds"/>
-
-                    <Label Text=">>"
-                      FontSize="35"
-                      TextColor="Black"
-                      HorizontalOptions="End"
-                       Grid.Column="1"/>
-                </Grid>
-
-                <Grid Padding="20,0,20,0" Grid.Row="6" x:Name="grdTestSong2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="TestSong2"
-                     FontSize="35"
-                     TextColor="Black"
-                     HorizontalOptions="Start"
-                     Grid.Column="0"
-                     x:Name="lbTestSong1"/>
-
-                    <Label Text=">>"
-                      FontSize="35"
-                      TextColor="Black"
-                      HorizontalOptions="End"
-                       Grid.Column="1"/>
-                </Grid>
-
-                <BoxView Grid.Row="1"
-                     Color="Black"/>
-                <BoxView Grid.Row="3"
-                     Color="Black"/>
-                <BoxView Grid.Row="5"
-                     Color="Black"/>
-                <BoxView Grid.Row="7"
-                     Color="Black"/>
-            </Grid>
-
-            <Grid BackgroundColor="LimeGreen"
+    <StackLayout Orientation="Vertical">
+        <ListView SelectionMode="None"
+                      x:Name="lvContainer"
+                      VerticalOptions="StartAndExpand"
+                      ItemTapped="OnItemTapped">
+        </ListView>
+        
+        <Grid BackgroundColor="LimeGreen"
                   HeightRequest="60" Grid.Row="1"
                   VerticalOptions="End" Padding="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <Button Text="Einstellungen"
+            <Button Text="Einstellungen"
                             HeightRequest="60"
                             x:Name="btnSettings"
                             Clicked="OnSettingsClicked"
                             BackgroundColor="Green"
                             TextColor="White"
                             FontSize="20"/>
-            </Grid>
-        </StackLayout>
-    </ScrollView>
+        </Grid>
+    </StackLayout>
 </ContentPage>

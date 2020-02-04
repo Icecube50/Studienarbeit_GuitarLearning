@@ -7,6 +7,9 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Threading.Tasks;
+using GuitarLearning_Mobile.ApplicationUtility;
+using static Android.OS.PowerManager;
+using Android.Content;
 
 namespace GuitarLearning_Mobile.Droid
 {
@@ -28,6 +31,20 @@ namespace GuitarLearning_Mobile.Droid
 
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+        }
+        private WakeLock wakeLock;
+        protected override void OnPause()
+        {
+            base.OnPause();
+            wakeLock?.Release();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            PowerManager powerManager = (PowerManager)this.GetSystemService(Context.PowerService);
+            wakeLock = powerManager.NewWakeLock(WakeLockFlags.ScreenDim, "MyLock");
+            wakeLock.Acquire();
         }
 
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)

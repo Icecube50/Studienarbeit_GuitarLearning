@@ -17,5 +17,16 @@
         /// </summary>
         /// <value>The Deviation property gets/sets the value of the int field. The default value is 300</value>
         public static int Deviation { get; set; } = 300;
+        /// <summary>
+        /// When this flag is set all the checks before the permission request are skipped and the request is forced
+        /// </summary>
+        /// <value>Gets/Sets the value of the ForcePermissionRequest bool field.</value>
+        public static bool ForcePermissionRequest { get; set; } = false;
+        /// <summary>
+        /// When this flag is set all the checks to determin whether the device has a connection to 
+        /// the server are skipped, and the Song-Page is loaded.
+        /// </summary>
+        /// <value>Gets/Sets the value of the SkipNetworkChecks bool field.</value>
+        public static bool SkipNetworkChecks { get; set; } = false;
     }
 }

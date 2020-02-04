@@ -212,7 +212,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             string pattern = "^" + sheetNote + "$";
             if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Comparing: " + apiNode + " with " + pattern);
-            return Regex.IsMatch(apiNode, pattern);
+            return Regex.IsMatch(apiNode, ("^" + sheetNote + "$"));
         }
         /// <summary>
         /// Splits the data string that was returned by the API and the most propable note.

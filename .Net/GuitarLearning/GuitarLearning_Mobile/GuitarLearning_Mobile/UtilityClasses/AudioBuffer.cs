@@ -11,12 +11,10 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// Mutext, that restricts the access to the buffer-queue.
         /// </summary>
         private static readonly object _lock = new object();
-
         /// <summary>
         /// Constant, limits the amount of data that can be recorded and processed at once.
-        /// <para>Value: 10.000</para>
         /// </summary>
-        public const int BUFFER_SIZE = 5000;
+        public static int BUFFER_SIZE = 5000;
         /// <summary>
         /// Instance of the queue that will be used as buffer.
         /// </summary>

@@ -19,8 +19,9 @@ namespace GuitarLearning_Mobile.DeveloperSupport
         /// <returns>true: when the device has an active connection to the internet, otherwise false</returns>
         public static bool HasConnectionToNetwork()
         {
-            if (CrossConnectivity.Current.IsConnected)
+            if (CrossConnectivity.Current.IsConnected || DevFlags.SkipNetworkChecks)
             {
+                Logger.Log("Connection: true");
                 return true;
             }
 
@@ -37,11 +38,13 @@ namespace GuitarLearning_Mobile.DeveloperSupport
         {
             try
             {
+                if (DevFlags.SkipNetworkChecks) return true;
                 bool success = false;
                 Task.Run(async () =>
                 {
                     success = await GetRequestAt(address);
                 });
+                Logger.Log("API: " + success);
                 return success;
             }
             catch

@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials.SongModel;
+using GuitarLearning_Mobile.ApplicationUtility;
 using GuitarLearning_Mobile.UtilityClasses;
 using System;
 using System.IO;
@@ -31,6 +32,11 @@ namespace GuitarLearning_Mobile.Pages
         /// <value>Gets/Sets the IsInUse bool field. Default value is false.</value>
         private bool IsInUse { get; set; } = false;
         /// <summary>
+        /// Name of the song to load
+        /// </summary>
+        /// <value>Gets/Sets the SongName string field</value>
+        private string SongName { get; set; }
+        /// <summary>
         /// Event that is invoked when <see cref="IsInUse"/> is changed. 
         /// </summary>
         private event EventHandler IsInUseChanged;
@@ -45,47 +51,7 @@ namespace GuitarLearning_Mobile.Pages
         {
             InitializeComponent();
 
-            try
-            {
-                this.Title = SongName;
-
-                //Get Tabulator-Sheet
-                string htmlFile = SongName + ".html";
-                string html = string.Empty;
-                using (var streamReader = new StreamReader(AssetStorage.Manager.Open(htmlFile)))
-                {
-                    html = streamReader.ReadToEnd();
-                    if (html == "") throw new Exception();
-                }
-
-                //Get Info-Sheet
-                string xmlFile = SongName + ".xml";
-                using (var reader = new StreamReader(AssetStorage.Manager.Open(xmlFile)))
-                {
-                    var serializer = new XmlSerializer(new Song().GetType());
-                    CurrentSong = (Song)serializer.Deserialize(reader);
-                    if (CurrentSong == null) throw new Exception();
-                }
-
-                HtmlWebViewSource htmlSource = new HtmlWebViewSource();
-                htmlSource.Html = html;
-                wvTabContainer.Source = htmlSource;
-                wvTabContainer.IsEnabled = false;
-
-                //Init events
-                IsInUseChanged += async (s, e) => { await AnimationAsync(s, e); };
-                IsInUseChanged += ChangeProcessState;
-                IsInUseChanged += ChangeButtonLabel;
-
-                //Init Utility
-                UtilityHelper = new UtilityHelper(CurrentSong);
-            }
-            catch (Exception e)
-            {
-                DisplayAlert("Fehler", "Das Notenblatt ist korrumpiert, bitte wählen Sie ein anderes", "OK");
-                Logger.Log("Error: " + e.Message);
-                Navigation.PopAsync();
-            }
+            this.SongName = SongName;
         }
         /// <summary>
         /// Subscribed to <see cref="IsInUseChanged"/>. Changes the text of the "Start/Stop"-button.
@@ -156,7 +122,6 @@ namespace GuitarLearning_Mobile.Pages
             IsInUse = !IsInUse;
             IsInUseChanged?.Invoke(null, new EventArgs());
         }
-
         /// <summary>
         /// Event which is invoked when the user leaves this page.
         /// </summary>
@@ -167,6 +132,55 @@ namespace GuitarLearning_Mobile.Pages
             if(IsInUse)
                 UtilityHelper?.Stop();
             UtilityHelper?.CleanUp();
+        }
+        /// <summary>
+        /// Called when the page is entered, loads the *.html from the app assets.
+        /// </summary>
+        /// <param name="sender">Page that sends the event</param>
+        /// <param name="e">Eventarguments</param>
+        private void OnEnter(object sender, EventArgs e)
+        {
+            try
+            {
+                this.Title = SongName;
+
+                //Get Tabulator-Sheet
+                string htmlFile = SongName + ".html";
+                string html = string.Empty;
+                using (var streamReader = new StreamReader(AssetStorage.Manager.Open(htmlFile)))
+                {
+                    html = streamReader.ReadToEnd();
+                    if (html == "") throw new Exception();
+                }
+
+                //Get Info-Sheet
+                string xmlFile = SongName + ".xml";
+                using (var reader = new StreamReader(AssetStorage.Manager.Open(xmlFile)))
+                {
+                    var serializer = new XmlSerializer(new Song().GetType());
+                    CurrentSong = (Song)serializer.Deserialize(reader);
+                    if (CurrentSong == null) throw new Exception();
+                }
+
+                HtmlWebViewSource htmlSource = new HtmlWebViewSource();
+                htmlSource.Html = html;
+                wvTabContainer.Source = htmlSource;
+                wvTabContainer.IsEnabled = false;
+
+                //Init events
+                IsInUseChanged += async (s, arg) => { await AnimationAsync(s, arg); };
+                IsInUseChanged += ChangeProcessState;
+                IsInUseChanged += ChangeButtonLabel;
+
+                //Init Utility
+                UtilityHelper = new UtilityHelper(CurrentSong);
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Fehler", "Das Notenblatt ist korrumpiert, bitte wählen Sie ein anderes", "OK");
+                Logger.Log("Error: " + ex.Message);
+                Navigation.PopAsync();
+            }
         }
     }
 }

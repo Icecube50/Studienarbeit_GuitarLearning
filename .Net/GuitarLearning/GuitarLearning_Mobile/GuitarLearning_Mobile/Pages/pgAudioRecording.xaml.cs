@@ -50,12 +50,14 @@ namespace GuitarLearning_Mobile.Pages
             {
                 StartProcessing();
                 btnRecording.Text = "Stop";
+                lbRecordingState.Text = "Recording = ON";
             }
             else
             {
                 StopProcessing();
                 lbCurrentChord.Text = "No Chord Detected";
                 btnRecording.Text = "Start";
+                lbRecordingState.Text = "Recording = OFF";
                 cts.Dispose();
                 cts = new CancellationTokenSource();
             }
@@ -88,6 +90,7 @@ namespace GuitarLearning_Mobile.Pages
 
         private void Start_Clicked(object sender, EventArgs e)
         {
+            recordingState = !recordingState;
             RecordingStateChanged?.Invoke(null, new EventArgs());
         }
     }

@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GuitarLearning_Mobile.Pages.pgSongPage_Template"
-             Disappearing="OnLeave">
+             Disappearing="OnLeave"
+             Appearing="OnEnter">
     <ContentPage.Content>
         <StackLayout Orientation="Horizontal">
             <Grid HorizontalOptions="FillAndExpand">

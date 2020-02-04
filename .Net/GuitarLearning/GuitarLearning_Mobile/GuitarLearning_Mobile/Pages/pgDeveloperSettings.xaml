@@ -7,69 +7,149 @@
              x:Class="GuitarLearning_Mobile.Pages.pgDeveloperSettings"
              Title="Einstellungen">
     <ContentPage.Content>
-        <StackLayout Padding="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <CheckBox VerticalOptions="Center"
+        <ScrollView>
+            <StackLayout Padding="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox VerticalOptions="Center"
                       HeightRequest="30"
                       Color="Green"
                       x:Name="cckLogging"
                       Grid.Column="1"
-                      HorizontalOptions="Start"
+                      HorizontalOptions="End"
+                      Margin="0,0,50,0"
                       CheckedChanged="OnDoLoggingChanged">
-                </CheckBox>
-                <Label Text="EnableLogging:"
+                    </CheckBox>
+                    <Label Text="EnableLogging:"
                        HeightRequest="30"
                        Grid.Column="0"
                        VerticalTextAlignment="Center"
                        HorizontalTextAlignment="Center"
                        Margin="0,0,20,0"
                        FontSize="20">
-                </Label>
-            </Grid>
+                    </Label>
+                </Grid>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="DEVIATION:"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox VerticalOptions="Center"
+                      HeightRequest="30"
+                      Color="Green"
+                      x:Name="cckForcePermissions"
+                      Grid.Column="1"
+                      HorizontalOptions="End"
+                      Margin="0,0,50,0"
+                      CheckedChanged="OnForcePermissionsChanged">
+                    </CheckBox>
+                    <Label Text="ForcePermissions:"
+                       HeightRequest="30"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,20,0"
+                       FontSize="20">
+                    </Label>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox VerticalOptions="Center"
+                      HeightRequest="30"
+                      Color="Green"
+                      x:Name="cckNetworkChecks"
+                      Grid.Column="1"
+                      HorizontalOptions="End"
+                      Margin="0,0,50,0"
+                      CheckedChanged="OnNetworkChecksChanged">
+                    </CheckBox>
+                    <Label Text="Skip Network Checks:"
+                       HeightRequest="30"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,20,0"
+                       FontSize="20">
+                    </Label>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="DEVIATION:"
                        HeightRequest="30"
                        Grid.Column="0"
                        VerticalTextAlignment="Center"
                        HorizontalTextAlignment="Center"
                        FontSize="20">
-                </Label>
-                <Entry Grid.Column="1"
+                    </Label>
+                    <Entry Grid.Column="1"
                        x:Name="etyDeviation"
-                       Placeholder="300"
+                       Text="300"
+                       Placeholder="Zulässige Abweichung"
                        >
-                </Entry>
-            </Grid>
-            <Button Text="Übernehmen"
+                    </Entry>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="BUFFER SIZE:"
+                       HeightRequest="30"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="20">
+                    </Label>
+                    <Entry Grid.Column="1"
+                       x:Name="etyBufferSize"
+                       Text="5000"
+                       Placeholder="Aufnahme-Buffer"
+                       >
+                    </Entry>
+                </Grid>
+                <Button Text="Übernehmen"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="End"
                     FontSize="20"
                     BackgroundColor="Green"
                     TextColor="White"
                     Clicked="OnApllyClicked">
-            </Button>
+                </Button>
 
-            <BoxView BackgroundColor="Gray"
+                <BoxView BackgroundColor="Gray"
                      HeightRequest="1"
                      Margin="0,10,0,10"/>
 
-            <Button Text="Logs Aufräumen"
+                <Button Text="Logs Aufräumen"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="End"
                     FontSize="20"
                     BackgroundColor="Green"
                     TextColor="White"
                     Clicked="OnDeleteLogsClicked">
-            </Button>
-        </StackLayout>
+                </Button>
+
+                <Button Text="Permissions anfordern"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End"
+                    FontSize="20"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    Clicked="OnGetPermissionsClicked">
+                </Button>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
