@@ -41,13 +41,16 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// Token that is used to cancel all running tasks.
         /// </summary>
         private CancellationTokenSource cts;
-
+        /// <summary>
+        /// Label which will display the current progress
+        /// </summary>
+        private Label ProgressLabel;
         /// <summary>
         /// Constructor
         /// <para>Initialises all fields.</para>
         /// </summary>
         /// <param name="song">Song that was serialised from the "SongName.xml".</param>
-        public UtilityHelper(Song song)
+        public UtilityHelper(Song song, Label label)
         {
             //Init Buffer
             AudioBuffer = new AudioBuffer();
@@ -59,9 +62,23 @@ namespace GuitarLearning_Mobile.UtilityClasses
             DataAnalyzer = new DataAnalyzer(ResultBuffer);
 
             SongHelper.InitHelper(song);
+            SongHelper.ProgressMade += OnProgressMade;
+
+            ProgressLabel = label;
 
             cts = new CancellationTokenSource();
         }
+
+        /// <summary>
+        /// Update the current progress
+        /// </summary>
+        /// <param name="sender">string, new progress information</param>
+        /// <param name="e">Eventarguments</param>
+        private void OnProgressMade(object sender, System.EventArgs e)
+        {
+            ProgressLabel.Text = sender as string;
+        }
+
         /// <summary>
         /// Start the all processes.
         /// </summary>

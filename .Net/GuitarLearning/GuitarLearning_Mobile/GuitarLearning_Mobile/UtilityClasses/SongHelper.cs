@@ -1,6 +1,8 @@
 ﻿using GuitarLearning_Essentials.SongModel;
 using GuitarLearning_Mobile.DeveloperSupport;
 using System;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace GuitarLearning_Mobile.UtilityClasses
 {
@@ -9,6 +11,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
     /// </summary>
     public static class SongHelper
     {
+        public static event EventHandler ProgressMade;
         /// <summary>
         /// Duration of the whole song
         /// </summary>
@@ -70,6 +73,10 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 {
                     SongIndex++;
                 }
+
+                string progressString = "Progress: " + elapsed + " / " + SongDuration;
+                ProgressMade?.Invoke(progressString, new EventArgs());
+
                 if (SongIndex >= IndexedSong.Length)
                 {
                     return true;

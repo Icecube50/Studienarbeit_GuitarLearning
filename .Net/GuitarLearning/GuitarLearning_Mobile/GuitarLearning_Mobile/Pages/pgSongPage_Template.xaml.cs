@@ -173,7 +173,7 @@ namespace GuitarLearning_Mobile.Pages
                 IsInUseChanged += ChangeButtonLabel;
 
                 //Init Utility
-                UtilityHelper = new UtilityHelper(CurrentSong);
+                UtilityHelper = new UtilityHelper(CurrentSong, lbProcessedTime);
             }
             catch (Exception ex)
             {
