@@ -54,8 +54,8 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     //Ignore
                     if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Analysing cancelled");
 
-                    string output = "AnalysedData: ["+ AnalysedData.Count +"]\n";
-                    foreach(var obj in AnalysedData)
+                    string output = "AnalysedData: [" + AnalysedData.Count + "]\n";
+                    foreach (var obj in AnalysedData)
                     {
                         output += obj.Name + " " + obj.TimePosition + "\n";
                     }

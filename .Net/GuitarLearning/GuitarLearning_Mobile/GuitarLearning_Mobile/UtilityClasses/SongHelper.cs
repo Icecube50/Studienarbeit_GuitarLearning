@@ -10,6 +10,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
     public static class SongHelper
     {
         /// <summary>
+        /// Duration of the whole song
+        /// </summary>
+        /// <value>Gets/Sets the SongDuration double field.</value>
+        public static double SongDuration { get; set; }
+        /// <summary>
         /// Song object that is serialised from the "SongName.xml". Contains all generic song data.
         /// </summary>
         /// <value>Gets/Sets the Song <see cref="GuitarLearning_Essentials.SongModel.Song"/> field.</value>
@@ -43,6 +48,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             SongIndex = 0;
             if (Song.BPM > 0) BPS = ((60.0 / Song.BPM) * 1000.0);
             else BPS = 0;
+            SongDuration = Song.SongDuration;
 
             IndexedSong = new INote[Song.Notation.Count];
             Song.Notation.CopyTo(IndexedSong);

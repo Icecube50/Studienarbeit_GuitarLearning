@@ -65,6 +65,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 {
                     if (DevFlags.LoggingEnabled) Logger.RecordingLog("Start Recording");
                     await ReadDataToBuffer(cts.Token);
+                    Logger.RecordingLog("Number of times audio was recorded: " + RecordCount);
                 }
                 catch (OperationCanceledException e)
                 {
@@ -124,6 +125,12 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 RecordCount++;
                 AudioBuffer?.Add(new AudioData(InputBuffer, TimeHelper.GetElapsedTime()));
                 InputBuffer = new float[InputBuffer.Length];
+
+                if((TimeHelper.GetElapsedTime() + 1000) > SongHelper.SongDuration)
+                {
+                    Logger.RecordingLog("Duration of sog reached => stopping");
+                    break;
+                }
             }
             SafeGetRecorder()?.Stop();
             ct.ThrowIfCancellationRequested();

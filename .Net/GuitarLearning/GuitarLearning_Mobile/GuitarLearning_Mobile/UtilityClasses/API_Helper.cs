@@ -39,6 +39,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// </summary>
         /// <value>Gets/Sets the ResponsesRecieved int field.</value>
         private int ResponsesRecieved { get; set; } = 0;
+        private int ErrorResponses { get; set; } = 0;
 
         /// <summary>
         /// Constructor
@@ -83,6 +84,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     //Ignore, just return 
                     if (DevFlags.LoggingEnabled) Logger.APILog("Processing task was cancelled");
                     Logger.APILog("Recieved " + ResponsesRecieved + " responses");
+                    Logger.APILog("Recieved " + ErrorResponses + " errors");
                 }
                 catch (Exception e)
                 {
@@ -146,7 +148,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     apiModel = JsonConvert.DeserializeObject<EssentiaModel>(json);
                     if (DevFlags.LoggingEnabled) Logger.APILog("Response == OK -" + apiModel.chordData);
                 }
-                else if (DevFlags.LoggingEnabled) Logger.APILog("Response != OK");
+                else if (DevFlags.LoggingEnabled) { Logger.APILog("Response != OK"); ErrorResponses++; }
             }
             ct.ThrowIfCancellationRequested();
             return apiModel;
