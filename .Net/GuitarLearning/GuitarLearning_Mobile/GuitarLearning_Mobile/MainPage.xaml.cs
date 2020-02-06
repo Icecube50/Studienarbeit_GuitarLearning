@@ -29,7 +29,21 @@ namespace GuitarLearning_Mobile
         {
             InitializeComponent();
 
-            lvContainer.ItemsSource = GroupItemModel.All;
+            List<ItemModel> Groups = new List<ItemModel>()
+            {
+                //Funktionen
+                new ItemModel("Funktionen", null, Color.Green),
+                new ItemModel("Network Testing", new pgNetworkTesting(), Color.Black),
+                new ItemModel("Audio Recording", new pgAudioRecording(), Color.Black),
+
+                //Lieder
+                new ItemModel("Lieder", null, Color.Green),
+                new ItemModel("Note Test", new pgSongPage_Template("Test1"), Color.Black),
+                new ItemModel("Chord Test", new pgSongPage_Template("ChordTest"), Color.Black),
+                new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest"), Color.Black),
+                new ItemModel("Static Test", new pgSongPage_Template("StaticTest"), Color.Black)
+            };
+            lvContainer.ItemsSource = Groups;
 
             Logger.Log("########### New Startup ############");
         }
@@ -95,10 +109,11 @@ namespace GuitarLearning_Mobile
         {
             if (IsAllowedToLoadSong())
             {
-                if(e.Item is ItemModel)
+                if (e.Item is ItemModel)
                 {
                     var item = e.Item as ItemModel;
-                    Navigation.PushAsync(item.GetPage());
+                    var page = item.GetPage();
+                    if(page != null) Navigation.PushAsync(page);
                 }
             }
         }

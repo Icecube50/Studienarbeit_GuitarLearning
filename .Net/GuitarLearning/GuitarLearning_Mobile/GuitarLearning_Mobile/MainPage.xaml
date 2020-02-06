@@ -14,28 +14,19 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            
+
             <ListView SelectionMode="None"
                       x:Name="lvContainer"
                       VerticalOptions="Start"
                       ItemTapped="OnItemTapped"
                       Grid.Row="0"
-                      SeparatorColor="Green"
-                      GroupDisplayBinding="{Binding Title}"
-                      IsGroupingEnabled="true">
+                      SeparatorColor="Green">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding PageName}"
-                                  TextColor="Black"/>
+                                  TextColor="{Binding Color}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-                <ListView.GroupHeaderTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Title}"
-                                  TextColor="Green"
-                                  />
-                    </DataTemplate>
-                </ListView.GroupHeaderTemplate>
             </ListView>
 
             <Grid BackgroundColor="LimeGreen"
