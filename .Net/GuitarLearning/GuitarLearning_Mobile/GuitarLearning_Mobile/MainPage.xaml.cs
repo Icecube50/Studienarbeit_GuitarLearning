@@ -29,14 +29,7 @@ namespace GuitarLearning_Mobile
         {
             InitializeComponent();
 
-            var listOfSongs = new List<ItemModel>();
-
-            listOfSongs.Add(new ItemModel("Network Testing", new pgNetworkTesting()));
-            listOfSongs.Add(new ItemModel("Audio Recording", new pgAudioRecording()));
-            listOfSongs.Add(new ItemModel("Note Test", new pgSongPage_Template("Test1")));
-            listOfSongs.Add(new ItemModel("Chord Test", new pgSongPage_Template("ChordTest")));
-            listOfSongs.Add(new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest")));
-            lvContainer.ItemsSource = listOfSongs;
+            lvContainer.ItemsSource = GroupItemModel.All;
 
             Logger.Log("########### New Startup ############");
         }

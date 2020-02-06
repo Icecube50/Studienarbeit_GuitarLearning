@@ -19,7 +19,23 @@
                       x:Name="lvContainer"
                       VerticalOptions="Start"
                       ItemTapped="OnItemTapped"
-                      Grid.Row="0">
+                      Grid.Row="0"
+                      SeparatorColor="Green"
+                      GroupDisplayBinding="{Binding Title}"
+                      IsGroupingEnabled="true">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding PageName}"
+                                  TextColor="Black"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Title}"
+                                  TextColor="Green"
+                                  />
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
             </ListView>
 
             <Grid BackgroundColor="LimeGreen"

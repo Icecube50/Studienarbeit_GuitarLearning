@@ -80,8 +80,9 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     SongIndex++;
                 }
 
-                string progressString = "Progress: " + elapsed + " / " + SongDuration;
-                ProgressMade?.Invoke(progressString, new EventArgs());
+                float progress = Convert.ToSingle(elapsed / SongDuration);
+                if (progress > 1) progress = 1;
+                ProgressMade?.Invoke(progress, new EventArgs());
 
                 if (SongIndex >= IndexedSong.Length)
                 {

@@ -6,34 +6,33 @@ using Xamarin.Forms;
 namespace GuitarLearning_Mobile.ApplicationUtility
 {
     /// <summary>
-    /// Model that is used in the list view to render all page links
+    /// Model-Class of a ListView item
     /// </summary>
     public class ItemModel
     {
-        string _name;
-        ContentPage _page;
+        /// <summary>
+        /// Page that will be loaded on the tapped event.
+        /// </summary>
+        private ContentPage _page;
+        /// <summary>
+        /// Name which the ListView will display
+        /// </summary>
+        /// <value>Gets/Sets the PageName string field.</value>
+        public string PageName { get; private set; }
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="name">Name that is displayed on screen</param>
-        /// <param name="contentPage">Page that will be pushed onto the navigation stack on the tap-event</param>
-        public ItemModel(string name, ContentPage contentPage)
+        /// <param name="pageName">Display name</param>
+        /// <param name="page">Link to the page</param>
+        public ItemModel(string pageName, ContentPage page)
         {
-            _name = name;
-            _page = contentPage;
+            _page = page;
+            PageName = pageName;
         }
         /// <summary>
-        /// Gets the _name string field value
+        /// Returns the _page field
         /// </summary>
-        /// <returns>Name of this object</returns>
-        public override string ToString()
-        {
-            return _name;
-        }
-        /// <summary>
-        /// Gets the _page ContentPage field value
-        /// </summary>
-        /// <returns>Page of this object</returns>
+        /// <returns>Page that can be pushed onto the navigation stack.</returns>
         public ContentPage GetPage()
         {
             return _page;

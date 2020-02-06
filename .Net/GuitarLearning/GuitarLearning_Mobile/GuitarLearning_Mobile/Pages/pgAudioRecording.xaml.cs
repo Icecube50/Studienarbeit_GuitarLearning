@@ -81,6 +81,9 @@ namespace GuitarLearning_Mobile.Pages
 
             resultBuffer.Clean();
             audioBuffer.Clean();
+            audioRecording.CleanUp();
+            
+            audioRecording = new AudioRecording(audioBuffer);
         }
 
         private void OnLeave(object sender, EventArgs e)

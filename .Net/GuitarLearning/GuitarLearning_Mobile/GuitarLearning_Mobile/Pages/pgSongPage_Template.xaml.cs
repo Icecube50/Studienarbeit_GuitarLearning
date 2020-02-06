@@ -71,8 +71,8 @@ namespace GuitarLearning_Mobile.Pages
             }
             else
             {
-                btnProcessState.Text = "Start"; 
-                lbProcessedTime.Text = ""; 
+                btnProcessState.Text = "Start";
+                pbProgress.Progress = 0;
             }
         }
 
@@ -150,7 +150,7 @@ namespace GuitarLearning_Mobile.Pages
             UtilityHelper?.CleanUp();
 
             //Init Utility
-            UtilityHelper = new UtilityHelper(CurrentSong, lbProcessedTime);
+            UtilityHelper = new UtilityHelper(CurrentSong, pbProgress);
         }
         /// <summary>
         /// Called when the page is entered, loads the *.html from the app assets.
@@ -187,7 +187,7 @@ namespace GuitarLearning_Mobile.Pages
                 wvTabContainer.IsEnabled = false;
 
                 //Init Utility
-                UtilityHelper = new UtilityHelper(CurrentSong, lbProcessedTime);
+                UtilityHelper = new UtilityHelper(CurrentSong, pbProgress);
 
                 InfoContainer.Page = this;
             }

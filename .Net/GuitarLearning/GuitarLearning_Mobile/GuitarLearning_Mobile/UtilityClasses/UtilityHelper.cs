@@ -43,15 +43,15 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// </summary>
         private CancellationTokenSource cts;
         /// <summary>
-        /// Label which will display the current progress
+        /// Progress Bar which will display the current progress
         /// </summary>
-        private Label ProgressLabel;
+        private ProgressBar _progressBar;
         /// <summary>
         /// Constructor
         /// <para>Initialises all fields.</para>
         /// </summary>
         /// <param name="song">Song that was serialised from the "SongName.xml".</param>
-        public UtilityHelper(Song song, Label label)
+        public UtilityHelper(Song song, ProgressBar progressBar)
         {
             //Init Buffer
             AudioBuffer = new AudioBuffer();
@@ -65,7 +65,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             SongHelper.InitHelper(song);
             SongHelper.ProgressMade += OnProgressMade;
 
-            ProgressLabel = label;
+            _progressBar = progressBar;
 
             cts = new CancellationTokenSource();
         }
@@ -79,7 +79,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                ProgressLabel.Text = sender as string;
+                _progressBar.Progress = (float)sender;
             });
         }
 

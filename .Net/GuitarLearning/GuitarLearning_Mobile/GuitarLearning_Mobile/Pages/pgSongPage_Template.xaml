@@ -15,8 +15,8 @@
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
-                <WebView Grid.Row="0"
-                         x:Name="wvTabContainer"/>
+                <WebView
+                    x:Name="wvTabContainer"/>
 
                 <Grid BackgroundColor="LimeGreen"
                          HeightRequest="60" Grid.Row="1" Padding="4">
@@ -35,13 +35,12 @@
                             TextColor="White"
                             FontSize="20"/>
 
-                    <Label 
+                    <ProgressBar 
                            Grid.Column="1"
                            WidthRequest="300"
-                           x:Name="lbProcessedTime"
-                           TextColor="White"
-                           FontSize="15"
-                           VerticalTextAlignment="Center"/>
+                           x:Name="pbProgress"
+                           Progress="0"
+                           ProgressColor="Orange"/>
                 </Grid>
             </Grid>
         </StackLayout>
