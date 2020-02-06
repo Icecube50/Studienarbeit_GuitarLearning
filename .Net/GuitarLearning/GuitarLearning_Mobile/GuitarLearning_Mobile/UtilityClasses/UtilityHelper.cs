@@ -1,6 +1,7 @@
 ﻿using GuitarLearning_Essentials.SongModel;
 using GuitarLearning_Mobile.DeveloperSupport;
 using System.Threading;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace GuitarLearning_Mobile.UtilityClasses
@@ -76,7 +77,10 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <param name="e">Eventarguments</param>
         private void OnProgressMade(object sender, System.EventArgs e)
         {
-            ProgressLabel.Text = sender as string;
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                ProgressLabel.Text = sender as string;
+            });
         }
 
         /// <summary>

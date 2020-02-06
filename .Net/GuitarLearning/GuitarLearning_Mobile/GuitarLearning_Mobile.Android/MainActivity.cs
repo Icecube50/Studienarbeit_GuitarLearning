@@ -43,7 +43,7 @@ namespace GuitarLearning_Mobile.Droid
         {
             base.OnResume();
             PowerManager powerManager = (PowerManager)this.GetSystemService(Context.PowerService);
-            wakeLock = powerManager.NewWakeLock(WakeLockFlags.ScreenDim, "MyLock");
+            wakeLock = powerManager.NewWakeLock(WakeLockFlags.ScreenBright, "MyLock");
             wakeLock.Acquire();
         }
 

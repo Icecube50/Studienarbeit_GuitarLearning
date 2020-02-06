@@ -9,27 +9,35 @@
              x:Name="AppRoot"
              Appearing="AfterLoad">
     <StackLayout Orientation="Vertical">
-        <ListView SelectionMode="None"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            
+            <ListView SelectionMode="None"
                       x:Name="lvContainer"
-                      VerticalOptions="StartAndExpand"
-                      ItemTapped="OnItemTapped">
-        </ListView>
-        
-        <Grid BackgroundColor="LimeGreen"
+                      VerticalOptions="Start"
+                      ItemTapped="OnItemTapped"
+                      Grid.Row="0">
+            </ListView>
+
+            <Grid BackgroundColor="LimeGreen"
                   HeightRequest="60" Grid.Row="1"
                   VerticalOptions="End" Padding="4">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Button Text="Einstellungen"
+                <Button Text="Einstellungen"
                             HeightRequest="60"
                             x:Name="btnSettings"
                             Clicked="OnSettingsClicked"
                             BackgroundColor="Green"
                             TextColor="White"
                             FontSize="20"/>
+            </Grid>
         </Grid>
     </StackLayout>
 </ContentPage>

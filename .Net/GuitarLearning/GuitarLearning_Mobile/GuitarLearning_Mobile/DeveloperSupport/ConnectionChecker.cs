@@ -34,16 +34,14 @@ namespace GuitarLearning_Mobile.DeveloperSupport
         /// </summary>
         /// <param name="address">API address</param>
         /// <returns>true: when the server send a response with status "OK", otherwise false</returns>
-        public static bool CanReachApiAt(string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
+        public static async Task<bool> CanReachApiAt(string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
         {
             try
             {
                 if (DevFlags.SkipNetworkChecks) return true;
                 bool success = false;
-                Task.Run(async () =>
-                {
-                    success = await GetRequestAt(address);
-                });
+                success = await GetRequestAt(address);
+
                 Logger.Log("API: " + success);
                 return success;
             }

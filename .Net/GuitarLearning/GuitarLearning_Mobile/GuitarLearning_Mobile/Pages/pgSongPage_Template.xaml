@@ -22,7 +22,7 @@
                          HeightRequest="60" Grid.Row="1" Padding="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -37,10 +37,10 @@
 
                     <Label 
                            Grid.Column="1"
-                           WidthRequest="200"
+                           WidthRequest="300"
                            x:Name="lbProcessedTime"
                            TextColor="White"
-                           FontSize="20"
+                           FontSize="15"
                            VerticalTextAlignment="Center"/>
                 </Grid>
             </Grid>

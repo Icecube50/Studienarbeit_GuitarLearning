@@ -95,7 +95,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 var obj = IndexedSong[SongIndex];
                 if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Index: " + SongIndex + "/" + IndexedSong.Length);
                 //if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("From Xml: " + obj.ToString());
-                if (obj.Note != null) return GetNext_Note(obj.Note);
+                if (obj.IsNote) return GetNext_Note(obj.Note);
                 else return GetNext_Chord(obj.Chord);
             }
         }

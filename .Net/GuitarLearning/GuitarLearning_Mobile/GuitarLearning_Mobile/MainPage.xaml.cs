@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GuitarLearning_Mobile
@@ -33,7 +34,8 @@ namespace GuitarLearning_Mobile
             listOfSongs.Add(new ItemModel("Network Testing", new pgNetworkTesting()));
             listOfSongs.Add(new ItemModel("Audio Recording", new pgAudioRecording()));
             listOfSongs.Add(new ItemModel("Note Test", new pgSongPage_Template("Test1")));
-            listOfSongs.Add(new ItemModel("Chord Test", new pgSongPage_Template("Test2")));
+            listOfSongs.Add(new ItemModel("Chord Test", new pgSongPage_Template("ChordTest")));
+            listOfSongs.Add(new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest")));
             lvContainer.ItemsSource = listOfSongs;
 
             Logger.Log("########### New Startup ############");
@@ -70,11 +72,17 @@ namespace GuitarLearning_Mobile
                 NotifyUser("Stellen Sie sicher das Ihr Gerät mit dem Internet verbunden ist.");
                 return false;
             }
-            if (!ConnectionChecker.CanReachApiAt())
+            var result = Task.Run(async () =>
+            {
+                return await ConnectionChecker.CanReachApiAt();
+            });
+            result.Wait();
+            if (!result.Result)
             {
                 NotifyUser("Der Server ist zurzeit nicht erreichbar. Versuchen Sie es später erneut.");
                 return false;
             }
+
             return true;
         }
         /// <summary>

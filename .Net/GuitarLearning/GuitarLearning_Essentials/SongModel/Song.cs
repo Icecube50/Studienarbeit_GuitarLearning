@@ -75,6 +75,11 @@ namespace GuitarLearning_Essentials.SongModel
         /// <value>Gets/Sets the chord. A default value has to be initialised or else the xml serialisation fails.</value>
         public Chord Chord { get; set; } = new Chord();
         /// <summary>
+        /// Set flag when the content of this INote is an actual Note
+        /// </summary>
+        /// <value>Gets/Sets the IsNote bool field</value>
+        public bool IsNote { get; set; }
+        /// <summary>
         /// Constructor
         /// <para>Use if you want to store a <see cref="SongModel.Note"/>.</para>
         /// </summary>
@@ -83,6 +88,7 @@ namespace GuitarLearning_Essentials.SongModel
         {
             Note = note;
             Chord = null;
+            IsNote = true;
         }
         /// <summary>
         /// Constructor
@@ -93,6 +99,7 @@ namespace GuitarLearning_Essentials.SongModel
         {
             Chord = chord;
             Note = null;
+            IsNote = false;
         }
         /// <summary>
         /// Constructor
@@ -101,15 +108,17 @@ namespace GuitarLearning_Essentials.SongModel
         /// <param name="note">INote to copy</param>
         public INote(INote note)
         {
-            if(note.Chord != null)
+            if(note.IsNote == false)
             {
                 Note = null;
                 Chord = new Chord(note.Chord);
+                IsNote = false;
             }
             else
             {
                 Note = new Note(note.Note);
                 Chord = null;
+                IsNote = true;
             }
         }
         /// <summary>

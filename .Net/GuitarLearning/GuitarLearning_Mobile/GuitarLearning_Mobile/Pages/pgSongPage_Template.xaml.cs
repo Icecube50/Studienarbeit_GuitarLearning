@@ -64,7 +64,11 @@ namespace GuitarLearning_Mobile.Pages
             {
                 btnProcessState.Text = "Stop";
             }
-            else { btnProcessState.Text = "Start"; }
+            else
+            {
+                btnProcessState.Text = "Start"; 
+                lbProcessedTime.Text = ""; 
+            }
         }
 
         /// <summary>
@@ -132,6 +136,8 @@ namespace GuitarLearning_Mobile.Pages
             if(IsInUse)
                 UtilityHelper?.Stop();
             UtilityHelper?.CleanUp();
+            IsInUse = false;
+            IsInUseChanged?.Invoke(null, new EventArgs());
         }
         /// <summary>
         /// Called when the page is entered, loads the *.html from the app assets.
