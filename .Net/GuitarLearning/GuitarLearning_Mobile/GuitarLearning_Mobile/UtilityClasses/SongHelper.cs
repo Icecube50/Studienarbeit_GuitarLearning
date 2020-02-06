@@ -18,6 +18,11 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <value>Gets/Sets the SongDuration double field.</value>
         public static double SongDuration { get; set; }
         /// <summary>
+        /// Number of notes in the song
+        /// </summary>
+        /// <value>Gets/Sets the NumberOfNotes int field</value>
+        public static int NumberOfNotes { get; set; }
+        /// <summary>
         /// Song object that is serialised from the "SongName.xml". Contains all generic song data.
         /// </summary>
         /// <value>Gets/Sets the Song <see cref="GuitarLearning_Essentials.SongModel.Song"/> field.</value>
@@ -57,6 +62,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             Song.Notation.CopyTo(IndexedSong);
 
             if (SongIndex >= IndexedSong.Length) throw new Exception("Invalid Index");
+            NumberOfNotes = IndexedSong.Length;
         }
         /// <summary>
         /// Checks whether enough time has passed to determine a new index or to keep the old one.

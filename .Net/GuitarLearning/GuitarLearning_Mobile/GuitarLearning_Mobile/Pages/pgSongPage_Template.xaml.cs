@@ -52,6 +52,11 @@ namespace GuitarLearning_Mobile.Pages
             InitializeComponent();
 
             this.SongName = SongName;
+
+            //Init events
+            IsInUseChanged += async (s, arg) => { await AnimationAsync(s, arg); };
+            IsInUseChanged += ChangeProcessState;
+            IsInUseChanged += ChangeButtonLabel;
         }
         /// <summary>
         /// Subscribed to <see cref="IsInUseChanged"/>. Changes the text of the "Start/Stop"-button.
@@ -85,6 +90,7 @@ namespace GuitarLearning_Mobile.Pages
             else 
             {
                 UtilityHelper.Stop();
+                Reset();
             }
         }
         /// <summary>
@@ -135,9 +141,16 @@ namespace GuitarLearning_Mobile.Pages
         {
             if(IsInUse)
                 UtilityHelper?.Stop();
-            UtilityHelper?.CleanUp();
             IsInUse = false;
             IsInUseChanged?.Invoke(null, new EventArgs());
+            Reset();
+        }
+        private void Reset()
+        {
+            UtilityHelper?.CleanUp();
+
+            //Init Utility
+            UtilityHelper = new UtilityHelper(CurrentSong, lbProcessedTime);
         }
         /// <summary>
         /// Called when the page is entered, loads the *.html from the app assets.
@@ -173,13 +186,10 @@ namespace GuitarLearning_Mobile.Pages
                 wvTabContainer.Source = htmlSource;
                 wvTabContainer.IsEnabled = false;
 
-                //Init events
-                IsInUseChanged += async (s, arg) => { await AnimationAsync(s, arg); };
-                IsInUseChanged += ChangeProcessState;
-                IsInUseChanged += ChangeButtonLabel;
-
                 //Init Utility
                 UtilityHelper = new UtilityHelper(CurrentSong, lbProcessedTime);
+
+                InfoContainer.Page = this;
             }
             catch (Exception ex)
             {

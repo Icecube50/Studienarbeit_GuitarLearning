@@ -15,7 +15,7 @@ namespace GuitarLearning_Mobile
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     /// <summary>
-    /// Main Page that is shown after the start of the apllication. Contains menut to
+    /// Main Page that is shown after the start of the apllication. Contains menu to
     /// navigate to the other pages of the app.
     /// </summary>
     [DesignTimeVisible(false)]

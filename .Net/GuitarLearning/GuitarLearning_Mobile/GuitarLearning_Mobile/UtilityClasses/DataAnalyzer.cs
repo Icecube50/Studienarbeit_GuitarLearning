@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials;
+using GuitarLearning_Mobile.ApplicationUtility;
 using GuitarLearning_Mobile.DeveloperSupport;
 using System;
 using System.Collections.Generic;
@@ -86,12 +87,15 @@ namespace GuitarLearning_Mobile.UtilityClasses
                         {
                             ct.ThrowIfCancellationRequested();
                             var data = ResultBuffer.Get();
-                            string note = GetNoteFromData(data);
-
-                            MainThread.BeginInvokeOnMainThread(() =>
+                            if (data != null)
                             {
-                                label.Text = note;
-                            });
+                                string note = GetNoteFromData(data);
+
+                                MainThread.BeginInvokeOnMainThread(() =>
+                                {
+                                    label.Text = note;
+                                });
+                            }
                         }
                     }
                 });
@@ -118,30 +122,35 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Analysing");
                     ct.ThrowIfCancellationRequested();
                     var data = ResultBuffer.Get();
-                    var song = CompareWithSheet(data);
-
-                    //Hack: In case something failed in CompareWithSheet skip this cycle, hopefully the next one will work
-                    if (song == null) continue;
-                    AnalysedData.Push(song);
-                    if (song.Type == Highlight.Chord)
+                    if (data != null)
                     {
-                        if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
-                        string scriptName = $"HighlightCorrectChord('" + song.WebId + "')";
+                        var song = CompareWithSheet(data);
 
-                        MainThread.BeginInvokeOnMainThread(async () =>
+                        //Hack: In case something failed in CompareWithSheet skip this cycle, hopefully the next one will work
+                        if (song == null) continue;
+                        AnalysedData.Push(song);
+                        if (song.Type == Highlight.Chord)
                         {
-                            await webView.EvaluateJavaScriptAsync(scriptName);
-                        });
-                    }
-                    else if (song.Type == Highlight.Note)
-                    {
-                        if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
-                        string scriptName = $"HighlightCorrectNote('" + song.WebId + "')";
+                            InfoContainer.HitNote();
+                            if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
+                            string scriptName = $"HighlightCorrectChord('" + song.WebId + "')";
 
-                        MainThread.BeginInvokeOnMainThread(async () =>
+                            MainThread.BeginInvokeOnMainThread(async () =>
+                            {
+                                await webView.EvaluateJavaScriptAsync(scriptName);
+                            });
+                        }
+                        else if (song.Type == Highlight.Note)
                         {
-                            await webView.EvaluateJavaScriptAsync(scriptName);
-                        });          
+                            InfoContainer.HitNote();
+                            if (DevFlags.LoggingEnabled) Logger.AnalyzerLog("Highlighting " + song.WebId);
+                            string scriptName = $"HighlightCorrectNote('" + song.WebId + "')";
+
+                            MainThread.BeginInvokeOnMainThread(async () =>
+                            {
+                                await webView.EvaluateJavaScriptAsync(scriptName);
+                            });
+                        }
                     }
                 }
             }
@@ -182,6 +191,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
             if (SongHelper.IncreaseIndex(essentiaData.time, songObject))
             {
                 //End of Song
+                InfoContainer.DisplayResults();
                 Logger.Log("Analyzer: END OF SONG, now crashing?");
                 throw new Exception("End of Song");
             }

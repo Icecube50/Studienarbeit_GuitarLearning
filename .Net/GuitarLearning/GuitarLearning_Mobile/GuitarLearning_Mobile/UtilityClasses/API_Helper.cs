@@ -111,9 +111,12 @@ namespace GuitarLearning_Mobile.UtilityClasses
                     if (AudioBuffer?.Peek() != null)
                     {
                         var data = AudioBuffer?.Get();
-                        EssentiaModel essentiaModel = new EssentiaModel(data.Data, data.Time);
-                        var chordData = await DoAPICall(essentiaModel, httpClient, ct);
-                        ResultBuffer.Add(chordData);
+                        if (data != null)
+                        {
+                            EssentiaModel essentiaModel = new EssentiaModel(data.Data, data.Time);
+                            var chordData = await DoAPICall(essentiaModel, httpClient, ct);
+                            ResultBuffer.Add(chordData);
+                        }
                     }
                 }
             }

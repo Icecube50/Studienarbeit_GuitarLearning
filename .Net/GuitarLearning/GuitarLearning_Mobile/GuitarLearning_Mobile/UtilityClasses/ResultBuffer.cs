@@ -37,7 +37,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             lock (_lock)
             {
-                return Buffer.Dequeue();
+                return Buffer.Count != 0 ?  Buffer.Dequeue() : null;
             }
         }
         /// <summary>

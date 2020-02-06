@@ -126,7 +126,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
                 AudioBuffer?.Add(new AudioData(InputBuffer, TimeHelper.GetElapsedTime()));
                 InputBuffer = new float[InputBuffer.Length];
 
-                if((TimeHelper.GetElapsedTime() + 1000) > SongHelper.SongDuration)
+                if((TimeHelper.GetElapsedTime() - 1000) > SongHelper.SongDuration)
                 {
                     Logger.RecordingLog("Duration of sog reached => stopping");
                     break;
