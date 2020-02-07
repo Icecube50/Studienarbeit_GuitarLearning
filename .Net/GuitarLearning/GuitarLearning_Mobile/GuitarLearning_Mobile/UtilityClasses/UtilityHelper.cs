@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials.SongModel;
+using GuitarLearning_Mobile.ApplicationUtility;
 using GuitarLearning_Mobile.DeveloperSupport;
 using System.Threading;
 using Xamarin.Essentials;
@@ -59,7 +60,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
 
             //Init Classes
             AudioRecording = new AudioRecording(AudioBuffer);
-            API_Helper = new API_Helper(AudioBuffer, ResultBuffer);
+            API_Helper = new API_Helper(AudioBuffer, ResultBuffer, ConfigFileHelper.ConfigApiAddress);
             DataAnalyzer = new DataAnalyzer(ResultBuffer);
 
             SongHelper.InitHelper(song);

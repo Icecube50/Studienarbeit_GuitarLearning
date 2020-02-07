@@ -6,6 +6,7 @@ using Plugin.Connectivity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -29,23 +30,25 @@ namespace GuitarLearning_Mobile
         {
             InitializeComponent();
 
-            List<ItemModel> Groups = new List<ItemModel>()
+            List<ItemModel> functions = new List<ItemModel>()
             {
                 //Funktionen
-                new ItemModel("Funktionen", null, Color.Green),
-                new ItemModel("Network Testing", new pgNetworkTesting(), Color.Black),
-                new ItemModel("Audio Recording", new pgAudioRecording(), Color.Black),
-
-                //Lieder
-                new ItemModel("Lieder", null, Color.Green),
-                new ItemModel("Note Test", new pgSongPage_Template("Test1"), Color.Black),
-                new ItemModel("Chord Test", new pgSongPage_Template("ChordTest"), Color.Black),
-                new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest"), Color.Black),
-                new ItemModel("Static Test", new pgSongPage_Template("StaticTest"), Color.Black)
+                new ItemModel("Network Testing", new pgNetworkTesting()),
+                new ItemModel("Audio Recording", new pgAudioRecording()),
             };
-            lvContainer.ItemsSource = Groups;
+            List<ItemModel> songs = new List<ItemModel>()
+            { 
+                //Lieder
+                new ItemModel("Note Test", new pgSongPage_Template("Test1")),
+                new ItemModel("Chord Test", new pgSongPage_Template("ChordTest")),
+                new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest")),
+                new ItemModel("Static Test", new pgSongPage_Template("StaticTest"))
+            };
+            lvFunctions.ItemsSource = functions;
+            lvContainer.ItemsSource = songs;
 
             Logger.Log("########### New Startup ############");
+            ConfigFileHelper.InitConfigFile();
         }
 
         /// <summary>
@@ -66,7 +69,9 @@ namespace GuitarLearning_Mobile
         /// <param name="e">Eventarguments</param>
         private void AfterLoad(object sender, EventArgs e)
         {
+            DevFlags.ForcePermissionRequest = true;
             PermissionHelper.AskForAllPermissions();
+            DevFlags.ForcePermissionRequest = false;
         }
         /// <summary>
         /// Check whether all prerequisites are met. 
@@ -81,7 +86,7 @@ namespace GuitarLearning_Mobile
             }
             var result = Task.Run(async () =>
             {
-                return await ConnectionChecker.CanReachApiAt();
+                return await ConnectionChecker.CanReachApiAt(ConfigFileHelper.ConfigApiAddress);
             });
             result.Wait();
             if (!result.Result)

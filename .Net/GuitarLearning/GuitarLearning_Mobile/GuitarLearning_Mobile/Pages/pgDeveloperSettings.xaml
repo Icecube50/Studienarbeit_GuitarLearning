@@ -119,6 +119,24 @@
                        >
                     </Entry>
                 </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="API:"
+                       HeightRequest="30"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="20">
+                    </Label>
+                    <Entry Grid.Column="1"
+                       x:Name="etyAPI"
+                       Placeholder="API-Address"
+                       >
+                    </Entry>
+                </Grid>
                 <Button Text="Übernehmen"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="End"

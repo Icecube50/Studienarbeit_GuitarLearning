@@ -1,4 +1,5 @@
-﻿using GuitarLearning_Mobile.DeveloperSupport;
+﻿using GuitarLearning_Mobile.ApplicationUtility;
+using GuitarLearning_Mobile.DeveloperSupport;
 using GuitarLearning_Mobile.UtilityClasses;
 using System;
 using System.Text.RegularExpressions;
@@ -29,6 +30,7 @@ namespace GuitarLearning_Mobile.Pages
             cckNetworkChecks.IsChecked = DevFlags.SkipNetworkChecks;
             etyDeviation.Text = Convert.ToString(DevFlags.Deviation);
             etyBufferSize.Text = Convert.ToString(AudioBuffer.BUFFER_SIZE);
+            etyAPI.Text = ConfigFileHelper.ConfigApiAddress;
         }
 
         /// <summary>
@@ -70,6 +72,9 @@ namespace GuitarLearning_Mobile.Pages
                     AudioBuffer.BUFFER_SIZE = safeNumber;
                 }
                 else { DisplayAlert("Error", "Bitte wählen Sie eine ganze Zahl", "OK"); }
+
+                string address = etyAPI.Text;
+                ConfigFileHelper.NewApiAddressIs(address);
             }
             catch
             {
@@ -117,6 +122,8 @@ namespace GuitarLearning_Mobile.Pages
         private void OnGetPermissionsClicked(object sender, EventArgs e)
         {
             PermissionHelper.AskForAllPermissions();
+
+            ConfigFileHelper.InitConfigFile();
         }
     }
 }

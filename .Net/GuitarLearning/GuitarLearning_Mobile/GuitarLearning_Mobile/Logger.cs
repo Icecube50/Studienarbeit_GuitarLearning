@@ -36,7 +36,7 @@ namespace GuitarLearning_Mobile
         /// <summary>
         /// Contains the name of the directory where all log files are saved
         /// </summary>
-        private const string LOG_DIRECTORY = "GuitarLearning";
+        public const string LOG_DIRECTORY = "GuitarLearning";
 
         /// <summary>
         /// Generic logging method, the file is safed at <code>Android.OS.Environment.GetExternalStoragePublicDirectory(string.Empty).AbsolutePath + "GuitarLearning\LogAndroid.txt"</code>

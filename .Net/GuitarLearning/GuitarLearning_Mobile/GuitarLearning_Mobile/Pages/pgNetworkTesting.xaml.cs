@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials;
+using GuitarLearning_Mobile.ApplicationUtility;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using System;
@@ -131,7 +132,7 @@ namespace GuitarLearning_Mobile.Pages
         /// <returns>Task, so the method can be run asynchronously.</returns>
         private async Task PostRequest()
         {
-            string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia";
+            string address = ConfigFileHelper.ConfigApiAddress;
             editorOutput = string.Empty;
             editorOutput += "Communication with: " + address + "\n";
             editorOutput += "Sending Post-Request...\n";
@@ -190,7 +191,7 @@ namespace GuitarLearning_Mobile.Pages
         /// <returns>Task, so the method can be run asynchronously.</returns>
         private async Task GetRequest()
         {
-            string address = "https://guitarlearningapi.azurewebsites.net/api/Essentia";
+            string address = ConfigFileHelper.ConfigApiAddress;
             editorOutput = string.Empty;
             editorOutput += "Communication with: " + address + "\n";
             editorOutput += "Sending Get-Request...\n";

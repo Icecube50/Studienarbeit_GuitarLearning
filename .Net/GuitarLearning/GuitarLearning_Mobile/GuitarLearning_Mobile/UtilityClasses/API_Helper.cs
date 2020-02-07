@@ -47,7 +47,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         /// <param name="audioBuffer">Instance of the AudioBuffer that shall be used.</param>
         /// <param name="resultBuffer">Instance of the ResultBuffer that shall be used.</param>
         /// <param name="apiAddress">[Optional] API-Address, default value is "https://guitarlearningapi.azurewebsites.net/api/Essentia"</param>
-        public API_Helper(AudioBuffer audioBuffer, ResultBuffer resultBuffer, string apiAddress = "https://guitarlearningapi.azurewebsites.net/api/Essentia")
+        public API_Helper(AudioBuffer audioBuffer, ResultBuffer resultBuffer, string apiAddress)
         {
             AudioBuffer = audioBuffer;
             ResultBuffer = resultBuffer;

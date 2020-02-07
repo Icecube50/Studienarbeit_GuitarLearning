@@ -1,4 +1,5 @@
 ﻿using GuitarLearning_Essentials;
+using GuitarLearning_Mobile.ApplicationUtility;
 using GuitarLearning_Mobile.UtilityClasses;
 using Plugin.Permissions;
 using System;
@@ -36,7 +37,7 @@ namespace GuitarLearning_Mobile.Pages
             resultBuffer = new ResultBuffer();
 
             audioRecording = new AudioRecording(audioBuffer);
-            apiHelper = new API_Helper(audioBuffer, resultBuffer);
+            apiHelper = new API_Helper(audioBuffer, resultBuffer, ConfigFileHelper.ConfigApiAddress);
             dataAnalyzer = new DataAnalyzer(resultBuffer);
 
             cts = new CancellationTokenSource();

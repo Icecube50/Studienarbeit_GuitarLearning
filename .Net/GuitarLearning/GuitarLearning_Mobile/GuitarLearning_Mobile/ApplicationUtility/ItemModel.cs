@@ -18,22 +18,16 @@ namespace GuitarLearning_Mobile.ApplicationUtility
         /// Name which the ListView will display
         /// </summary>
         /// <value>Gets/Sets the PageName string field.</value>
-        public string PageName { get; private set; }
-        /// <summary>
-        /// Colour in which the PageName will be rendered
-        /// </summary>
-        /// <value>Gets/Sets the Color field.</value>
-        public Color Color { get; private set; }
+        private string _pageName;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="pageName">Display name</param>
         /// <param name="page">Link to the page</param>
-        public ItemModel(string pageName, ContentPage page, Color color)
+        public ItemModel(string pageName, ContentPage page)
         {
             _page = page;
-            PageName = pageName;
-            Color = color;
+            _pageName = pageName;
         }
         /// <summary>
         /// Returns the _page field
@@ -42,6 +36,10 @@ namespace GuitarLearning_Mobile.ApplicationUtility
         public ContentPage GetPage()
         {
             return _page;
+        }
+        public override string ToString()
+        {
+            return _pageName; 
         }
     }
 }
