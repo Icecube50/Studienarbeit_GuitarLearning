@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.API_Helper">
+    <Position X="7.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMBAABAAIAAAAAAAAAAAAAAAAgAAIEIAAAAAAAAEAA=</HashCode>
+      <FileName>UtilityClasses\API_Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.AudioBuffer">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAAAAAAEAABgAAAAAAQACAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>UtilityClasses\AudioBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.AudioData">
+    <Position X="4.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAQA=</HashCode>
+      <FileName>UtilityClasses\AudioBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.AudioRecording">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAoAAAgEAAEEA=</HashCode>
+      <FileName>UtilityClasses\AudioRecording.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.DataAnalyzer">
+    <Position X="11.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgSAAABAAAIAAAIAAAABAAAAQQAAAEAAAAAACAAAAAA=</HashCode>
+      <FileName>UtilityClasses\DataAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.ResultBuffer">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAEAABgAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>UtilityClasses\ResultBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.SongHelper">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAICgAAAAAAABAAAAAIAgAAQAACAoAQABAAAAAAAA=</HashCode>
+      <FileName>UtilityClasses\SongHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.SongObject">
+    <Position X="13" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAQAAAAAAAEAAQACAAAAAAA=</HashCode>
+      <FileName>UtilityClasses\SongHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.TimeHelper">
+    <Position X="6" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAIAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UtilityClasses\TimeHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GuitarLearning_Mobile.UtilityClasses.UtilityHelper">
+    <Position X="0.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAACAAAAIAAAAAAABAgAAAAAAAYAQAAEAAEAA=</HashCode>
+      <FileName>UtilityClasses\UtilityHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="GuitarLearning_Mobile.UtilityClasses.Highlight">
+    <Position X="11.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>UtilityClasses\EnumHighlight.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
