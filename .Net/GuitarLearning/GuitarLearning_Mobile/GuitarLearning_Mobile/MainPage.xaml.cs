@@ -39,7 +39,7 @@ namespace GuitarLearning_Mobile
             List<ItemModel> songs = new List<ItemModel>()
             { 
                 //Lieder
-                new ItemModel("Note Test", new pgSongPage_Template("Test1")),
+                new ItemModel("Note Test", new pgSongPage_Template("NoteTest")),
                 new ItemModel("Chord Test", new pgSongPage_Template("ChordTest")),
                 new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest")),
                 new ItemModel("Static Test", new pgSongPage_Template("StaticTest"))

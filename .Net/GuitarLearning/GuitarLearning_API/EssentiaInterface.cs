@@ -15,7 +15,7 @@ namespace GuitarLearning_API
         /// <param name="audioInput">Raw audio data</param>
         /// <param name="audioInputSize">Size of the array</param>
         /// <returns></returns>
-        [DllImport("Extern\\guitar_api.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("Extern\\guitar_api92.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.LPStr)]
         private static extern string CalculateChords([In, Out]float[] audioInput, int audioInputSize);
 

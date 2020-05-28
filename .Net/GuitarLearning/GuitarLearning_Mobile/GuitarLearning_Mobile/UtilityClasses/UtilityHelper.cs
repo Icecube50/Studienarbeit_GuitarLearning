@@ -92,6 +92,7 @@ namespace GuitarLearning_Mobile.UtilityClasses
         {
             if (DevFlags.LoggingEnabled) Logger.Log("Starting now");
             TimeHelper.SetStartTime();
+            TimeHelper.SetStartTime_Analysis();
 
             AudioRecording.StartRecording();
             API_Helper.StartAPI();

@@ -24,7 +24,9 @@ namespace GuitarLearning_Mobile.ApplicationUtility
         /// </summary>
         public static void DisplayResults()
         {
+            var elapsed = TimeHelper.GetElapsedTime_Analysis();
             string infoMsg = "Sie haben " + CorrectNotes + " von " + SongHelper.NumberOfNotes + " Noten getroffen!";
+            infoMsg += "\r\nDie Analyse hat " + elapsed + " ms gedauert.";
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
