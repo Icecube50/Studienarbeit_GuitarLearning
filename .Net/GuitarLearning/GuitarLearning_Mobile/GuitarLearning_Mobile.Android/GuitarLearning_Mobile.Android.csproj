@@ -142,5 +142,29 @@
   <ItemGroup>
     <AndroidAsset Include="Assets\NoteTest.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\AkkordeKurz.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\AkkordeKurz.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\AkkordeLang.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\AkkordeLang.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\NotenKurz.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\NotenKurz.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\NotenLang.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\NotenLang.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

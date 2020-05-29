@@ -42,7 +42,11 @@ namespace GuitarLearning_Mobile
                 new ItemModel("Note Test", new pgSongPage_Template("NoteTest")),
                 new ItemModel("Chord Test", new pgSongPage_Template("ChordTest")),
                 new ItemModel("Trumpet Test", new pgSongPage_Template("TrumpetTest")),
-                new ItemModel("Static Test", new pgSongPage_Template("StaticTest"))
+                new ItemModel("Static Test", new pgSongPage_Template("StaticTest")),
+                new ItemModel("Noten Lang", new pgSongPage_Template("NotenLang")),
+                new ItemModel("Akkorde Lang", new pgSongPage_Template("AkkordeLang")),
+                new ItemModel("Noten Kurz", new pgSongPage_Template("NotenKurz")),
+                new ItemModel("Akkorde Kurz", new pgSongPage_Template("AkkordeKurz")),
             };
             lvFunctions.ItemsSource = functions;
             lvContainer.ItemsSource = songs;
